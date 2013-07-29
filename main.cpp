@@ -14,6 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <string>
+#include <sstream>
+
 #include <wx/wx.h>
 #include <gst/gst.h>
 
@@ -28,18 +31,18 @@ void main_loop_run( gpointer )
 
 
 // This function will be called by the pad-added signal
-void pad_added_handler (GstElement *src, GstPad *new_pad, GstElement *queue)
+void onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink)
 {
   g_print ("Received new pad '%s' from '%s':\n", GST_PAD_NAME (new_pad), GST_ELEMENT_NAME (src));
 
-  GstPad *compatiblePad = gst_element_get_compatible_pad( queue, new_pad, gst_pad_get_caps( new_pad ) );
+  GstPad *compatiblePad = gst_element_get_compatible_pad( sink, new_pad, gst_pad_get_caps( new_pad ) );
 
 	if ( compatiblePad )
 	{
 		if ( gst_pad_link( new_pad, compatiblePad ) == GST_PAD_LINK_OK )
 			g_print("  Link succeeded." );
 		else
-			g_print( "Link to '%s' from '%s' Failed.\n", GST_PAD_NAME (compatiblePad), GST_ELEMENT_NAME (queue) );
+			g_print( "Link to '%s' from '%s' Failed.\n", GST_PAD_NAME (compatiblePad), GST_ELEMENT_NAME (sink) );
 	}
 	else
 		g_print( "Skipping incompatible pad.\n" );
@@ -82,13 +85,18 @@ public:
 
 	DECLARE_EVENT_TABLE()
 
-	//CustomData m_data;
-	GThread    *m_gstThread;
-	GstElement *m_gstPipeline;
 private:
 
+	GThread    *m_gstThread;
+	GstElement *m_gstPipeline;
+
+	GstElement *m_audioComposition;
+	GstElement *m_videoComposition;
+
+	static unsigned int m_nSamples;
+
 	bool
-		addSample( GstElement *sink );
+		addSample( int start, int mediaStart, int duration );
 };
 
 
@@ -117,6 +125,7 @@ MyApp::MyApp( void )
 		wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
 }
 
+
 bool
 MyApp::OnInit( void )
 {
@@ -128,50 +137,59 @@ MyApp::OnInit( void )
 	return true;
 }
 
+
 bool
-MyFrame::addSample( GstElement *sink )
+MyFrame::addSample( int start, int mediaStart, int duration )
 {
-	GstElement *composition, *videoSource, *audioSource;
+	GstElement *videoSource, *audioSource;
 
-	composition = gst_element_factory_make( "gnlcomposition", "composition" );
-	videoSource = gst_element_factory_make( "gnlfilesource", "video-1" );
-	audioSource = gst_element_factory_make( "gnlfilesource", "audio-1" );
+	// Get the names of the src elements
+	std::stringstream nameStream( "sample_a" );
+	nameStream << m_nSamples;
+	std::string srcName = nameStream.str();
+	videoSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
 
-	if ( !gst_bin_add( GST_BIN( composition ), videoSource ) )
+	nameStream.clear();
+	nameStream << "sample_comp" << m_nSamples;
+	srcName = nameStream.str();
+	audioSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
+
+	// Add the src elements to the compositions
+	if ( !gst_bin_add( GST_BIN( m_videoComposition ), videoSource ) )
 		goto MyFrame_addSample_EXIT;
 
-	if ( !gst_bin_add( GST_BIN( composition ), audioSource ) )
+	if ( !gst_bin_add( GST_BIN( m_audioComposition ), audioSource ) )
 		goto MyFrame_addSample_EXIT;
 
-	if ( !gst_bin_add( GST_BIN( m_gstPipeline ), composition ) )
-		goto MyFrame_addSample_EXIT;
+	// set the properties
+	g_object_set( videoSource, "uri", "file:///C:/zelda.mp4", NULL );
+	g_object_set( videoSource, "start", start * GST_SECOND, NULL );
+	g_object_set( videoSource, "duration", duration * GST_SECOND, NULL );
+	g_object_set( videoSource, "media-start", mediaStart * GST_SECOND, NULL );
+	g_object_set( videoSource, "media-duration", duration * GST_SECOND, NULL );
 
-	g_object_set( videoSource, "uri", "file:///C:/zelda.ogv", NULL );
-	g_object_set( videoSource, "start", 0 * GST_SECOND, NULL );
-	g_object_set( videoSource, "duration", 3 * GST_SECOND, NULL );
-	g_object_set( videoSource, "media-start", 10 * GST_SECOND, NULL );
-	g_object_set( videoSource, "media-duration", 3 * GST_SECOND, NULL );
-	g_object_set( videoSource, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
+	g_object_set( audioSource, "uri", "file:///C:/zelda.mp4", NULL );
+	g_object_set( audioSource, "start", start * GST_SECOND, NULL );
+	g_object_set( audioSource, "duration", duration * GST_SECOND, NULL );
+	g_object_set( audioSource, "media-start", mediaStart * GST_SECOND, NULL );
+	g_object_set( audioSource, "media-duration", duration * GST_SECOND, NULL );
 
-	g_object_set( audioSource, "uri", "file:///C:/zelda.ogv", NULL );
-	g_object_set( audioSource, "start", 3 * GST_SECOND, NULL );
-	g_object_set( audioSource, "duration", 3 * GST_SECOND, NULL );
-	g_object_set( audioSource, "media-start", 15 * GST_SECOND, NULL );
-	g_object_set( audioSource, "media-duration", 3 * GST_SECOND, NULL );
-	g_object_set( audioSource, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
-
-	g_signal_connect( composition, "pad-added", G_CALLBACK(pad_added_handler), sink );
+	// inc the static id
+	m_nSamples++;
 
 	return true;
 
-
+	// Free things on error
 MyFrame_addSample_EXIT:
-	gst_object_unref( composition );
 	gst_object_unref( videoSource );
 	gst_object_unref( audioSource );
 
 	return false;
 }
+
+
+unsigned int MyFrame::m_nSamples( 0u );
+
 
 MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &size ) :
 	wxFrame( NULL, -1, title, position, size ),
@@ -199,15 +217,31 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	// Build the pipeline
 	m_gstPipeline = gst_pipeline_new( "pipeline" );
 
-	GstElement *queue = gst_element_factory_make( "queue", "queue" );
-	GstElement *sink  = gst_element_factory_make( "autovideosink", "video-sink" );
+	GstElement *audioQueue = gst_element_factory_make( "queue", "queue_a" );
+	GstElement *videoQueue = gst_element_factory_make( "queue", "queue_v" );
 
-	gst_bin_add_many( GST_BIN( m_gstPipeline ), queue, sink, NULL );
+	m_audioComposition = gst_element_factory_make( "gnlcomposition", "sample_comp_a0" );
+	m_videoComposition = gst_element_factory_make( "gnlcomposition", "sample_comp_v0" );
 
-	addSample( queue );
+	g_object_set( m_audioComposition, "caps", gst_caps_from_string( "audio/x-raw-int;audio/x-raw-float" ), NULL ); 
+	g_object_set( m_videoComposition, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
 
-	if ( !gst_element_link( queue, sink ) )
-		g_printerr ("Queue/Sink could not be linked.\n");
+	g_signal_connect( m_audioComposition, "pad-added", G_CALLBACK(onPadAdded), audioQueue );
+	g_signal_connect( m_videoComposition, "pad-added", G_CALLBACK(onPadAdded), videoQueue );
+
+	GstElement *audioSink  = gst_element_factory_make( "autoaudiosink", "audio-sink" );
+	GstElement *videoSink  = gst_element_factory_make( "autovideosink", "video-sink" );
+
+	gst_bin_add_many( GST_BIN( m_gstPipeline ), m_audioComposition, m_videoComposition, audioQueue, videoQueue, videoSink, audioSink, NULL );
+
+	addSample( 0, 2, 4 );
+	addSample( 4, 10, 4 );
+
+	if ( !gst_element_link( audioQueue, audioSink ) )
+		g_printerr ("Audio Queue/Sink could not be linked.\n");
+
+	if ( !gst_element_link( videoQueue, videoSink ) )
+		g_printerr ("Video Queue/Sink could not be linked.\n");
    
 	// Start playing
 	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
