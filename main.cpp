@@ -17,26 +17,15 @@
 #include <wx/wx.h>
 #include <gst/gst.h>
 
-// Structure to contain all our information, so we can pass it to callbacks
-typedef struct _CustomData {
-  GstElement *pipeline;
-  GstElement *composition;
-  GstElement *sink;
-  GMainLoop  *loop;
 
-} CustomData;
-
-
-void main_loop_run( gpointer data ) 
+void main_loop_run( gpointer ) 
 { 
-	if ( !data )
-		return;
-
-	CustomData *customData = (CustomData *)data;
+	//CustomData *customData = (CustomData *)data;
 
 	GMainLoop *loop = g_main_loop_new( NULL, FALSE );
 	g_main_loop_run( loop );
 }
+
 
 // This function will be called by the pad-added signal
 void pad_added_handler (GstElement *src, GstPad *new_pad, GstElement *queue)
@@ -93,7 +82,9 @@ public:
 
 	DECLARE_EVENT_TABLE()
 
-	CustomData m_data;
+	//CustomData m_data;
+	GThread    *m_gstThread;
+	GstElement *m_gstPipeline;
 };
 
 
@@ -135,7 +126,8 @@ MyApp::OnInit( void )
 
 
 MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &size ) :
-	wxFrame( NULL, -1, title, position, size )
+	wxFrame( NULL, -1, title, position, size ),
+	m_gstThread( NULL )
 {
 	wxMenu *menuFile = new wxMenu;
 
@@ -155,35 +147,22 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
 	gst_init (NULL, NULL);
  
-	//// Build the pipeline
-	m_data.pipeline = gst_pipeline_new( "pipeline" );
 
-	GstElement *source1, *source2;
+	// Build the pipeline
+	m_gstPipeline = gst_pipeline_new( "pipeline" );
 
-	m_data.composition = gst_element_factory_make( "gnlcomposition", "composition" );
+	GstElement *composition, *source1, *source2;
+
+	composition = gst_element_factory_make( "gnlcomposition", "composition" );
 	source1 = gst_element_factory_make( "gnlfilesource", "video-1" );
 	source2 = gst_element_factory_make( "gnlfilesource", "video-2" );
 
 	GstElement *queue = gst_element_factory_make( "queue", "queue" );
+	GstElement *sink  = gst_element_factory_make( "autovideosink", "video-sink" );
 
-	m_data.sink = gst_element_factory_make( "autovideosink", "video-sink" );
 
-
-	if ( !gst_bin_add( GST_BIN(m_data.composition), source1 ) )
-		g_printerr( "Couldn't add source 1 to composition\n" );
-
-	if ( !gst_bin_add( GST_BIN(m_data.composition), source2 ) )
-		g_printerr( "Couldn't add source 2 to composition\n" );
-
-	if ( !gst_bin_add( GST_BIN(m_data.pipeline), m_data.composition ) )
-		g_printerr( "Couldn't add composition\n" );
-
-	if ( !gst_bin_add( GST_BIN(m_data.pipeline), queue ) )
-		g_printerr( "Couldn't add queue\n" );
-
-	if ( !gst_bin_add( GST_BIN(m_data.pipeline), m_data.sink ) )
-		g_printerr( "Couldn't add sink\n" );
-
+	gst_bin_add_many( GST_BIN( composition ), source1, source2, NULL );
+	gst_bin_add_many( GST_BIN( m_gstPipeline ), composition, queue, sink, NULL );
 
 	g_object_set( source1, "uri", "file:///C:/zelda.ogv", NULL );
 	g_object_set( source1, "start", 0 * GST_SECOND, NULL );
@@ -200,34 +179,31 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	g_object_set (source1, "caps", gst_caps_from_string ("video/x-raw-yuv;video/x-raw-rgb"), NULL); 
 	g_object_set (source2, "caps", gst_caps_from_string ("video/x-raw-yuv;video/x-raw-rgb"), NULL); 
 
-	if ( !gst_element_link( queue, m_data.sink ) )
+	if ( !gst_element_link( queue, sink ) )
 		g_printerr ("Queue/Sink could not be linked.\n");
 
-	g_signal_connect( m_data.composition, "pad-added", G_CALLBACK(pad_added_handler), queue );
+	g_signal_connect( composition, "pad-added", G_CALLBACK(pad_added_handler), queue );
    
 	// Start playing
-	gst_element_set_state (m_data.pipeline, GST_STATE_PLAYING);
-	///
+	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
 
-	GstBus *bus = gst_element_get_bus (m_data.pipeline);
-	 
-	GThread *thread = g_thread_new( "myThread", (GThreadFunc)main_loop_run, &m_data );
+	// Create the Gstreamer Main Loop Thread
+	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
 
-	if ( thread == NULL )
-		g_printerr( "couldnt' create thread\n" );
-
+	if ( m_gstThread == NULL )
+		GST_ERROR( "Couldn't create GStreamer loop thread.\n" );
 }
 
 
 void
 MyFrame::OnQuit( wxCommandEvent &WXUNUSED(event) )
 {
-	/// Cleanup
+	gst_element_set_state (m_gstPipeline, GST_STATE_NULL);
+	gst_object_unref (m_gstPipeline);
 
-	//gst_object_unref (bus);
-	//gst_element_set_state (pipeline, GST_STATE_NULL);
-	//gst_object_unref (pipeline);
-	///
+	if ( m_gstThread != NULL )
+		g_thread_join( m_gstThread );
+
 	Close( true );
 }
 
