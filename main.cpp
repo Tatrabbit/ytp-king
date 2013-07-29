@@ -20,6 +20,8 @@
 #include <wx/wx.h>
 #include <gst/gst.h>
 
+#include <gst/interfaces/xoverlay.h>
+
 
 void main_loop_run( gpointer ) 
 { 
@@ -40,13 +42,15 @@ void onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink)
 	if ( compatiblePad )
 	{
 		if ( gst_pad_link( new_pad, compatiblePad ) == GST_PAD_LINK_OK )
-			g_print("  Link succeeded." );
+			g_print("  Link succeeded.\n" );
 		else
 			g_print( "Link to '%s' from '%s' Failed.\n", GST_PAD_NAME (compatiblePad), GST_ELEMENT_NAME (sink) );
 	}
 	else
 		g_print( "Skipping incompatible pad.\n" );
 }
+
+void onSync( GstBus *bus, GstMessage *message, gpointer data );
 
 
 enum
@@ -82,6 +86,8 @@ public:
 
 	void
 		OnAbout( wxCommandEvent &event );
+
+	wxPanel *m_moviePanel;
 
 	DECLARE_EVENT_TABLE()
 
@@ -206,6 +212,19 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 
 	SetMenuBar( menuBar );
 
+	wxSizer *mainSizer = new wxBoxSizer( wxHORIZONTAL );
+
+	m_moviePanel = new wxPanel( this );
+	m_moviePanel->SetupColours();
+	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
+	m_moviePanel->SetWindowStyle( wxALL | wxEXPAND );
+	m_moviePanel->SetPosition( wxPoint( 0, 0 ) );
+	m_moviePanel->SetSize( 200, 200 );
+
+	mainSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND, 0 );
+
+	this->SetSizer( mainSizer );
+
 	CreateStatusBar();
 	SetStatusText( _("Welcome to wxPingas!") );
 
@@ -242,7 +261,14 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 
 	if ( !gst_element_link( videoQueue, videoSink ) )
 		g_printerr ("Video Queue/Sink could not be linked.\n");
-   
+
+	// connect to the x-window callback
+	GstBus *bus = gst_element_get_bus( m_gstPipeline );
+	gst_bus_enable_sync_message_emission( bus );
+	gst_bus_add_signal_watch( bus );
+
+	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, this );
+
 	// Start playing
 	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
 
@@ -273,4 +299,21 @@ MyFrame::OnAbout( wxCommandEvent &WXUNUSED(event) )
 	wxMessageBox( _("This is a wxWidgets Hello World sample"),
 		          _("About Hello World"),
 				  wxOK | wxICON_INFORMATION, this );
+}
+
+void onSync( GstBus *bus, GstMessage *message, gpointer data )
+{
+	const GstStructure *structure = gst_message_get_structure( message );
+	const char *structureName = gst_structure_get_name( structure );
+
+	g_print( "Called '%s'\n", structureName );
+	
+	MyFrame *frame = (MyFrame *)data;
+
+	if ( strcmp( structureName, "prepare-xwindow-id" ) == 0 )
+	{
+		GstObject *imagesink = GST_MESSAGE_SRC( message );
+		g_object_set( imagesink, "force-aspect-ratio", true, NULL );
+		gst_x_overlay_set_xwindow_id( GST_X_OVERLAY( imagesink ), (gulong)frame->m_moviePanel->GetHWND() );
+	}
 }
