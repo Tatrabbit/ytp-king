@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="$(gdk_pixbuf_2_0Imported)!=true" Project="gdk-pixbuf-2.0.props"/>
+		<Import Condition="$(gobject_2_0Imported)!=true" Project="gobject-2.0.props"/>
+		<Import Condition="$(gmodule_no_export_2_0Imported)!=true" Project="gmodule-no-export-2.0.props"/>
+		<Import Condition="$(CommonImported)!=true" Project="Common.props"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<PropertyGroup>
+		<cogl_2_0_experimentalImported>true</cogl_2_0_experimentalImported>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>$(GSTREAMER_SDK_ROOT_X86)\include\cogl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalLibraryDirectories>;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalDependencies>cogl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup/>
+</Project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="$(gstreamer_0_10Imported)!=true" Project="gstreamer-0.10.props"/>
+		<Import Condition="$(gstreamer_base_0_10Imported)!=true" Project="gstreamer-base-0.10.props"/>
+		<Import Condition="$(CommonImported)!=true" Project="Common.props"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<PropertyGroup>
+		<gstreamer_video_0_10Imported>true</gstreamer_video_0_10Imported>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalLibraryDirectories>;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalDependencies>gstvideo-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup/>
+</Project>

@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="$(gdk_pixbuf_2_0Imported)!=true" Project="gdk-pixbuf-2.0.props"/>
+		<Import Condition="$(gobject_2_0Imported)!=true" Project="gobject-2.0.props"/>
+		<Import Condition="$(gmodule_no_export_2_0Imported)!=true" Project="gmodule-no-export-2.0.props"/>
+		<Import Condition="$(cogl_1_0Imported)!=true" Project="cogl-1.0.props"/>
+		<Import Condition="$(CommonImported)!=true" Project="Common.props"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<PropertyGroup>
+		<cogl_pango_1_0Imported>true</cogl_pango_1_0Imported>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalLibraryDirectories>;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalDependencies>cogl-pango.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup/>
+</Project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="$(cogl_1_0Imported)!=true" Project="cogl-1.0.props"/>
+		<Import Condition="$(cogl_1_0Imported)!=true" Project="cogl-1.0.props"/>
+		<Import Condition="$(cairo_gobjectImported)!=true" Project="cairo-gobject.props"/>
+		<Import Condition="$(atkImported)!=true" Project="atk.props"/>
+		<Import Condition="$(pangocairoImported)!=true" Project="pangocairo.props"/>
+		<Import Condition="$(cogl_pango_1_0Imported)!=true" Project="cogl-pango-1.0.props"/>
+		<Import Condition="$(json_glib_1_0Imported)!=true" Project="json-glib-1.0.props"/>
+		<Import Condition="$(CommonImported)!=true" Project="Common.props"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<PropertyGroup>
+		<clutter_win32_1_0Imported>true</clutter_win32_1_0Imported>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>$(GSTREAMER_SDK_ROOT_X86)\include\clutter-1.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalLibraryDirectories>;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalDependencies>clutter-win32-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup/>
+</Project>

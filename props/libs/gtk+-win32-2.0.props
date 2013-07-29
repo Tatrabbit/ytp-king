@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="$(gdk_win32_2_0Imported)!=true" Project="gdk-win32-2.0.props"/>
+		<Import Condition="$(atkImported)!=true" Project="atk.props"/>
+		<Import Condition="$(cairoImported)!=true" Project="cairo.props"/>
+		<Import Condition="$(gdk_pixbuf_2_0Imported)!=true" Project="gdk-pixbuf-2.0.props"/>
+		<Import Condition="$(gio_2_0Imported)!=true" Project="gio-2.0.props"/>
+		<Import Condition="$(CommonImported)!=true" Project="Common.props"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<PropertyGroup>
+		<gtk__win32_2_0Imported>true</gtk__win32_2_0Imported>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalLibraryDirectories>;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalDependencies>gtk-win32-2.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup/>
+</Project>

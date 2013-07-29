@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="$(gstreamer_0_10Imported)!=true" Project="gstreamer-0.10.props"/>
+		<Import Condition="$(gstreamer_base_0_10Imported)!=true" Project="gstreamer-base-0.10.props"/>
+		<Import Condition="$(gstreamer_controller_0_10Imported)!=true" Project="gstreamer-controller-0.10.props"/>
+		<Import Condition="$(gstreamer_pbutils_0_10Imported)!=true" Project="gstreamer-pbutils-0.10.props"/>
+		<Import Condition="$(CommonImported)!=true" Project="Common.props"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<PropertyGroup>
+		<gst_editing_services_0_10Imported>true</gst_editing_services_0_10Imported>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalLibraryDirectories>;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalDependencies>ges-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup/>
+</Project>
