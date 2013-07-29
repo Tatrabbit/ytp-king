@@ -85,6 +85,10 @@ public:
 	//CustomData m_data;
 	GThread    *m_gstThread;
 	GstElement *m_gstPipeline;
+private:
+
+	bool
+		addSample( GstElement *sink );
 };
 
 
@@ -124,6 +128,50 @@ MyApp::OnInit( void )
 	return true;
 }
 
+bool
+MyFrame::addSample( GstElement *sink )
+{
+	GstElement *composition, *videoSource, *audioSource;
+
+	composition = gst_element_factory_make( "gnlcomposition", "composition" );
+	videoSource = gst_element_factory_make( "gnlfilesource", "video-1" );
+	audioSource = gst_element_factory_make( "gnlfilesource", "audio-1" );
+
+	if ( !gst_bin_add( GST_BIN( composition ), videoSource ) )
+		goto MyFrame_addSample_EXIT;
+
+	if ( !gst_bin_add( GST_BIN( composition ), audioSource ) )
+		goto MyFrame_addSample_EXIT;
+
+	if ( !gst_bin_add( GST_BIN( m_gstPipeline ), composition ) )
+		goto MyFrame_addSample_EXIT;
+
+	g_object_set( videoSource, "uri", "file:///C:/zelda.ogv", NULL );
+	g_object_set( videoSource, "start", 0 * GST_SECOND, NULL );
+	g_object_set( videoSource, "duration", 3 * GST_SECOND, NULL );
+	g_object_set( videoSource, "media-start", 10 * GST_SECOND, NULL );
+	g_object_set( videoSource, "media-duration", 3 * GST_SECOND, NULL );
+	g_object_set( videoSource, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
+
+	g_object_set( audioSource, "uri", "file:///C:/zelda.ogv", NULL );
+	g_object_set( audioSource, "start", 3 * GST_SECOND, NULL );
+	g_object_set( audioSource, "duration", 3 * GST_SECOND, NULL );
+	g_object_set( audioSource, "media-start", 15 * GST_SECOND, NULL );
+	g_object_set( audioSource, "media-duration", 3 * GST_SECOND, NULL );
+	g_object_set( audioSource, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
+
+	g_signal_connect( composition, "pad-added", G_CALLBACK(pad_added_handler), sink );
+
+	return true;
+
+
+MyFrame_addSample_EXIT:
+	gst_object_unref( composition );
+	gst_object_unref( videoSource );
+	gst_object_unref( audioSource );
+
+	return false;
+}
 
 MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &size ) :
 	wxFrame( NULL, -1, title, position, size ),
@@ -151,38 +199,15 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	// Build the pipeline
 	m_gstPipeline = gst_pipeline_new( "pipeline" );
 
-	GstElement *composition, *source1, *source2;
-
-	composition = gst_element_factory_make( "gnlcomposition", "composition" );
-	source1 = gst_element_factory_make( "gnlfilesource", "video-1" );
-	source2 = gst_element_factory_make( "gnlfilesource", "video-2" );
-
 	GstElement *queue = gst_element_factory_make( "queue", "queue" );
 	GstElement *sink  = gst_element_factory_make( "autovideosink", "video-sink" );
 
+	gst_bin_add_many( GST_BIN( m_gstPipeline ), queue, sink, NULL );
 
-	gst_bin_add_many( GST_BIN( composition ), source1, source2, NULL );
-	gst_bin_add_many( GST_BIN( m_gstPipeline ), composition, queue, sink, NULL );
-
-	g_object_set( source1, "uri", "file:///C:/zelda.ogv", NULL );
-	g_object_set( source1, "start", 0 * GST_SECOND, NULL );
-	g_object_set( source1, "duration", 3 * GST_SECOND, NULL );
-	g_object_set( source1, "media-start", 10 * GST_SECOND, NULL );
-	g_object_set( source1, "media-duration", 3 * GST_SECOND, NULL );
-
-	g_object_set( source2, "uri", "file:///C:/zelda.ogv", NULL );
-	g_object_set( source2, "start", 3 * GST_SECOND, NULL );
-	g_object_set( source2, "duration", 3 * GST_SECOND, NULL );
-	g_object_set( source2, "media-start", 15 * GST_SECOND, NULL );
-	g_object_set( source2, "media-duration", 3 * GST_SECOND, NULL );
-
-	g_object_set (source1, "caps", gst_caps_from_string ("video/x-raw-yuv;video/x-raw-rgb"), NULL); 
-	g_object_set (source2, "caps", gst_caps_from_string ("video/x-raw-yuv;video/x-raw-rgb"), NULL); 
+	addSample( queue );
 
 	if ( !gst_element_link( queue, sink ) )
 		g_printerr ("Queue/Sink could not be linked.\n");
-
-	g_signal_connect( composition, "pad-added", G_CALLBACK(pad_added_handler), queue );
    
 	// Start playing
 	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
@@ -198,8 +223,8 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 void
 MyFrame::OnQuit( wxCommandEvent &WXUNUSED(event) )
 {
-	gst_element_set_state (m_gstPipeline, GST_STATE_NULL);
-	gst_object_unref (m_gstPipeline);
+	gst_element_set_state( m_gstPipeline, GST_STATE_NULL );
+	gst_object_unref( m_gstPipeline );
 
 	if ( m_gstThread != NULL )
 		g_thread_join( m_gstThread );
