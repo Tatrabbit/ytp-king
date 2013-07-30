@@ -1,0 +1,15 @@
+; ProductName = YTP King
+; DESCRIPTION = An easy to use sentence mixing program.
+;             = Features:
+;             = <ull>
+;             =    <li>Feature 1</li>
+;             = </ull>
+; Licence     = license.rtf
+; Installed   = WINDOWS_ALL
+; Guid.UpgradeCode = {7EF333CB-3BB9-457D-831E-8482E50F2999}
+; MsiName     = YTP King
+
+VERSION : 0.0.1
+DATE    : 30 Jul 2013
+CHANGES : First Version
+
