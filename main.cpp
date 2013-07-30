@@ -163,50 +163,6 @@ MyApp::OnInit( void )
 
 	MyFrame *frame = new MyFrame( _("Hello World, Chuu!"), wxPoint( 50, 50 ), wxSize( 450, 340 ) );
 
-		//cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
-
-		
-		// set the plugins path
-		//GstRegistry *registry;
-		//registry = gst_registry_get_default();
-
-		//std::string pluginPath( "C:\\gstreamer-sdk\\0.10\\x86\\lib\\gstreamer-0.10" );
-		//pluginPath += cCurrentPath;
-
-		//pluginPath += cCurrentPath;
-
-		//pluginPath += "\\plugins";
-
-		//wxSafeShowMessage( "derp", pluginPath.c_str() );
-
-		//std::wstring path( pluginPath.begin(), pluginPath.end() );
-
-		//putenv( pluginPath.c_str() );
-		//SetEnvironmentVariable( L"GST_PLUGIN_SYSTEM_PATH", path.c_str() );
-
-		//gst_init( NULL, NULL );
-
-		//gst_default_registry_add_path( pluginPath.c_str() );
-		//gst_update_registry();
-
-		//int gstArgc = 2;
-
-		// The const-ness is derpy
-		//const char *gstArgvConst[2];
-
-		//char **gstArgv = const_cast<char **>(gstArgvConst);
-
-		//gstArgvConst[0] = cCurrentPath;
-		//gstArgvConst[1] = "--gst-plugin-path";
-		//gstArgvConst[1] = pluginPath.c_str();
-
-		//gst_init( &gstArgc, &gstArgv );
-		
-
-		//gst_registry_add_path( registry, pluginPath.c_str() );
-		//if ( gst_registry_scan_path( registry, pluginPath.c_str() ) )
-			//wxLogMessage( "plugins added" );
-
 	frame->Show( true );
 	SetTopWindow( frame );
 
@@ -294,10 +250,8 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	wxSizer *entrySizer = new wxBoxSizer( wxHORIZONTAL );
 
 	m_textControl = new wxTextCtrl( this, -1 );
-	//wxButton *playButton = new wxButton( this, -1, "Play" );
 
 	entrySizer->Add( m_textControl, 1, wxALL|wxEXPAND );
-	//entrySizer->Add( playButton, 0, wxALL|wxEXPAND );
 
 	mainSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
@@ -348,11 +302,6 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	gst_bus_add_signal_watch( bus );
 
 	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, this );
-
-	// Start playing
-	//gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
-
-	
 }
 
 
