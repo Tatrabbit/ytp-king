@@ -25,22 +25,15 @@
 #include <gst/interfaces/xoverlay.h>
 
 #ifdef _MSC_VER
-#	include <direct.h>
-#	include <Shlwapi.h>
 
 #	define getcwd _getcwd
-#	define putenv _putenv
 #else
-#	include <unistd.h>
 #	define getcwd getcwd
 #endif
 
 
 void main_loop_run( gpointer ) 
 {
-	SetEnvironmentVariable( L"GST_PLUGIN_SYSTEM_PATH", L"C:\\gstreamer-sdk\\0.10\\x86\\lib\\gstreamer-0.10" );
-	gst_init( NULL, NULL );
-
 	GMainLoop *loop = g_main_loop_new( NULL, FALSE );
 	g_main_loop_run( loop );
 }
@@ -80,7 +73,7 @@ class MyApp :
 public:
 	MyApp( void );
 
-	char m_currentPath[FILENAME_MAX];
+	char m_currentDirectory[MAX_PATH];
 
 private:
 	virtual bool OnInit( void )
@@ -137,8 +130,8 @@ IMPLEMENT_APP(MyApp)
 
 MyApp::MyApp( void )
 {
-	if ( !getcwd( m_currentPath, sizeof( m_currentPath ) ) )
-		m_currentPath[0] = '\0';
+	if ( !getcwd( m_currentDirectory, sizeof( m_currentDirectory ) ) )
+		m_currentDirectory[0] = '\0';
 
 	FILE *result = freopen( "ErrorLog.txt", "w", stderr );
 	freopen( "Log.txt", "w", stdout );
@@ -150,16 +143,18 @@ MyApp::MyApp( void )
 
 		wxLogMessage( "Program Started." );
 	}
-	else
-		wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
+	// TODO the log message won't store in Program Files, use appdata folder.
+	//else
+		//wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
 }
 
-//file:///C:/zelda.mp4
+
 bool
 MyApp::OnInit( void )
 {
 	// Initialize GStreamer
 	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
+	gst_init( NULL, NULL );
 
 	MyFrame *frame = new MyFrame( _("Hello World, Chuu!"), wxPoint( 50, 50 ), wxSize( 450, 340 ) );
 
@@ -327,10 +322,10 @@ MyFrame::OnAbout( wxCommandEvent &WXUNUSED(event) )
 
 	// Start playing
 	m_filename = m_textControl->GetValue();
-	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
-
 	addSample( 0, 2, 4 );
 	addSample( 4, 10, 4 );
+
+	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
 }
 
 void onSync( GstBus *bus, GstMessage *message, gpointer data )
