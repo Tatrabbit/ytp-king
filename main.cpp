@@ -14,6 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <cstdlib>
+
 #include <string>
 #include <sstream>
 
@@ -22,10 +24,22 @@
 
 #include <gst/interfaces/xoverlay.h>
 
+#ifdef _MSC_VER
+#	include <direct.h>
+#	include <Shlwapi.h>
+
+#	define getcwd _getcwd
+#	define putenv _putenv
+#else
+#	include <unistd.h>
+#	define getcwd getcwd
+#endif
+
 
 void main_loop_run( gpointer ) 
-{ 
-	//CustomData *customData = (CustomData *)data;
+{
+	SetEnvironmentVariable( L"GST_PLUGIN_SYSTEM_PATH", L"C:\\gstreamer-sdk\\0.10\\x86\\lib\\gstreamer-0.10" );
+	gst_init( NULL, NULL );
 
 	GMainLoop *loop = g_main_loop_new( NULL, FALSE );
 	g_main_loop_run( loop );
@@ -66,6 +80,8 @@ class MyApp :
 public:
 	MyApp( void );
 
+	char m_currentPath[FILENAME_MAX];
+
 private:
 	virtual bool OnInit( void )
 		override;
@@ -101,6 +117,10 @@ private:
 
 	static unsigned int m_nSamples;
 
+	std::string m_filename;
+
+	wxTextCtrl *m_textControl;
+
 	bool
 		addSample( int start, int mediaStart, int duration );
 };
@@ -117,6 +137,9 @@ IMPLEMENT_APP(MyApp)
 
 MyApp::MyApp( void )
 {
+	if ( !getcwd( m_currentPath, sizeof( m_currentPath ) ) )
+		m_currentPath[0] = '\0';
+
 	FILE *result = freopen( "ErrorLog.txt", "w", stderr );
 	freopen( "Log.txt", "w", stdout );
 
@@ -131,11 +154,58 @@ MyApp::MyApp( void )
 		wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
 }
 
-
+//file:///C:/zelda.mp4
 bool
 MyApp::OnInit( void )
 {
+	// Initialize GStreamer
+	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
+
 	MyFrame *frame = new MyFrame( _("Hello World, Chuu!"), wxPoint( 50, 50 ), wxSize( 450, 340 ) );
+
+		//cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
+
+		
+		// set the plugins path
+		//GstRegistry *registry;
+		//registry = gst_registry_get_default();
+
+		//std::string pluginPath( "C:\\gstreamer-sdk\\0.10\\x86\\lib\\gstreamer-0.10" );
+		//pluginPath += cCurrentPath;
+
+		//pluginPath += cCurrentPath;
+
+		//pluginPath += "\\plugins";
+
+		//wxSafeShowMessage( "derp", pluginPath.c_str() );
+
+		//std::wstring path( pluginPath.begin(), pluginPath.end() );
+
+		//putenv( pluginPath.c_str() );
+		//SetEnvironmentVariable( L"GST_PLUGIN_SYSTEM_PATH", path.c_str() );
+
+		//gst_init( NULL, NULL );
+
+		//gst_default_registry_add_path( pluginPath.c_str() );
+		//gst_update_registry();
+
+		//int gstArgc = 2;
+
+		// The const-ness is derpy
+		//const char *gstArgvConst[2];
+
+		//char **gstArgv = const_cast<char **>(gstArgvConst);
+
+		//gstArgvConst[0] = cCurrentPath;
+		//gstArgvConst[1] = "--gst-plugin-path";
+		//gstArgvConst[1] = pluginPath.c_str();
+
+		//gst_init( &gstArgc, &gstArgv );
+		
+
+		//gst_registry_add_path( registry, pluginPath.c_str() );
+		//if ( gst_registry_scan_path( registry, pluginPath.c_str() ) )
+			//wxLogMessage( "plugins added" );
 
 	frame->Show( true );
 	SetTopWindow( frame );
@@ -168,13 +238,13 @@ MyFrame::addSample( int start, int mediaStart, int duration )
 		goto MyFrame_addSample_EXIT;
 
 	// set the properties
-	g_object_set( videoSource, "uri", "file:///C:/zelda.mp4", NULL );
+	g_object_set( videoSource, "uri", m_filename.c_str(), NULL );
 	g_object_set( videoSource, "start", start * GST_SECOND, NULL );
 	g_object_set( videoSource, "duration", duration * GST_SECOND, NULL );
 	g_object_set( videoSource, "media-start", mediaStart * GST_SECOND, NULL );
 	g_object_set( videoSource, "media-duration", duration * GST_SECOND, NULL );
 
-	g_object_set( audioSource, "uri", "file:///C:/zelda.mp4", NULL );
+	g_object_set( audioSource, "uri", m_filename.c_str(), NULL );
 	g_object_set( audioSource, "start", start * GST_SECOND, NULL );
 	g_object_set( audioSource, "duration", duration * GST_SECOND, NULL );
 	g_object_set( audioSource, "media-start", mediaStart * GST_SECOND, NULL );
@@ -200,10 +270,17 @@ unsigned int MyFrame::m_nSamples( 0u );
 MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &size ) :
 	wxFrame( NULL, -1, title, position, size ),
 	m_gstThread( NULL )
+	//,m_filename( "file:///C:/zelda.mp4" )
 {
+	// Create the Gstreamer Main Loop Thread
+	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
+
+	if ( m_gstThread == NULL )
+		GST_ERROR( "Couldn't create GStreamer loop thread.\n" );
+
 	wxMenu *menuFile = new wxMenu;
 
-	menuFile->Append( ID_About, _("&About") );
+	menuFile->Append( ID_About, _("&Play") );
 	menuFile->AppendSeparator();
 	menuFile->Append( ID_Quit, _("&Quit") );
 
@@ -212,7 +289,17 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 
 	SetMenuBar( menuBar );
 
-	wxSizer *mainSizer = new wxBoxSizer( wxHORIZONTAL );
+	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
+
+	wxSizer *entrySizer = new wxBoxSizer( wxHORIZONTAL );
+
+	m_textControl = new wxTextCtrl( this, -1 );
+	//wxButton *playButton = new wxButton( this, -1, "Play" );
+
+	entrySizer->Add( m_textControl, 1, wxALL|wxEXPAND );
+	//entrySizer->Add( playButton, 0, wxALL|wxEXPAND );
+
+	mainSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
 	m_moviePanel = new wxPanel( this );
 	m_moviePanel->SetupColours();
@@ -227,11 +314,6 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 
 	CreateStatusBar();
 	SetStatusText( _("Welcome to wxPingas!") );
-
-	// Initialize GStreamer
-	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
-	gst_init (NULL, NULL);
- 
 
 	// Build the pipeline
 	m_gstPipeline = gst_pipeline_new( "pipeline" );
@@ -253,8 +335,6 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 
 	gst_bin_add_many( GST_BIN( m_gstPipeline ), m_audioComposition, m_videoComposition, audioQueue, videoQueue, videoSink, audioSink, NULL );
 
-	addSample( 0, 2, 4 );
-	addSample( 4, 10, 4 );
 
 	if ( !gst_element_link( audioQueue, audioSink ) )
 		g_printerr ("Audio Queue/Sink could not be linked.\n");
@@ -270,13 +350,9 @@ MyFrame::MyFrame( const wxString &title, const wxPoint &position, const wxSize &
 	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, this );
 
 	// Start playing
-	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
+	//gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
 
-	// Create the Gstreamer Main Loop Thread
-	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
-
-	if ( m_gstThread == NULL )
-		GST_ERROR( "Couldn't create GStreamer loop thread.\n" );
+	
 }
 
 
@@ -296,9 +372,16 @@ MyFrame::OnQuit( wxCommandEvent &WXUNUSED(event) )
 void
 MyFrame::OnAbout( wxCommandEvent &WXUNUSED(event) )
 {
-	wxMessageBox( _("This is a wxWidgets Hello World sample"),
+	/*wxMessageBox( _("This is a wxWidgets Hello World sample"),
 		          _("About Hello World"),
-				  wxOK | wxICON_INFORMATION, this );
+				  wxOK | wxICON_INFORMATION, this );*/
+
+	// Start playing
+	m_filename = m_textControl->GetValue();
+	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
+
+	addSample( 0, 2, 4 );
+	addSample( 4, 10, 4 );
 }
 
 void onSync( GstBus *bus, GstMessage *message, gpointer data )
