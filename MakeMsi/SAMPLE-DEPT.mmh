@@ -1,0 +1,83 @@
+; Note that this header is one of the few intended to be "replaced".
+; It has however been written so physical altering or deleting of this
+; file should not be required.
+;
+; There are many options, some are:
+;
+;       1. Ignore this file altogether, create your own front end with
+;          different filenames so as not to clash.
+;
+;       2. Modify this file BUT if you do so you should move it to a
+;          different directory so as not be be deleted ALONG WITH YOUR
+;          CHANGES on a MAKEMSI uninstall!
+;
+;       3. Create a new header that overrides some things but still includes
+;          this one.
+;
+; Let me know of any issues.
+;----------------------------------------------------------------------------
+
+#define COMMONFRAMEWORK_ZIP_SOURCE_FOR_BACKUP     N
+
+;----------------------------------------------------------------------------
+;--- Define Version number of this install support --------------------------
+;----------------------------------------------------------------------------
+#ifdef   DEPT_VERSION
+   ;--- Die, already included -----------------------------------------------
+   #error ^You have already included "<?InputComponent>"^
+#endif
+#define  DEPT_VERSION   03.171
+
+
+;----------------------------------------------------------------------------
+;--- Obsolete values (don't use!) -------------------------------------------
+;----------------------------------------------------------------------------
+#define? DEPT_SUPPORT_WEB_URL
+
+
+;----------------------------------------------------------------------------
+;--- Define some Department details -----------------------------------------
+;----------------------------------------------------------------------------
+#define? DEPT_ARP_URL_PUBLISHER                          http://www.rainchu.com
+#define? DEPT_ARP_URL_TECHNICAL_SUPPORT                  <$DEPT_ARP_URL_PUBLISHER>
+#define? DEPT_ARP_URL_APPLICATION_UPDATE_INFORMATION
+#define? DEPT_NAME                       rainChu
+#define? DEPT_ADDRESS                    USA
+#define? DEPT_MSI_MANUFACTURER           <$DEPT_NAME>
+#define? DEPT_MSI_AUTHOR                 <$DEPT_NAME>
+#define? COMPANY_CONTACT_NAME            Alex Haddad
+#define? COMPANY_CONTACT_NAME_PHONE      
+#define? COMPANY_PACKAGED_BY             Installer created by <$DEPT_NAME> (<$DEPT_ADDRESS>).
+
+
+;----------------------------------------------------------------------------
+;--- Define the types of boxes your department/company supports -------------
+;----------------------------------------------------------------------------
+#ifndef COMPANY_DEFINE_DEPARTMENTS_PLATFORMS
+   #(
+       #define COMPANY_DEFINE_DEPARTMENTS_PLATFORMS  ;;COMPANY.MMH expands...
+
+       ;--- User must override... -------------------------------------------
+       <$Platform "WINDOWS_ALL" DESC=^On any Windows Computer^ PLATDIR=AnyWindowsComputer">
+       <$Platform "TEST"        DESC=^Testing (NOT SUPPORTED)^ PLATDIR="Testing-Unsupported">
+   #)
+#endif
+
+
+;----------------------------------------------------------------------------
+;--- Load MAKEMSI support ---------------------------------------------------
+;----------------------------------------------------------------------------
+#NextId PUSH
+   #include "COMPANY.MMH"
+#NextId POP
+
+;----------------------------------------------------------------------------
+;--- Make sure we record details about this header --------------------------
+;----------------------------------------------------------------------------
+<$SourceFile Version="<$DEPT_VERSION>">
+
+;----------------------------------------------------------------------------
+;--- Start "location" status information (if allowed) -----------------------
+;----------------------------------------------------------------------------
+<$LocationVerboseOn>            ;;Outputs messages during length processing (to prove it hasn't hung etc)
+

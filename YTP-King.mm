@@ -1,6 +1,41 @@
 #define VER_FILENAME.VER  YTP-King.ver
 
-#include "rainChu.mmh"
+; After you've installed MakeMSI, you should edit this file in your
+; Program Files/Make MSI installation. Include your own personal
+; details.
+#include "DEPT.MMH"
+
+
+; Default department
+#define? DEPT_ARP_URL_PUBLISHER           http://www.rainChu.com
+#define? DEPT_ARP_URL_TECHNICAL_SUPPORT   http://www.rainChu.com
+#define? COMPANY_SUMMARY_SCHEMA           110      ;;Minimum v1.1 Installer
+
+
+
+;----------------------------------------------------------------------------
+;--- Override/set some standard defaults ------------------------------------
+;----------------------------------------------------------------------------
+#define? DBG_ALL                                   Y         ;;Add MAKEMSI debugging to "console file"
+#define? DBG_SAY_LOCATION                          call Say2Logs <$DBG_INDENT> || '  ' || time() || ' '  ;;Adding time makes it a bit slower but useful for debugging slow builds...
+#define? COMMONFRAMEWORK_ZIP_SOURCE_FOR_BACKUP     N         ;;No "insurance" until I bother to install "info zip"...
+#define? DEFAULT_SERVICE_CONTROL_UNINSTALL_EVENTS            ;;I think this option is safer than the MAKEMSI default
+#define? DEFAULT_SERVICE_CONTROL_INSTALL_EVENTS              ;;I think this option is better
+#define? DEFAULT_FILE_WANT_FILEHASH                Y         ;;My box can generate MD5 hashes!
+#define? COMPANY_PREPROCESS_LICENCE_FILE           Y         ;;Default is to preprocess licence files
+#define? MAKEMSI_HTML_EXTENSION                    hta       ;;Default extension (HTML Application - gets around WINXP SP2 issue)
+#define? UISAMPLE_LEFTSIDE_TEXT_FONT_COLOR         &H7F0000  ;;Medium Blue in BGR (believe it or not...)
+
+#(
+    #define? UISAMPLE_LEFTSIDE_TEXT
+    Ugly side banner will soon be replaced
+#)
+#(
+    #define? @VALIDATE_TEXT_FOR_MISSINGDATA                   ;;Example only as now duplicates exact text as new default value
+    This column is not mentioned in the _Validation table.
+    Either add the validation data or use the "@validate" parameter
+    on the "row" command (or alter its default).
+#)
 
 #(
 	<$Feature "App"
