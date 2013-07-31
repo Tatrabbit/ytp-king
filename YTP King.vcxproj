@@ -71,6 +71,9 @@
       </AdditionalManifestDependencies>
       <AdditionalDependencies>gstinterfaces-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>post-build.bat "$(SolutionDir)" $(Configuration) x86</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -89,6 +92,9 @@
       <AdditionalDependencies>gstinterfaces-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>post-build.bat "$(SolutionDir)" $(Configuration) x86</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
