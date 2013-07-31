@@ -12,6 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ytpking\Application.cpp" />
+    <ClCompile Include="src\ytpking\MainWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\ytpking\MainWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ABBEC9AA-90E0-4FE7-80A8-06543503F377}</ProjectGuid>
@@ -43,13 +49,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(GSTREAMER_SDK_ROOT_X86)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\src;$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(GSTREAMER_SDK_ROOT_X86)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(WX_LIB_PATH)\vc110_dll;$(LibraryPath)</LibraryPath>
     <SourcePath>$(WX_INCLUDE_PATH);$(SourcePath)</SourcePath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\src;$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(IncludePath)</IncludePath>
     <LibraryPath>$(WX_LIB_PATH)\vc110_dll;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <SourcePath>$(WX_INCLUDE_PATH);$(SourcePath)</SourcePath>
@@ -86,6 +92,7 @@
       <PreprocessorDefinitions>wxMSVC_VERSION=110;WXUSINGDLL;_UNICODE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

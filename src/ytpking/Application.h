@@ -14,7 +14,36 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "ytpking/Application.h"
+#include <wx/wx.h>
 
 
-IMPLEMENT_APP( ytpking::Application )
+	namespace ytpking
+	{
+
+
+/** The YTP King app itself.
+
+This is instantiated by wxWidgets, in the automatically generated main()
+*/
+class Application :
+	public ::wxApp
+{
+public:
+
+	Application( void );
+
+private:
+
+	virtual bool OnInit( void )
+		override;
+
+	/** Holds the cwd.
+	This will never be undefined after the ctor.
+	If there was an error initializing it, this is a 0 length c string. */
+	char m_currentDirectory[MAX_PATH];
+
+	wxLog *m_logger;
+};
+
+
+	}

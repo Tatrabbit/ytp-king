@@ -1,0 +1,112 @@
+/*  YTP King - Easy to use sentence mixer
+ *  Copyright (C) 2013  Alex "rainChu" Haddad
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+#include "Application.h"
+
+
+	namespace ytpking
+	{
+
+
+Application::Application( void )
+{
+	if ( !getcwd( m_currentDirectory, sizeof( m_currentDirectory ) ) )
+		m_currentDirectory[0] = '\0';
+
+	FILE *result = freopen( "ErrorLog.txt", "w", stderr );
+	freopen( "Log.txt", "w", stdout );
+
+	if ( result )
+	{
+		m_logger = new wxLogStderr( stderr ); // TODO delete!
+		wxLog::SetActiveTarget( m_logger );
+
+		wxLogMessage( "Program Started." );
+	}
+	// TODO the log message won't store in Program Files, use appdata folder.
+	//else
+		//wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
+}
+
+
+bool
+Application::OnInit( void )
+{
+	// Initialize GStreamer
+	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
+	gst_init( NULL, NULL );
+
+	MyFrame *frame = new MyFrame( _("Hello World, Chuu!"), wxPoint( 50, 50 ), wxSize( 450, 340 ) );
+
+	frame->Show( true );
+	SetTopWindow( frame );
+
+	return true;
+}
+
+
+bool
+Application::addSample( int start, int mediaStart, int duration )
+{
+	GstElement *videoSource, *audioSource;
+
+	// Get the names of the src elements
+	std::stringstream nameStream( "sample_a" );
+	nameStream << m_nSamples;
+	std::string srcName = nameStream.str();
+	videoSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
+
+	nameStream.clear();
+	nameStream << "sample_comp" << m_nSamples;
+	srcName = nameStream.str();
+	audioSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
+
+	// Add the src elements to the compositions
+	if ( !gst_bin_add( GST_BIN( m_videoComposition ), videoSource ) )
+		goto MyFrame_addSample_EXIT;
+
+	if ( !gst_bin_add( GST_BIN( m_audioComposition ), audioSource ) )
+		goto MyFrame_addSample_EXIT;
+
+	// set the properties
+	g_object_set( videoSource, "uri", m_filename.c_str(), NULL );
+	g_object_set( videoSource, "start", start * GST_SECOND, NULL );
+	g_object_set( videoSource, "duration", duration * GST_SECOND, NULL );
+	g_object_set( videoSource, "media-start", mediaStart * GST_SECOND, NULL );
+	g_object_set( videoSource, "media-duration", duration * GST_SECOND, NULL );
+
+	g_object_set( audioSource, "uri", m_filename.c_str(), NULL );
+	g_object_set( audioSource, "start", start * GST_SECOND, NULL );
+	g_object_set( audioSource, "duration", duration * GST_SECOND, NULL );
+	g_object_set( audioSource, "media-start", mediaStart * GST_SECOND, NULL );
+	g_object_set( audioSource, "media-duration", duration * GST_SECOND, NULL );
+
+	// inc the static id
+	m_nSamples++;
+
+	return true;
+
+	// Free things on error
+MyFrame_addSample_EXIT:
+	gst_object_unref( videoSource );
+	gst_object_unref( audioSource );
+
+	return false;
+}
+
+
+
+	}
