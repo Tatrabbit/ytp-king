@@ -50,8 +50,8 @@
 				PrimaryFolder="Y"
 		>
 		
-		<$Files "bin\Release\*.dll" DestDir="INSTALLDIR">
-		<$Files "bin\Release\*.exe" DestDir="INSTALLDIR">
+		<$Files "..\bin\Release\*.dll" DestDir="INSTALLDIR">
+		<$Files "..\bin\Release\*.exe" DestDir="INSTALLDIR">
 	<$/Feature>
 
 	;; GStreamer
@@ -75,7 +75,7 @@
 				>
 		<$/Component>
 		
-		<$Files "bin\Release\plugins\*.dll"
+		<$Files "..\bin\Release\plugins\*.dll"
 			DestDir="GSTREAMER_INSTALL_DIR">
 	<$/Feature>
 #)
