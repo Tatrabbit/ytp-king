@@ -20,6 +20,8 @@
 
 	namespace ytpking
 	{
+	namespace snb
+	{
 
 
 class SourcesToolbar :
@@ -31,4 +33,5 @@ public:
 
 };
 
-	}
+
+	} }

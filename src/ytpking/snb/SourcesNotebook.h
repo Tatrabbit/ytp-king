@@ -19,6 +19,8 @@
 
 	namespace ytpking
 	{
+	namespace snb
+	{
 
 
 class SourcesNotebook :
@@ -33,4 +35,4 @@ public:
 };
 
 
-	}
+	} }

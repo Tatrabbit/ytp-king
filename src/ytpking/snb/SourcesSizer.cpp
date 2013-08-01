@@ -19,8 +19,12 @@
 #include "SourcesNotebook.h"
 #include "SourcesToolbar.h"
 
+
 	namespace ytpking
 	{
+	namespace snb
+	{
+
 
 SourcesSizer::SourcesSizer( wxWindow *parent ) :
 	wxBoxSizer( wxVERTICAL ),
@@ -32,4 +36,5 @@ SourcesSizer::SourcesSizer( wxWindow *parent ) :
 	Add( m_toolbar,  0, wxEXPAND );
 }
 
-	}
+
+	} }

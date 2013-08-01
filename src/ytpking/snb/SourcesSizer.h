@@ -16,7 +16,10 @@
 */
 #include <wx/sizer.h>
 
+
 	namespace ytpking
+	{
+	namespace snb
 	{
 
 
@@ -36,4 +39,5 @@ public:
 
 };
 
-	}
+
+	} }

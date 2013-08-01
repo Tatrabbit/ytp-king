@@ -21,6 +21,8 @@
 
 	namespace ytpking
 	{
+	namespace snb
+	{
 
 
 SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
@@ -34,4 +36,4 @@ SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
 
 
 
-	}
+	} }

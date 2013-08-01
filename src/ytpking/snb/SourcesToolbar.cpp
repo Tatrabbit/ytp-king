@@ -21,6 +21,8 @@
 
 	namespace ytpking
 	{
+	namespace snb
+	{
 
 
 SourcesToolbar::SourcesToolbar( wxWindow *parent ) :
@@ -41,4 +43,4 @@ SourcesToolbar::SourcesToolbar( wxWindow *parent ) :
 }
 
 
-	}
+	} }

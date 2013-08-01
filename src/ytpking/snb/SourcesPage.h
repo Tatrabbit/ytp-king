@@ -19,6 +19,8 @@
 
 	namespace ytpking
 	{
+	namespace snb
+	{
 
 
 class SourcesPage :
@@ -31,4 +33,4 @@ public:
 };
 
 
-	}
+	} }

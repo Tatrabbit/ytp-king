@@ -32,8 +32,6 @@ typedef void    *gpointer;
 	namespace ytpking
 	{
 
-class SourcesSizer;
-
 
 class MainWindow :
 	public wxFrame
@@ -44,7 +42,7 @@ public:
 
 	wxPanel *m_moviePanel;
 
-	SourcesSizer *m_sourcesSizer;
+	wxSizer *m_sourcesSizer;
 
 
 	//// BEGIN wx Events

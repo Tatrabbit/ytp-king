@@ -44,7 +44,7 @@ MainWindow::MainWindow( const wxString &title, const wxPoint &position, const wx
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
-	m_sourcesSizer = new SourcesSizer( this );
+	m_sourcesSizer = new snb::SourcesSizer( this );
 
 	// Create the Gstreamer Main Loop Thread
 	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );

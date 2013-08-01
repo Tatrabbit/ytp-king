@@ -19,6 +19,8 @@
 
 	namespace ytpking
 	{
+	namespace snb
+	{
 
 
 SourcesPage::SourcesPage( wxWindow *parent ) :
@@ -27,4 +29,4 @@ SourcesPage::SourcesPage( wxWindow *parent ) :
 }
 
 
-	}
+	} }
