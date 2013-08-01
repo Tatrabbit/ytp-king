@@ -28,6 +28,8 @@ public:
 
 	SourcesNotebook( wxWindow *parent );
 
+	wxNotebookPage *m_sourcesPage;
+
 };
 
 

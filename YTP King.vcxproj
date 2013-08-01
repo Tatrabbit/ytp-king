@@ -15,6 +15,7 @@
     <ClCompile Include="src\ytpking\Application.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
     <ClCompile Include="src\ytpking\SourcesNotebook.cpp" />
+    <ClCompile Include="src\ytpking\SourcesPage.cpp" />
     <ClCompile Include="src\ytpking\SourcesSizer.cpp" />
     <ClCompile Include="src\ytpking\SourcesToolbar.cpp" />
   </ItemGroup>
@@ -23,6 +24,7 @@
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
     <ClInclude Include="src\ytpking\SourcesNotebook.h" />
+    <ClInclude Include="src\ytpking\SourcesPage.h" />
     <ClInclude Include="src\ytpking\SourcesSizer.h" />
     <ClInclude Include="src\ytpking\SourcesToolbar.h" />
   </ItemGroup>

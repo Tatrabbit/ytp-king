@@ -14,24 +14,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "ytpking/SourcesNotebook.h"
-
 #include "ytpking/SourcesPage.h"
 
 
 	namespace ytpking
 	{
 
-
-SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
-	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize, wxNB_LEFT )
+SourcesPage::SourcesPage( wxWindow *parent ) :
+		wxNotebookPage( parent, -1 )
 {
-	m_sourcesPage = new SourcesPage( this );
-	AddPage( m_sourcesPage, "Sources" );
-
-	Layout();
 }
-
 
 
 	}
