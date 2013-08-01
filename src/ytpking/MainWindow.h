@@ -20,9 +20,6 @@
 #include <wx/wx.h>
 
 
-//  TODO I'm not sure if this will cause problems, it's fine on MSVS. If it breaks
-////     compilation, include gst.h here, instead of in ytpking/MainWindow.cpp
-//#include <gst/gst.h>
 typedef struct  _GstElement   GstElement;
 typedef struct  _GstMessage   GstMessage;
 typedef struct  _GThread      GThread;
@@ -30,11 +27,12 @@ typedef struct  _GstPad       GstPad;
 typedef struct  _GstBus       GstBus;
 
 typedef void    *gpointer;
-////
-//
+
 
 	namespace ytpking
 	{
+
+class SourcesSizer;
 
 
 class MainWindow :
@@ -45,6 +43,8 @@ public:
 	MainWindow( const wxString &title, const wxPoint &pos, const wxSize &size );
 
 	wxPanel *m_moviePanel;
+
+	SourcesSizer *m_sourcesSizer;
 
 
 	//// BEGIN wx Events

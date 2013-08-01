@@ -14,10 +14,20 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ytpking\Application.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
+    <ClCompile Include="src\ytpking\SourcesNotebook.cpp" />
+    <ClCompile Include="src\ytpking\SourcesSizer.cpp" />
+    <ClCompile Include="src\ytpking\SourcesToolbar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="res\resource.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
+    <ClInclude Include="src\ytpking\SourcesNotebook.h" />
+    <ClInclude Include="src\ytpking\SourcesSizer.h" />
+    <ClInclude Include="src\ytpking\SourcesToolbar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\Ytp-King.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ABBEC9AA-90E0-4FE7-80A8-06543503F377}</ProjectGuid>
@@ -70,6 +80,7 @@
       </AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
+      <DisableSpecificWarnings>4011</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -83,6 +94,9 @@
     <PostBuildEvent>
       <Command>post-build.bat "$(SolutionDir)" $(Configuration) x86</Command>
     </PostBuildEvent>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\res</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -93,6 +107,7 @@
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <DisableSpecificWarnings>4011</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -34,26 +34,20 @@ CD "%1\bin\%2
 
 REM wxWidgets
 IF "%2" == "Debug" (
-	REM Blindly assume the rest are here, too.
-	IF NOT EXIST "wxbase295ud_vc110.dll" (
-		COPY "%WX_LIB_PATH%\vc110_dll\wxbase295ud_vc110.dll" .
-		COPY "%WX_LIB_PATH%\vc110_dll\wxmsw295ud_core_vc110.dll" .
-	) ELSE (
-		REM Don't even copy other files below these lines.
-		ECHO Files already copied, ending post-build.bat now.
-		GOTO END
-	)
+	SET wx="ud"
 ) ELSE (
-	REM Blindly assume the rest are here, too.
-	IF NOT EXIST "wxbase295u_vc110.dll" (
-		COPY "%WX_LIB_PATH%\vc110_dll\wxbase295u_vc110.dll" .
-		COPY "%WX_LIB_PATH%\vc110_dll\wxmsw295u_core_vc110.dll" .
-	) ELSE (
-		REM Don't even copy other files below these lines.
-		ECHO Files already copied, ending post-build.bat now.
-		GOTO END
-	)
+	SET wx="u"
 )
+
+IF EXIST "wxbase295%wx%_vc110.dll" (
+	REM Blindly assume the rest are here, too.
+	ECHO Files already copied, ending post-build.bat now.
+	GOTO END
+)
+
+COPY "%WX_LIB_PATH%\vc110_dll\wxbase295%wx%_vc110.dll" .
+COPY "%WX_LIB_PATH%\vc110_dll\wxmsw295%wx%_core_vc110.dll" .
+
 
 REM GStreamer
 

@@ -19,6 +19,8 @@
 #include <gst/gst.h>
 #include <gst/interfaces/xoverlay.h>
 
+#include "SourcesSizer.h"
+
 
 	namespace ytpking
 	{
@@ -39,6 +41,11 @@ MainWindow::MainWindow( const wxString &title, const wxPoint &position, const wx
 	wxFrame( NULL, -1, title, position, size ),
 	m_gstThread( NULL )
 {
+	// Remove the ugly grey tinge on Windows
+	SetBackgroundColour( wxNullColour );
+
+	m_sourcesSizer = new SourcesSizer( this );
+
 	// Create the Gstreamer Main Loop Thread
 	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
 
@@ -56,7 +63,11 @@ MainWindow::MainWindow( const wxString &title, const wxPoint &position, const wx
 
 	SetMenuBar( menuBar );
 
-	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
+	wxSizer *mainSizer = new wxBoxSizer( wxHORIZONTAL );
+
+	mainSizer->Add( m_sourcesSizer, 1, wxEXPAND );
+
+	wxSizer *movieSizer = new wxBoxSizer( wxVERTICAL );
 
 	wxSizer *entrySizer = new wxBoxSizer( wxHORIZONTAL );
 
@@ -64,7 +75,7 @@ MainWindow::MainWindow( const wxString &title, const wxPoint &position, const wx
 
 	entrySizer->Add( m_textControl, 1, wxALL|wxEXPAND );
 
-	mainSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
+	movieSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
 	m_moviePanel = new wxPanel( this );
 	m_moviePanel->SetupColours();
@@ -73,7 +84,9 @@ MainWindow::MainWindow( const wxString &title, const wxPoint &position, const wx
 	m_moviePanel->SetPosition( wxPoint( 0, 0 ) );
 	m_moviePanel->SetSize( 200, 200 );
 
-	mainSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND, 0 );
+	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND, 0 );
+
+	mainSizer->Add( movieSizer, 3, wxEXPAND );
 
 	this->SetSizer( mainSizer );
 
