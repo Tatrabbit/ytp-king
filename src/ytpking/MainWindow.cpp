@@ -19,7 +19,7 @@
 #include <gst/gst.h>
 #include <gst/interfaces/xoverlay.h>
 
-#include "SourcesSizer.h"
+#include "snb/SourcesSizer.h"
 
 
 	namespace ytpking

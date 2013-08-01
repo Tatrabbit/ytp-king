@@ -14,24 +14,31 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "ytpking/SourcesNotebook.h"
+#include "SourcesToolbar.h"
 
-#include "ytpking/SourcesPage.h"
+#include <wx/button.h>
 
 
 	namespace ytpking
 	{
 
 
-SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
-	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize, wxNB_LEFT )
+SourcesToolbar::SourcesToolbar( wxWindow *parent ) :
+	wxBoxSizer( wxHORIZONTAL )
 {
-	m_sourcesPage = new SourcesPage( this );
-	AddPage( m_sourcesPage, "Sources" );
+	wxButton *button;
 
-	Layout();
+	button = new wxButton( parent, -1 );
+
+	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
+	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
+	Add( button, 1 );
+
+	button = new wxButton( parent, -1 );
+	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
+	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
+	Add( button, 1 );
 }
-
 
 
 	}
