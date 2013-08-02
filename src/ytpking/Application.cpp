@@ -59,7 +59,7 @@ Application::OnInit( void )
 	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
 	gst_init( NULL, NULL );
 
-	MainWindow *frame = new MainWindow( _("Hello World, Chuu!"), wxPoint( 50, 50 ), wxSize( 450, 340 ) );
+	MainWindow *frame = new MainWindow(  );
 
 	frame->Show( true );
 	SetTopWindow( frame );

@@ -37,8 +37,8 @@ unsigned int
 	MainWindow::m_nSamples( 0u );
 
 
-MainWindow::MainWindow( const wxString &title, const wxPoint &position, const wxSize &size ) :
-	wxFrame( NULL, -1, title, position, size ),
+MainWindow::MainWindow( void ) :
+	wxFrame( NULL, -1, "Hello World, Chuu!", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
 	m_gstThread( NULL )
 {
 	// Remove the ugly grey tinge on Windows
@@ -244,6 +244,22 @@ void MainWindow::onSync( GstBus *bus, GstMessage *message, gpointer data )
 		g_object_set( imagesink, "force-aspect-ratio", true, NULL );
 		gst_x_overlay_set_xwindow_id( GST_X_OVERLAY( imagesink ), (gulong)frame->m_moviePanel->GetHWND() );
 	}
+}
+
+
+const wxPoint
+&MainWindow::getStartupPosition( wxPoint &defaultPosition ) const
+{
+	// TODO save the window position, check monitor size.
+	return defaultPosition;
+}
+
+
+const wxSize
+&MainWindow::getStartupSize( wxSize &defaultSize ) const
+{
+	// TODO save the window size, check monitor size.
+	return defaultSize;
 }
 
 

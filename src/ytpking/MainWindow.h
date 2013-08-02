@@ -38,7 +38,7 @@ class MainWindow :
 {
 public:
 
-	MainWindow( const wxString &title, const wxPoint &pos, const wxSize &size );
+	MainWindow( void );
 
 	wxPanel *m_moviePanel;
 
@@ -90,6 +90,13 @@ private:
 		addSample( int start, int mediaStart, int duration );
 
 	wxDECLARE_EVENT_TABLE();
+
+	const wxPoint
+		&getStartupPosition( wxPoint &defaultPosition ) const;
+
+	const wxSize
+		&getStartupSize( wxSize &defaultSize ) const;
+
 };
 
 
