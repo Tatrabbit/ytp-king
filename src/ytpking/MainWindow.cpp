@@ -21,6 +21,7 @@
 
 #include "lnb/LibrarySizer.h"
 #include "TimelineSizer.h"
+#include "SamplePropertiesSizer.h"
 
 
 	namespace ytpking
@@ -45,8 +46,9 @@ MainWindow::MainWindow( void ) :
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
-	m_sourcesSizer  = new lnb::LibrarySizer( this );
-	m_timelineSizer = new TimelineSizer( this );
+	m_sourcesSizer          = new lnb::LibrarySizer( this );
+	m_timelineSizer         = new TimelineSizer( this );
+	m_samplePropertiesSizer = new SamplePropertiesSizer( this );
 
 	// Create the Gstreamer Main Loop Thread
 	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
@@ -69,6 +71,8 @@ MainWindow::MainWindow( void ) :
 
 	mainSizer->Add( m_sourcesSizer, 1, wxEXPAND );
 
+	wxSizer *sampleAndMovieSizer = new wxBoxSizer( wxHORIZONTAL );
+
 	wxSizer *movieSizer = new wxBoxSizer( wxVERTICAL );
 
 	wxSizer *entrySizer = new wxBoxSizer( wxHORIZONTAL );
@@ -89,7 +93,10 @@ MainWindow::MainWindow( void ) :
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
 	movieSizer->Add( m_timelineSizer, 0, wxALL|wxEXPAND );
 
-	mainSizer->Add( movieSizer, 3, wxEXPAND );
+	sampleAndMovieSizer->Add( m_samplePropertiesSizer );
+	sampleAndMovieSizer->Add( movieSizer, 1, wxALL|wxEXPAND );
+
+	mainSizer->Add( sampleAndMovieSizer, 3, wxEXPAND );
 
 	this->SetSizer( mainSizer );
 

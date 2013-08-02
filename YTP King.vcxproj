@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ytpking\Application.cpp" />
+    <ClCompile Include="src\ytpking\EndFrameSpinCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp" />
     <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp" />
@@ -22,12 +23,15 @@
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesPage.cpp" />
+    <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp" />
+    <ClCompile Include="src\ytpking\StartFrameSpinCtrl.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\ytpking\EndFrameSpinCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\SamplesPage.h" />
     <ClInclude Include="src\ytpking\lnb\SamplesTreeCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\SourcesListCtrl.h" />
@@ -37,6 +41,8 @@
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h" />
     <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\TapesPage.h" />
+    <ClInclude Include="src\ytpking\SamplePropertiesSizer.h" />
+    <ClInclude Include="src\ytpking\StartFrameSpinCtrl.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
   </ItemGroup>

@@ -19,6 +19,12 @@
     <Filter Include="Source Files\lnb : Sources Notebook">
       <UniqueIdentifier>{70bdf764-4d97-48e3-8e77-85a4271adefc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\lnb : Sources Notebook\Pages">
+      <UniqueIdentifier>{c73cdd65-9baf-42af-bd00-e3e7c8714f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lnb : Sources Notebook\Pages">
+      <UniqueIdentifier>{23d1aba1-204b-43c2-a9fd-5737a54c0879}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -33,16 +39,10 @@
     <ClCompile Include="src\ytpking\TimelineSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp">
-      <Filter>Source Files\lnb : Sources Notebook</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp">
-      <Filter>Source Files\lnb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\lnb\SourcesPage.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp">
@@ -51,14 +51,29 @@
     <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\lnb\TapesPage.cpp">
-      <Filter>Source Files\lnb : Sources Notebook</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\lnb\LibraryNotebook.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\lnb\LibrarySizer.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp">
+      <Filter>Source Files\lnb : Sources Notebook\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\SourcesPage.cpp">
+      <Filter>Source Files\lnb : Sources Notebook\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\TapesPage.cpp">
+      <Filter>Source Files\lnb : Sources Notebook\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\StartFrameSpinCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\EndFrameSpinCtrl.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,19 +95,10 @@
     <ClInclude Include="src\ytpking\lnb\SourcesListCtrl.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\lnb\SourcesPage.h">
-      <Filter>Header Files\lnb : Sources Notebook</Filter>
-    </ClInclude>
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h">
-      <Filter>Header Files\lnb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\lnb\TapesPage.h">
-      <Filter>Header Files\lnb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\lnb\SamplesPage.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\lnb\LibraryNotebook.h">
@@ -100,6 +106,24 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\lnb\LibrarySizer.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\TapesPage.h">
+      <Filter>Header Files\lnb : Sources Notebook\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\SourcesPage.h">
+      <Filter>Header Files\lnb : Sources Notebook\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\SamplesPage.h">
+      <Filter>Header Files\lnb : Sources Notebook\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\SamplePropertiesSizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\StartFrameSpinCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\EndFrameSpinCtrl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

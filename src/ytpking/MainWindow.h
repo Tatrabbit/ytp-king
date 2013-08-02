@@ -44,6 +44,7 @@ public:
 
 	wxSizer *m_sourcesSizer;
 	wxSizer *m_timelineSizer;
+	wxSizer *m_samplePropertiesSizer;
 
 
 	//// BEGIN wx Events
