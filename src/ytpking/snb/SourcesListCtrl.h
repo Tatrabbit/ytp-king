@@ -14,11 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesPage.h"
-
-#include <wx/sizer.h>
-
-#include "SourcesListCtrl.h"
+#include <wx/listctrl.h>
 
 
 	namespace ytpking
@@ -26,19 +22,13 @@
 	namespace snb
 	{
 
-
-SourcesPage::SourcesPage( wxWindow *parent ) :
-	wxNotebookPage( parent, -1 )
+class SourcesListCtrl :
+	public wxListCtrl
 {
-	m_listCtrl = new SourcesListCtrl( this );
+public:
 
-	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
-	
-	mainSizer->Add( m_listCtrl, 1, wxEXPAND|wxALL );
+	SourcesListCtrl( wxWindow *parent );
 
-	SetSizer( mainSizer );
-	Layout();
-}
-
+};
 
 	} }

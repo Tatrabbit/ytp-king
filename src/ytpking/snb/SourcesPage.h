@@ -17,6 +17,9 @@
 #include <wx/notebook.h>
 
 
+class wxListCtrl;
+
+
 	namespace ytpking
 	{
 	namespace snb
@@ -29,6 +32,8 @@ class SourcesPage :
 public:
 
 	SourcesPage( wxWindow *parent );
+
+	wxListCtrl *m_listCtrl;
 
 };
 

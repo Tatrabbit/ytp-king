@@ -14,11 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesPage.h"
-
-#include <wx/sizer.h>
-
 #include "SourcesListCtrl.h"
+
+#include <wx/imaglist.h>
+
+
 
 
 	namespace ytpking
@@ -27,17 +27,22 @@
 	{
 
 
-SourcesPage::SourcesPage( wxWindow *parent ) :
-	wxNotebookPage( parent, -1 )
+SourcesListCtrl::SourcesListCtrl( wxWindow *parent ) :
+	wxListCtrl( parent, -1, wxDefaultPosition, wxDefaultSize,
+	            wxLC_ICON|wxLC_SINGLE_SEL|wxLC_NO_HEADER )
 {
-	m_listCtrl = new SourcesListCtrl( this );
+	wxImageList *imageList = new wxImageList( 32, 32, false );
+	imageList->Add( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
 
-	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
-	
-	mainSizer->Add( m_listCtrl, 1, wxEXPAND|wxALL );
+	AssignImageList( imageList, wxIMAGE_LIST_NORMAL );
 
-	SetSizer( mainSizer );
-	Layout();
+	wxListItem item;
+
+	item.SetText( "Derp" );
+	item.SetId( 0 );
+	item.SetImage( 0 );
+
+	InsertItem( item );
 }
 
 
