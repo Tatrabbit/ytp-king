@@ -31,6 +31,7 @@ public:
 	SourcesNotebook( wxWindow *parent );
 
 	wxNotebookPage *m_sourcesPage;
+	wxNotebookPage *m_samplesPage;
 
 };
 

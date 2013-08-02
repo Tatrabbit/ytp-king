@@ -14,10 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesNotebook.h"
-
-#include "SourcesPage.h"
-#include "SamplesPage.h"
+#include "SamplesTreeCtrl.h"
 
 
 	namespace ytpking
@@ -26,16 +23,17 @@
 	{
 
 
-SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
-	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize )
+SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
+	wxTreeCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
+	            wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
+				wxTR_ROW_LINES|wxTR_HIDE_ROOT)
 {
-	m_sourcesPage = new SourcesPage( this );
-	AddPage( m_sourcesPage, "Sources" );
+	wxTreeItemId root = AddRoot( "" );
 
-	m_samplesPage = new SamplesPage( this );
-	AddPage( m_samplesPage, "Samples" );
+	wxTreeItemId derpItem = AppendItem( root, "Derp" );
+	wxTreeItemId herpItem = AppendItem( derpItem, "Herp" );
+	AppendItem( herpItem, "Poppins" );
 }
-
 
 
 	} }

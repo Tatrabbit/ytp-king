@@ -37,7 +37,6 @@ SourcesPage::SourcesPage( wxWindow *parent ) :
 	mainSizer->Add( m_listCtrl, 1, wxEXPAND|wxALL );
 
 	SetSizer( mainSizer );
-	Layout();
 }
 
 

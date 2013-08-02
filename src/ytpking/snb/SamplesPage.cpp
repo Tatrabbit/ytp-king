@@ -14,10 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesNotebook.h"
-
-#include "SourcesPage.h"
 #include "SamplesPage.h"
+
+#include <wx/sizer.h>
+
+#include "SamplesTreeCtrl.h"
 
 
 	namespace ytpking
@@ -26,14 +27,15 @@
 	{
 
 
-SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
-	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize )
+SamplesPage::SamplesPage( wxWindow *parent ) :
+	wxNotebookPage( parent, wxID_ANY )
 {
-	m_sourcesPage = new SourcesPage( this );
-	AddPage( m_sourcesPage, "Sources" );
+	m_treeCtrl = new SamplesTreeCtrl( this );
 
-	m_samplesPage = new SamplesPage( this );
-	AddPage( m_samplesPage, "Samples" );
+	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
+	mainSizer->Add( m_treeCtrl, 1, wxEXPAND|wxALL );
+
+	SetSizer( mainSizer );
 }
 
 

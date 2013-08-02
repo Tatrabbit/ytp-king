@@ -45,6 +45,12 @@
     <ClCompile Include="src\ytpking\snb\SourcesListCtrl.cpp">
       <Filter>Source Files\snb : Sources Notebook</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\snb\SamplesPage.cpp">
+      <Filter>Source Files\snb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\snb\SamplesTreeCtrl.cpp">
+      <Filter>Source Files\snb : Sources Notebook</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -69,6 +75,12 @@
       <Filter>Header Files\snb : Sources Notebook</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\snb\SourcesListCtrl.h">
+      <Filter>Header Files\snb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\snb\SamplesPage.h">
+      <Filter>Header Files\snb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\snb\SamplesTreeCtrl.h">
       <Filter>Header Files\snb : Sources Notebook</Filter>
     </ClInclude>
   </ItemGroup>
