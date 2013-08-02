@@ -16,7 +16,6 @@
 */
 #include "StartFrameSpinCtrl.h"
 
-
 	namespace ytpking
 	{
 

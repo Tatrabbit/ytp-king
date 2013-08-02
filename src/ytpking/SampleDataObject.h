@@ -14,30 +14,55 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#include <wx/dataobj.h>
 
+#include <string>
 
-class wxTreeEvent;
-
-class wxTreeCtrl;
 
 	namespace ytpking
 	{
-	namespace lnb
-	{
 
 
-class SamplesPage :
-	public wxNotebookPage
+class SampleDataObject :
+	public wxDataObjectSimple
 {
 public:
 
-	SamplesPage( wxWindow *parent );
+	SampleDataObject( void );
+	SampleDataObject( const char *sampleName );
 
-	wxTreeCtrl *m_treeCtrl;
+	virtual
+		~SampleDataObject( void );
+
+	const char
+		*GetData( void ) const;
+
+	void
+		SetData( const char *sampleName );
+
+private:
+
+	size_t m_dataSize;
+	char  *m_data;
+
+	inline void
+		SetFormat( const wxDataFormat &format )
+	{ wxDataObjectSimple::SetFormat( format ); }
+
+
+	size_t
+		GetDataSize( void )
+		const override;
+
+	bool
+		GetDataHere( void *buf )
+		const override;
+
+
+	bool SetData( size_t len, const void *buf )
+		override;
 
 };
 
 
-	} }
-
+	}

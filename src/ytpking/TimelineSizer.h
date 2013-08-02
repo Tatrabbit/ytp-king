@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <wx/sizer.h>
-
+#include <wx/dnd.h>
 
 	namespace ytpking
 	{
@@ -30,8 +30,28 @@ public:
 
 private:
 
-	wxWindow *m_firstSample;
+	class TimelineDropTarget :
+		public wxDropTarget
+	{
+	public:
 
+		TimelineDropTarget( void );
+
+		/// TODO Only show drags will be accepted if they've originated from
+		//       certain controls fromthis program.
+
+		//wxDragResult
+		//	OnDragOver( wxCoord x, wxCoord y, wxDragResult defResult )
+		//	override;
+
+
+		wxDragResult
+			OnData( wxCoord x, wxCoord y, wxDragResult defResult )
+			override;	
+
+	};
+
+	wxWindow *m_firstSample;
 	
 };
 

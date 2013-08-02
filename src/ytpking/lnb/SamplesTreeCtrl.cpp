@@ -16,6 +16,12 @@
 */
 #include "SamplesTreeCtrl.h"
 
+#include <wx/imaglist.h>
+#include <wx/event.h>
+#include <wx/wx.h>
+#include <wx/dnd.h>
+
+#include "ytpking/SampleDataObject.h"
 
 	namespace ytpking
 	{
@@ -25,15 +31,55 @@
 
 SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
 	wxTreeCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
-	            wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
+		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
 				wxTR_ROW_LINES|wxTR_HIDE_ROOT)
 {
+	// TODO Documentation says there must be an image list for item dragging in MSW.
+	//      Does this still apply?
+
+	//wxImageList *imageList = new wxImageList( 32, 32 );
+	//imageList->Add( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
+	//AssignImageList( imageList );
+
 	wxTreeItemId root = AddRoot( "" );
 
 	wxTreeItemId derpItem = AppendItem( root, "Derp" );
+
 	wxTreeItemId herpItem = AppendItem( derpItem, "Herp" );
-	AppendItem( herpItem, "Poppins" );
+	AppendItem( herpItem, "Poppins", 0 );
 }
+
+
+void
+SamplesTreeCtrl::onBeginDrag( wxTreeEvent& event )
+{
+	// It's confusing to drag something, and not see it affected.
+	SelectItem( event.GetItem() );
+
+	// TODO debugging stuff for now
+	SampleDataObject dataObject( "Derp" );
+
+	wxDropSource dropSource( this );
+	dropSource.SetData( dataObject );
+	wxDragResult result = dropSource.DoDragDrop( wxDrag_CopyOnly );
+
+	switch (result)
+	{
+	case wxDragCopy:
+		wxSafeShowMessage( "Derp", "Dragged" );
+		break;
+	
+	default:
+		break;
+	}
+}
+
+
+wxBEGIN_EVENT_TABLE( SamplesTreeCtrl, wxTreeCtrl )
+
+	EVT_TREE_BEGIN_DRAG( wxID_ANY, onBeginDrag  )
+
+wxEND_EVENT_TABLE()
 
 
 	} }

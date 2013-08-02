@@ -23,6 +23,7 @@
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesPage.cpp" />
+    <ClCompile Include="src\ytpking\SampleDataObject.cpp" />
     <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp" />
     <ClCompile Include="src\ytpking\StartFrameSpinCtrl.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h" />
     <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\TapesPage.h" />
+    <ClInclude Include="src\ytpking\SampleDataObject.h" />
     <ClInclude Include="src\ytpking\SamplePropertiesSizer.h" />
     <ClInclude Include="src\ytpking\StartFrameSpinCtrl.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />

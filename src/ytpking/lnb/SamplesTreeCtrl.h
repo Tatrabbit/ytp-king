@@ -29,6 +29,12 @@ class SamplesTreeCtrl :
 public:
 
 	SamplesTreeCtrl( wxWindow *parent );
+
+	void
+		onBeginDrag( wxTreeEvent &event );
+
+	wxDECLARE_EVENT_TABLE();
+
 };
 
 

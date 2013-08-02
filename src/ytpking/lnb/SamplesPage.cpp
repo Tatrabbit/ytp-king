@@ -16,7 +16,9 @@
 */
 #include "SamplesPage.h"
 
+#include <wx/wx.h>
 #include <wx/sizer.h>
+#include <wx/event.h>
 
 #include "SamplesTreeCtrl.h"
 
@@ -37,7 +39,6 @@ SamplesPage::SamplesPage( wxWindow *parent ) :
 
 	SetSizer( mainSizer );
 }
-
 
 
 	} }

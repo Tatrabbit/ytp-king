@@ -15,10 +15,37 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "ytpking/TimelineSizer.h"
+#include "SampleDataObject.h"
 
+#include <wx/wx.h>
 
 	namespace ytpking
 	{
+
+
+TimelineSizer::
+TimelineDropTarget::TimelineDropTarget( void ) :
+	wxDropTarget( new SampleDataObject )
+{
+}
+
+
+wxDragResult
+TimelineSizer::
+TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
+{
+	if ( GetData() )
+	{
+		GetData();
+		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
+		wxSafeShowMessage( _("Derp"), dataObject->GetData() );
+
+		return defResult;
+	}
+	else
+		return wxDragNone;
+}
+
 
 
 TimelineSizer::TimelineSizer( wxWindow *parent ) :
@@ -26,6 +53,8 @@ TimelineSizer::TimelineSizer( wxWindow *parent ) :
 {
 	m_firstSample = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
 	m_firstSample->SetOwnBackgroundColour( wxColour( "red" ) );
+
+	m_firstSample->SetDropTarget( new TimelineDropTarget );
 
 	Add( m_firstSample, 0 );
 }
