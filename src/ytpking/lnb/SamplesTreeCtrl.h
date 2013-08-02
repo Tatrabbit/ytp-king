@@ -14,27 +14,22 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesSizer.h"
-
-#include "SourcesNotebook.h"
-#include "SourcesToolbar.h"
+#include <wx/treectrl.h>
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-SourcesSizer::SourcesSizer( wxWindow *parent ) :
-	wxBoxSizer( wxVERTICAL ),
-
-	m_notebook( new SourcesNotebook( parent ) ),
-	m_toolbar( new SourcesToolbar( parent ) )
+class SamplesTreeCtrl :
+	public wxTreeCtrl
 {
-	Add( m_notebook, 1, wxEXPAND );
-	Add( m_toolbar,  0, wxEXPAND );
-}
+public:
+
+	SamplesTreeCtrl( wxWindow *parent );
+};
 
 
 	} }

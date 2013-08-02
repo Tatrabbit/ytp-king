@@ -14,33 +14,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesToolbar.h"
-
-#include <wx/button.h>
+//#include <wx/ribbon/toolbar.h>
+#include <wx/sizer.h>
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-SourcesToolbar::SourcesToolbar( wxWindow *parent ) :
-	wxBoxSizer( wxHORIZONTAL )
+class SourcesToolbar :
+	public ::wxBoxSizer
 {
-	wxButton *button;
+public:
 
-	button = new wxButton( parent, -1 );
+	SourcesToolbar( wxWindow *parent );
 
-	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
-	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
-	Add( button, 1 );
-
-	button = new wxButton( parent, -1 );
-	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
-	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
-	Add( button, 1 );
-}
+};
 
 
 	} }

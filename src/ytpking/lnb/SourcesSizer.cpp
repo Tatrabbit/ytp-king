@@ -14,32 +14,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesNotebook.h"
+#include "SourcesSizer.h"
 
-#include "SourcesPage.h"
-#include "SamplesPage.h"
-#include "TapesPage.h"
+#include "LibraryNotebook.h"
+#include "SourcesToolbar.h"
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
-	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize )
+SourcesSizer::SourcesSizer( wxWindow *parent ) :
+	wxBoxSizer( wxVERTICAL ),
+
+	m_notebook( new LibraryNotebook( parent ) ),
+	m_toolbar( new SourcesToolbar( parent ) )
 {
-	m_sourcesPage = new SourcesPage( this );
-	AddPage( m_sourcesPage, "Sources" );
-
-	m_samplesPage = new SamplesPage( this );
-	AddPage( m_samplesPage, "Samples" );
-
-	m_tapesPage = new TapesPage( this );
-	AddPage( m_tapesPage, "Tapes" );
+	Add( m_notebook, 1, wxEXPAND );
+	Add( m_toolbar,  0, wxEXPAND );
 }
-
 
 
 	} }

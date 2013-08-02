@@ -14,21 +14,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/treectrl.h>
+#include <wx/listctrl.h>
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-class SamplesTreeCtrl :
-	public wxTreeCtrl
+class TapesListCtrl :
+	public wxListCtrl
 {
 public:
 
-	SamplesTreeCtrl( wxWindow *parent );
+	TapesListCtrl( wxWindow *parent );
 };
 
 

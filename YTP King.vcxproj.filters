@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\snb : Sources Notebook">
-      <UniqueIdentifier>{70bdf764-4d97-48e3-8e77-85a4271adefc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\snb : Sources Notebook">
+    <Filter Include="Header Files\lnb : Sources Notebook">
       <UniqueIdentifier>{180f2f7e-75d0-4a10-b816-d2460a87b3ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lnb : Sources Notebook">
+      <UniqueIdentifier>{70bdf764-4d97-48e3-8e77-85a4271adefc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,35 +30,35 @@
     <ClCompile Include="src\ytpking\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SourcesNotebook.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SourcesPage.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SourcesSizer.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SourcesToolbar.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SourcesListCtrl.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SamplesPage.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\snb\SamplesTreeCtrl.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\TimelineSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\snb\TapesPage.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
+    <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\snb\TapesListCtrl.cpp">
-      <Filter>Source Files\snb : Sources Notebook</Filter>
+    <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\SourcesPage.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\SourcesSizer.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\TapesPage.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\LibraryNotebook.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,35 +71,35 @@
     <ClInclude Include="res\resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SourcesToolbar.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SourcesSizer.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SourcesNotebook.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SourcesPage.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SourcesListCtrl.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SamplesPage.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\snb\SamplesTreeCtrl.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
-    </ClInclude>
     <ClInclude Include="src\ytpking\TimelineSizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\snb\TapesPage.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
+    <ClInclude Include="src\ytpking\lnb\SamplesTreeCtrl.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\snb\TapesListCtrl.h">
-      <Filter>Header Files\snb : Sources Notebook</Filter>
+    <ClInclude Include="src\ytpking\lnb\SourcesListCtrl.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\SourcesPage.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\SourcesSizer.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\TapesPage.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\SamplesPage.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\LibraryNotebook.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

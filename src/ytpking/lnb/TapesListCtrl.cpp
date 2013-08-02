@@ -14,27 +14,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#include "TapesListCtrl.h"
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-class SourcesNotebook :
-	public ::wxNotebook
+TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
+	// TODO make this be wxLC_VIRTUAL
+	wxListCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
+	            wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES )
 {
-public:
-
-	SourcesNotebook( wxWindow *parent );
-
-	wxNotebookPage *m_sourcesPage;
-	wxNotebookPage *m_samplesPage;
-	wxNotebookPage *m_tapesPage;
-
-};
+	AppendColumn( "Name" );
+	InsertItem( 0, "Your Majesty" );
+}
 
 
 	} }

@@ -14,22 +14,28 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-//#include <wx/ribbon/toolbar.h>
 #include <wx/sizer.h>
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-class SourcesToolbar :
+class LibraryNotebook;
+class SourcesToolbar;
+
+
+class SourcesSizer :
 	public ::wxBoxSizer
 {
 public:
 
-	SourcesToolbar( wxWindow *parent );
+	SourcesSizer( wxWindow *parent );
+
+	LibraryNotebook *m_notebook;
+	SourcesToolbar  *m_toolbar;
 
 };
 

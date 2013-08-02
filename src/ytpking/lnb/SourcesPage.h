@@ -16,23 +16,25 @@
 */
 #include <wx/notebook.h>
 
+
 class wxListCtrl;
+
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-
-class TapesPage :
-	public wxNotebookPage
+class SourcesPage :
+	public ::wxNotebookPage
 {
 public:
 
-	TapesPage( wxWindow *parent );
-	
+	SourcesPage( wxWindow *parent );
+
 	wxListCtrl *m_listCtrl;
+
 };
 
 

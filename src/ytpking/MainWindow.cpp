@@ -19,7 +19,7 @@
 #include <gst/gst.h>
 #include <gst/interfaces/xoverlay.h>
 
-#include "snb/SourcesSizer.h"
+#include "lnb/SourcesSizer.h"
 #include "TimelineSizer.h"
 
 
@@ -45,7 +45,7 @@ MainWindow::MainWindow( void ) :
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
-	m_sourcesSizer  = new snb::SourcesSizer( this );
+	m_sourcesSizer  = new lnb::SourcesSizer( this );
 	m_timelineSizer = new TimelineSizer( this );
 
 	// Create the Gstreamer Main Loop Thread

@@ -14,21 +14,33 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/listctrl.h>
+#include "SourcesToolbar.h"
+
+#include <wx/button.h>
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
-class SourcesListCtrl :
-	public wxListCtrl
+
+SourcesToolbar::SourcesToolbar( wxWindow *parent ) :
+	wxBoxSizer( wxHORIZONTAL )
 {
-public:
+	wxButton *button;
 
-	SourcesListCtrl( wxWindow *parent );
+	button = new wxButton( parent, -1 );
 
-};
+	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
+	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
+	Add( button, 1 );
+
+	button = new wxButton( parent, -1 );
+	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
+	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
+	Add( button, 1 );
+}
+
 
 	} }

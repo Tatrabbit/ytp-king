@@ -14,28 +14,32 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#include "LibraryNotebook.h"
 
+#include "SourcesPage.h"
+#include "SamplesPage.h"
+#include "TapesPage.h"
 
-class wxTreeCtrl;
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-class SamplesPage :
-	public wxNotebookPage
+LibraryNotebook::LibraryNotebook( wxWindow *parent ) :
+	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize )
 {
-public:
+	m_sourcesPage = new SourcesPage( this );
+	AddPage( m_sourcesPage, "Sources" );
 
-	SamplesPage( wxWindow *parent );
+	m_samplesPage = new SamplesPage( this );
+	AddPage( m_samplesPage, "Samples" );
 
-	wxTreeCtrl *m_treeCtrl;
+	m_tapesPage = new TapesPage( this );
+	AddPage( m_tapesPage, "Tapes" );
+}
 
-};
 
 
 	} }
-

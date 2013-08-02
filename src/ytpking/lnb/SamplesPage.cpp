@@ -14,28 +14,30 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#include "SamplesPage.h"
 
+#include <wx/sizer.h>
 
-class wxListCtrl;
+#include "SamplesTreeCtrl.h"
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-class SourcesPage :
-	public ::wxNotebookPage
+SamplesPage::SamplesPage( wxWindow *parent ) :
+	wxNotebookPage( parent, wxID_ANY )
 {
-public:
+	m_treeCtrl = new SamplesTreeCtrl( this );
 
-	SourcesPage( wxWindow *parent );
+	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
+	mainSizer->Add( m_treeCtrl, 1, wxEXPAND|wxALL );
 
-	wxListCtrl *m_listCtrl;
+	SetSizer( mainSizer );
+}
 
-};
 
 
 	} }

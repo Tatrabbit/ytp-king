@@ -14,26 +14,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SourcesPage.h"
+#include "TapesPage.h"
 
 #include <wx/sizer.h>
+#include <wx/listctrl.h>
 
-#include "SourcesListCtrl.h"
+#include "TapesListCtrl.h"
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
 
-SourcesPage::SourcesPage( wxWindow *parent ) :
-	wxNotebookPage( parent, -1 )
+TapesPage::TapesPage( wxWindow *parent ) :
+	wxNotebookPage( parent, wxID_ANY )
 {
-	m_listCtrl = new SourcesListCtrl( this );
-
 	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
-	
+
+	m_listCtrl = new TapesListCtrl( this );
+
 	mainSizer->Add( m_listCtrl, 1, wxEXPAND|wxALL );
 
 	SetSizer( mainSizer );

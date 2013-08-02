@@ -13,32 +13,32 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ytpking\Application.cpp" />
-    <ClCompile Include="src\ytpking\snb\TapesListCtrl.cpp" />
-    <ClCompile Include="src\ytpking\snb\TapesPage.cpp" />
+    <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp" />
+    <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp" />
+    <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp" />
+    <ClCompile Include="src\ytpking\lnb\LibraryNotebook.cpp" />
+    <ClCompile Include="src\ytpking\lnb\SourcesPage.cpp" />
+    <ClCompile Include="src\ytpking\lnb\SourcesSizer.cpp" />
+    <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp" />
+    <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp" />
+    <ClCompile Include="src\ytpking\lnb\TapesPage.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
-    <ClCompile Include="src\ytpking\snb\SamplesPage.cpp" />
-    <ClCompile Include="src\ytpking\snb\SamplesTreeCtrl.cpp" />
-    <ClCompile Include="src\ytpking\snb\SourcesListCtrl.cpp" />
-    <ClCompile Include="src\ytpking\snb\SourcesNotebook.cpp" />
-    <ClCompile Include="src\ytpking\snb\SourcesPage.cpp" />
-    <ClCompile Include="src\ytpking\snb\SourcesSizer.cpp" />
-    <ClCompile Include="src\ytpking\snb\SourcesToolbar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\ytpking\snb\TapesListCtrl.h" />
-    <ClInclude Include="src\ytpking\snb\TapesPage.h" />
+    <ClInclude Include="src\ytpking\lnb\SamplesPage.h" />
+    <ClInclude Include="src\ytpking\lnb\SamplesTreeCtrl.h" />
+    <ClInclude Include="src\ytpking\lnb\SourcesListCtrl.h" />
+    <ClInclude Include="src\ytpking\lnb\LibraryNotebook.h" />
+    <ClInclude Include="src\ytpking\lnb\SourcesPage.h" />
+    <ClInclude Include="src\ytpking\lnb\SourcesSizer.h" />
+    <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h" />
+    <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h" />
+    <ClInclude Include="src\ytpking\lnb\TapesPage.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
-    <ClInclude Include="src\ytpking\snb\SamplesPage.h" />
-    <ClInclude Include="src\ytpking\snb\SamplesTreeCtrl.h" />
-    <ClInclude Include="src\ytpking\snb\SourcesListCtrl.h" />
-    <ClInclude Include="src\ytpking\snb\SourcesNotebook.h" />
-    <ClInclude Include="src\ytpking\snb\SourcesPage.h" />
-    <ClInclude Include="src\ytpking\snb\SourcesSizer.h" />
-    <ClInclude Include="src\ytpking\snb\SourcesToolbar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\Ytp-King.rc" />

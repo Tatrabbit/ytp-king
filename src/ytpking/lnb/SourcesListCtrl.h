@@ -14,26 +14,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "SamplesTreeCtrl.h"
+#include <wx/listctrl.h>
 
 
 	namespace ytpking
 	{
-	namespace snb
+	namespace lnb
 	{
 
-
-SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
-	wxTreeCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
-	            wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
-				wxTR_ROW_LINES|wxTR_HIDE_ROOT)
+class SourcesListCtrl :
+	public wxListCtrl
 {
-	wxTreeItemId root = AddRoot( "" );
+public:
 
-	wxTreeItemId derpItem = AppendItem( root, "Derp" );
-	wxTreeItemId herpItem = AppendItem( derpItem, "Herp" );
-	AppendItem( herpItem, "Poppins" );
-}
+	SourcesListCtrl( wxWindow *parent );
 
+};
 
 	} }
