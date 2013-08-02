@@ -40,9 +40,10 @@ public:
 
 	MainWindow( void );
 
-	wxPanel *m_moviePanel;
+	wxWindow *m_moviePanel;
 
 	wxSizer *m_sourcesSizer;
+	wxSizer *m_timelineSizer;
 
 
 	//// BEGIN wx Events

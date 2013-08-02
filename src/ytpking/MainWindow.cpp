@@ -20,6 +20,7 @@
 #include <gst/interfaces/xoverlay.h>
 
 #include "snb/SourcesSizer.h"
+#include "TimelineSizer.h"
 
 
 	namespace ytpking
@@ -44,7 +45,8 @@ MainWindow::MainWindow( void ) :
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
-	m_sourcesSizer = new snb::SourcesSizer( this );
+	m_sourcesSizer  = new snb::SourcesSizer( this );
+	m_timelineSizer = new TimelineSizer( this );
 
 	// Create the Gstreamer Main Loop Thread
 	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
@@ -77,14 +79,15 @@ MainWindow::MainWindow( void ) :
 
 	movieSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
-	m_moviePanel = new wxPanel( this );
-	m_moviePanel->SetupColours();
+	m_moviePanel = new wxWindow( this, wxID_ANY );
+	//m_moviePanel->SetupColours();
 	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
-	m_moviePanel->SetWindowStyle( wxALL | wxEXPAND );
-	m_moviePanel->SetPosition( wxPoint( 0, 0 ) );
-	m_moviePanel->SetSize( 200, 200 );
+	//m_moviePanel->SetWindowStyle( wxALL | wxEXPAND );
+	//m_moviePanel->SetPosition( wxPoint( 0, 0 ) );
+	//m_moviePanel->SetSize( 200, 200 );
 
-	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND, 0 );
+	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
+	movieSizer->Add( m_timelineSizer, 0, wxALL|wxEXPAND );
 
 	mainSizer->Add( movieSizer, 3, wxEXPAND );
 
