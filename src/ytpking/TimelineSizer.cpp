@@ -25,11 +25,7 @@ TimelineSizer::TimelineSizer( wxWindow *parent ) :
 	wxBoxSizer( wxHORIZONTAL )
 {
 	m_firstSample = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
-	//m_firstSample->SetupColours();
 	m_firstSample->SetOwnBackgroundColour( wxColour( "red" ) );
-	//m_firstSample->SetWindowStyle( wxALL | wxEXPAND );
-	//m_firstSample->SetPosition( wxPoint( 0, 0 ) );
-	//m_firstSample->SetSize( 200, 80 );
 
 	Add( m_firstSample, 0 );
 }

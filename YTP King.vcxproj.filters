@@ -54,6 +54,12 @@
     <ClCompile Include="src\ytpking\TimelineSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\snb\TapesPage.cpp">
+      <Filter>Source Files\snb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\snb\TapesListCtrl.cpp">
+      <Filter>Source Files\snb : Sources Notebook</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -88,6 +94,12 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\TimelineSizer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\snb\TapesPage.h">
+      <Filter>Header Files\snb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\snb\TapesListCtrl.h">
+      <Filter>Header Files\snb : Sources Notebook</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

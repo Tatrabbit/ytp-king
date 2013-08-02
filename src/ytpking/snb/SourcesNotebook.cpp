@@ -18,6 +18,7 @@
 
 #include "SourcesPage.h"
 #include "SamplesPage.h"
+#include "TapesPage.h"
 
 
 	namespace ytpking
@@ -34,6 +35,9 @@ SourcesNotebook::SourcesNotebook( wxWindow *parent ) :
 
 	m_samplesPage = new SamplesPage( this );
 	AddPage( m_samplesPage, "Samples" );
+
+	m_tapesPage = new TapesPage( this );
+	AddPage( m_tapesPage, "Tapes" );
 }
 
 

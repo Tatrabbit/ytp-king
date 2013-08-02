@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ytpking\Application.cpp" />
+    <ClCompile Include="src\ytpking\snb\TapesListCtrl.cpp" />
+    <ClCompile Include="src\ytpking\snb\TapesPage.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
     <ClCompile Include="src\ytpking\snb\SamplesPage.cpp" />
@@ -26,6 +28,8 @@
   <ItemGroup>
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\ytpking\snb\TapesListCtrl.h" />
+    <ClInclude Include="src\ytpking\snb\TapesPage.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
     <ClInclude Include="src\ytpking\snb\SamplesPage.h" />

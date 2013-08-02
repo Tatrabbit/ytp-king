@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#include <wx/listctrl.h>
 
 
 	namespace ytpking
@@ -23,17 +23,12 @@
 	{
 
 
-class SourcesNotebook :
-	public ::wxNotebook
+class TapesListCtrl :
+	public wxListCtrl
 {
 public:
 
-	SourcesNotebook( wxWindow *parent );
-
-	wxNotebookPage *m_sourcesPage;
-	wxNotebookPage *m_samplesPage;
-	wxNotebookPage *m_tapesPage;
-
+	TapesListCtrl( wxWindow *parent );
 };
 
 

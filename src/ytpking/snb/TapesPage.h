@@ -16,6 +16,7 @@
 */
 #include <wx/notebook.h>
 
+class wxListCtrl;
 
 	namespace ytpking
 	{
@@ -23,17 +24,15 @@
 	{
 
 
-class SourcesNotebook :
-	public ::wxNotebook
+
+class TapesPage :
+	public wxNotebookPage
 {
 public:
 
-	SourcesNotebook( wxWindow *parent );
-
-	wxNotebookPage *m_sourcesPage;
-	wxNotebookPage *m_samplesPage;
-	wxNotebookPage *m_tapesPage;
-
+	TapesPage( wxWindow *parent );
+	
+	wxListCtrl *m_listCtrl;
 };
 
 
