@@ -38,7 +38,7 @@ unsigned int
 
 
 MainWindow::MainWindow( void ) :
-	wxFrame( NULL, -1, "Hello World, Chuu!", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
+	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
 	m_gstThread( NULL )
 {
 	// Remove the ugly grey tinge on Windows
@@ -91,7 +91,7 @@ MainWindow::MainWindow( void ) :
 	this->SetSizer( mainSizer );
 
 	CreateStatusBar();
-	SetStatusText( _("Welcome to wxPingas!") );
+	SetStatusText( "Roll your cursor over something and look here for help." );
 
 	// Build the pipeline
 	m_gstPipeline = gst_pipeline_new( "pipeline" );
