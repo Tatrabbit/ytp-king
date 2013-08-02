@@ -14,7 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/sizer.h>
+#include "LibrarySizer.h"
+
+#include "LibraryNotebook.h"
+#include "SourcesToolbar.h"
 
 
 	namespace ytpking
@@ -23,21 +26,15 @@
 	{
 
 
-class LibraryNotebook;
-class SourcesToolbar;
+LibrarySizer::LibrarySizer( wxWindow *parent ) :
+	wxBoxSizer( wxVERTICAL ),
 
-
-class SourcesSizer :
-	public ::wxBoxSizer
+	m_notebook( new LibraryNotebook( parent ) ),
+	m_toolbar( new SourcesToolbar( parent ) )
 {
-public:
-
-	SourcesSizer( wxWindow *parent );
-
-	LibraryNotebook *m_notebook;
-	SourcesToolbar  *m_toolbar;
-
-};
+	Add( m_notebook, 1, wxEXPAND );
+	Add( m_toolbar,  0, wxEXPAND );
+}
 
 
 	} }

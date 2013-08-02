@@ -18,7 +18,7 @@
     <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\LibraryNotebook.cpp" />
     <ClCompile Include="src\ytpking\lnb\SourcesPage.cpp" />
-    <ClCompile Include="src\ytpking\lnb\SourcesSizer.cpp" />
+    <ClCompile Include="src\ytpking\lnb\LibrarySizer.cpp" />
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesPage.cpp" />
@@ -33,7 +33,7 @@
     <ClInclude Include="src\ytpking\lnb\SourcesListCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\LibraryNotebook.h" />
     <ClInclude Include="src\ytpking\lnb\SourcesPage.h" />
-    <ClInclude Include="src\ytpking\lnb\SourcesSizer.h" />
+    <ClInclude Include="src\ytpking\lnb\LibrarySizer.h" />
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h" />
     <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\TapesPage.h" />

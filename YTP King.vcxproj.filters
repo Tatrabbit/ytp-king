@@ -45,9 +45,6 @@
     <ClCompile Include="src\ytpking\lnb\SourcesPage.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\lnb\SourcesSizer.cpp">
-      <Filter>Source Files\lnb : Sources Notebook</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
@@ -58,6 +55,9 @@
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\lnb\LibraryNotebook.cpp">
+      <Filter>Source Files\lnb : Sources Notebook</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\lnb\LibrarySizer.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,9 +83,6 @@
     <ClInclude Include="src\ytpking\lnb\SourcesPage.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\lnb\SourcesSizer.h">
-      <Filter>Header Files\lnb : Sources Notebook</Filter>
-    </ClInclude>
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
@@ -99,6 +96,9 @@
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\lnb\LibraryNotebook.h">
+      <Filter>Header Files\lnb : Sources Notebook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\lnb\LibrarySizer.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
     </ClInclude>
   </ItemGroup>
