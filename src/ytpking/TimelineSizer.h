@@ -22,7 +22,7 @@
 
 
 class TimelineSizer :
-	public wxBoxSizer
+	public wxStaticBoxSizer
 {
 public:
 
@@ -50,8 +50,6 @@ private:
 			override;	
 
 	};
-
-	wxWindow *m_firstSample;
 	
 };
 

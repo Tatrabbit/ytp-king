@@ -49,14 +49,14 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 
 
 TimelineSizer::TimelineSizer( wxWindow *parent ) :
-	wxBoxSizer( wxHORIZONTAL )
+	wxStaticBoxSizer( wxHORIZONTAL, parent, "Tape Mixer" )
 {
-	m_firstSample = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
-	m_firstSample->SetOwnBackgroundColour( wxColour( "red" ) );
+	wxWindow *container = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
+	//container->SetOwnBackgroundColour( wxColour( "red" ) );
 
-	m_firstSample->SetDropTarget( new TimelineDropTarget );
+	container->SetDropTarget( new TimelineDropTarget );
 
-	Add( m_firstSample, 0 );
+	Add( container, 0 );
 }
 
 
