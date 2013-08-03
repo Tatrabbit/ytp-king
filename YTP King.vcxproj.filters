@@ -25,6 +25,18 @@
     <Filter Include="Header Files\lnb : Sources Notebook\Pages">
       <UniqueIdentifier>{23d1aba1-204b-43c2-a9fd-5737a54c0879}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gst : GStreamer">
+      <UniqueIdentifier>{b5d7f31c-2475-4ac4-a481-6996e13f5884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gst : GStreamer">
+      <UniqueIdentifier>{52f2bcc5-665c-4824-81b4-e5f271eb0798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gst : GStreamer\gnl : GNonLin">
+      <UniqueIdentifier>{b214e74d-a69d-4147-8f66-ae1ce0048b8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gst : GStreamer\gnl : GNonlin">
+      <UniqueIdentifier>{f5f33382-63e6-49f2-88ec-84135ae9c87d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -78,6 +90,9 @@
     <ClCompile Include="src\ytpking\SampleDataObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\gst\GstreamerThread.cpp">
+      <Filter>Source Files\gst : GStreamer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -130,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\SampleDataObject.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\GstreamerThread.h">
+      <Filter>Header Files\gst : GStreamer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

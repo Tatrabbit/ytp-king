@@ -32,6 +32,10 @@ typedef void    *gpointer;
 	namespace ytpking
 	{
 
+namespace gst {
+	class GstreamerThread;
+}
+
 
 class MainWindow :
 	public wxFrame
@@ -39,6 +43,15 @@ class MainWindow :
 public:
 
 	MainWindow( void );
+	~MainWindow( void );
+
+private: // TODO macros for = delete when it becomes available.
+	MainWindow( const MainWindow &c );
+
+	MainWindow
+		&operator=( const MainWindow &c );
+
+public:
 
 	wxWindow *m_moviePanel;
 
@@ -76,7 +89,6 @@ private:
 		About
 	};
 
-	GThread    *m_gstThread;
 	GstElement *m_gstPipeline;
 
 	GstElement *m_audioComposition;
@@ -87,6 +99,8 @@ private:
 	std::string m_filename;
 
 	wxTextCtrl *m_textControl;
+
+	gst::GstreamerThread *m_gstThread;
 
 	bool
 		addSample( int start, int mediaStart, int duration );

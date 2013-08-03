@@ -19,6 +19,8 @@
 #include <gst/gst.h>
 #include <gst/interfaces/xoverlay.h>
 
+#include "gst/GstreamerThread.h"
+
 #include "lnb/LibrarySizer.h"
 #include "TimelineSizer.h"
 #include "SamplePropertiesSizer.h"
@@ -28,20 +30,13 @@
 	{
 
 
-void main_loop_run( gpointer ) 
-{
-	GMainLoop *loop = g_main_loop_new( NULL, FALSE );
-	g_main_loop_run( loop );
-}
-
-
 unsigned int
 	MainWindow::m_nSamples( 0u );
 
 
 MainWindow::MainWindow( void ) :
 	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
-	m_gstThread( NULL )
+	m_gstThread( new gst::GstreamerThread )
 {
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
@@ -49,12 +44,6 @@ MainWindow::MainWindow( void ) :
 	m_sourcesSizer          = new lnb::LibrarySizer( this );
 	m_timelineSizer         = new TimelineSizer( this );
 	m_samplePropertiesSizer = new SamplePropertiesSizer( this );
-
-	// Create the Gstreamer Main Loop Thread
-	m_gstThread = g_thread_new( "gst-main_loop", (GThreadFunc)main_loop_run, NULL );
-
-	if ( m_gstThread == NULL )
-		GST_ERROR( "Couldn't create GStreamer loop thread.\n" );
 
 	wxMenu *menuFile = new wxMenu;
 
@@ -84,11 +73,7 @@ MainWindow::MainWindow( void ) :
 	movieSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
 	m_moviePanel = new wxWindow( this, wxID_ANY );
-	//m_moviePanel->SetupColours();
 	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
-	//m_moviePanel->SetWindowStyle( wxALL | wxEXPAND );
-	//m_moviePanel->SetPosition( wxPoint( 0, 0 ) );
-	//m_moviePanel->SetSize( 200, 200 );
 
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
 	movieSizer->Add( m_timelineSizer, 0, wxALL|wxEXPAND );
@@ -136,6 +121,12 @@ MainWindow::MainWindow( void ) :
 	gst_bus_add_signal_watch( bus );
 
 	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, this );
+}
+
+
+MainWindow::~MainWindow( void )
+{
+	delete m_gstThread;
 }
 
 
@@ -197,8 +188,7 @@ MainWindow::OnQuit( wxCommandEvent &WXUNUSED(event) )
 	gst_element_set_state( m_gstPipeline, GST_STATE_NULL );
 	gst_object_unref( m_gstPipeline );
 
-	if ( m_gstThread != NULL )
-		g_thread_join( m_gstThread );
+	
 
 	Close( true );
 }
