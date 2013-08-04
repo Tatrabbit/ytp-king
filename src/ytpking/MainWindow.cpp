@@ -20,6 +20,8 @@
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
+#include "gst/gnl/AudioComposition.h"
+#include "gst/gnl/FileSource.h"
 
 #include "lnb/LibrarySizer.h"
 #include "TimelineSizer.h"
@@ -36,7 +38,8 @@ unsigned int
 
 MainWindow::MainWindow( void ) :
 	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
-	m_gstThread( new gst::GstreamerThread )
+	m_gstThread( new gst::GstreamerThread ),
+	m_previewAudioComposition( new gst::gnl::AudioComposition )
 {
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
@@ -88,41 +91,44 @@ MainWindow::MainWindow( void ) :
 	CreateStatusBar();
 	SetStatusText( "Roll your cursor over something and look here for help." );
 
-	m_pipeline = new gst::Pipeline( m_moviePanel );
+	m_pipeline                = new gst::Pipeline( m_moviePanel );
 
-	GstElement *audioQueue = gst_element_factory_make( "queue", "queue_a" );
-	GstElement *videoQueue = gst_element_factory_make( "queue", "queue_v" );
+	m_previewAudioComposition->addTo( *m_pipeline );
 
-	m_audioComposition = gst_element_factory_make( "gnlcomposition", "sample_comp_a0" );
-	m_videoComposition = gst_element_factory_make( "gnlcomposition", "sample_comp_v0" );
+	//GstElement *audioQueue = gst_element_factory_make( "queue", "queue_a" );
+	//GstElement *videoQueue = gst_element_factory_make( "queue", "queue_v" );
 
-	g_object_set( m_audioComposition, "caps", gst_caps_from_string( "audio/x-raw-int;audio/x-raw-float" ), NULL ); 
-	g_object_set( m_videoComposition, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
+	//m_audioComposition = gst_element_factory_make( "gnlcomposition", "sample_comp_a0" );
+	//m_videoComposition = gst_element_factory_make( "gnlcomposition", "sample_comp_v0" );
 
-	g_signal_connect( m_audioComposition, "pad-added", G_CALLBACK(onPadAdded), audioQueue );
-	g_signal_connect( m_videoComposition, "pad-added", G_CALLBACK(onPadAdded), videoQueue );
+	//g_object_set( m_audioComposition, "caps", gst_caps_from_string( "audio/x-raw-int;audio/x-raw-float" ), NULL ); 
+	//g_object_set( m_videoComposition, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
 
-	GstElement *audioSink  = gst_element_factory_make( "autoaudiosink", "audio-sink" );
-	GstElement *videoSink  = gst_element_factory_make( "autovideosink", "video-sink" );
+	//g_signal_connect( m_audioComposition, "pad-added", G_CALLBACK(onPadAdded), audioQueue );
+	//g_signal_connect( m_videoComposition, "pad-added", G_CALLBACK(onPadAdded), videoQueue );
 
-	m_pipeline->add( m_audioComposition );
-	m_pipeline->add( m_videoComposition );
-	m_pipeline->add( audioQueue );
-	m_pipeline->add( videoQueue );
-	m_pipeline->add( videoSink );
-	m_pipeline->add( audioSink );
+	//GstElement *audioSink  = gst_element_factory_make( "autoaudiosink", "audio-sink" );
+	//GstElement *videoSink  = gst_element_factory_make( "autovideosink", "video-sink" );
+
+	//m_pipeline->add( m_audioComposition );
+	//m_pipeline->add( m_videoComposition );
+	//m_pipeline->add( audioQueue );
+	//m_pipeline->add( videoQueue );
+	//m_pipeline->add( videoSink );
+	//m_pipeline->add( audioSink );
 
 
-	if ( !gst_element_link( audioQueue, audioSink ) )
-		g_printerr ("Audio Queue/Sink could not be linked.\n");
-
-	if ( !gst_element_link( videoQueue, videoSink ) )
-		g_printerr ("Video Queue/Sink could not be linked.\n");
+	//if ( !gst_element_link( audioQueue, audioSink ) )
+	//	g_printerr ("Audio Queue/Sink could not be linked.\n");
+	//
+	//if ( !gst_element_link( videoQueue, videoSink ) )
+	//	g_printerr ("Video Queue/Sink could not be linked.\n");
 }
 
 
 MainWindow::~MainWindow( void )
 {
+	delete m_previewAudioComposition;
 	delete m_pipeline;
 	delete m_gstThread;
 }
@@ -131,52 +137,58 @@ MainWindow::~MainWindow( void )
 bool
 MainWindow::addSample( int start, int mediaStart, int duration )
 {
-	GstElement *videoSource, *audioSource;
+	gst::gnl::FileSource *audio = m_previewAudioComposition->addSource();
+	audio->setDuration( 10 );
+	audio->setFilename( "file:///C:/zelda.mp4" );
+	m_previewAudioComposition->update();
 
-	// Get the names of the src elements
-	std::stringstream nameStream( "sample_a" );
-	nameStream << m_nSamples;
-	std::string srcName = nameStream.str();
-	videoSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
+	//GstElement *videoSource, *audioSource;
 
-	nameStream.clear();
-	nameStream << "sample_comp" << m_nSamples;
-	srcName = nameStream.str();
-	audioSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
-
+	//// Get the names of the src elements
+	//std::stringstream nameStream( "sample_a" );
+	//nameStream << m_nSamples;
+	//std::string srcName = nameStream.str();
+	//videoSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
+	//
+	//nameStream.clear();
+	//nameStream << "sample_comp" << m_nSamples;
+	//srcName = nameStream.str();
+	//audioSource = gst_element_factory_make( "gnlfilesource", srcName.c_str() );
+	//
 	// Add the src elements to the compositions
-	if ( !gst_bin_add( GST_BIN( m_videoComposition ), videoSource ) )
-		goto addSample_RETURN_FALSE;
-
-	if ( !gst_bin_add( GST_BIN( m_audioComposition ), audioSource ) )
-		goto addSample_RETURN_FALSE;
+	//if ( !gst_bin_add( GST_BIN( m_videoComposition ), videoSource ) )
+	//	goto addSample_RETURN_FALSE;
+	//
+	//if ( !gst_bin_add( GST_BIN( m_audioComposition ), audioSource ) )
+	//	goto addSample_RETURN_FALSE;
 
 	// set the properties
-	g_object_set( videoSource, "uri", m_filename.c_str(), NULL );
-	g_object_set( videoSource, "start", start * GST_SECOND, NULL );
-	g_object_set( videoSource, "duration", duration * GST_SECOND, NULL );
-	g_object_set( videoSource, "media-start", mediaStart * GST_SECOND, NULL );
-	g_object_set( videoSource, "media-duration", duration * GST_SECOND, NULL );
-
-	g_object_set( audioSource, "uri", m_filename.c_str(), NULL );
-	g_object_set( audioSource, "start", start * GST_SECOND, NULL );
-	g_object_set( audioSource, "duration", duration * GST_SECOND, NULL );
-	g_object_set( audioSource, "media-start", mediaStart * GST_SECOND, NULL );
-	g_object_set( audioSource, "media-duration", duration * GST_SECOND, NULL );
+	//g_object_set( videoSource, "uri", m_filename.c_str(), NULL );
+	//g_object_set( videoSource, "start", start * GST_SECOND, NULL );
+	//g_object_set( videoSource, "duration", duration * GST_SECOND, NULL );
+	//g_object_set( videoSource, "media-start", mediaStart * GST_SECOND, NULL );
+	//g_object_set( videoSource, "media-duration", duration * GST_SECOND, NULL );
+	//
+	//g_object_set( audioSource, "uri", m_filename.c_str(), NULL );
+	//g_object_set( audioSource, "start", start * GST_SECOND, NULL );
+	//g_object_set( audioSource, "duration", duration * GST_SECOND, NULL );
+	//g_object_set( audioSource, "media-start", mediaStart * GST_SECOND, NULL );
+	//g_object_set( audioSource, "media-duration", duration * GST_SECOND, NULL );
 
 	// inc the static id
-	m_nSamples++;
+	//m_nSamples++;
 
-	return true;
+	//return true;
 
 	// Free things on error
-addSample_RETURN_FALSE:
+//addSample_RETURN_FALSE:
 	// And goto helps keep the indentation flat. Don't dismiss it blindly, it CAN be useful
 	// sometimes.
-	gst_object_unref( videoSource );
-	gst_object_unref( audioSource );
+	//gst_object_unref( videoSource );
+	//gst_object_unref( audioSource );
 
-	return false;
+	//return false;
+	return true;
 }
 
 
@@ -198,28 +210,9 @@ MainWindow::OnAbout( wxCommandEvent &WXUNUSED(event) )
 	// Start playing
 	m_filename = m_textControl->GetValue();
 	addSample( 0, 2, 4 );
-	addSample( 4, 10, 4 );
+	//addSample( 4, 10, 4 );
 
 	m_pipeline->play();
-}
-
-
-// This function will be called by the pad-added signal
-void MainWindow::onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink)
-{
-  g_print ("Received new pad '%s' from '%s':\n", GST_PAD_NAME (new_pad), GST_ELEMENT_NAME (src));
-
-  GstPad *compatiblePad = gst_element_get_compatible_pad( sink, new_pad, gst_pad_get_caps( new_pad ) );
-
-	if ( compatiblePad )
-	{
-		if ( gst_pad_link( new_pad, compatiblePad ) == GST_PAD_LINK_OK )
-			g_print("  Link succeeded.\n" );
-		else
-			g_print( "Link to '%s' from '%s' Failed.\n", GST_PAD_NAME (compatiblePad), GST_ELEMENT_NAME (sink) );
-	}
-	else
-		g_print( "Skipping incompatible pad.\n" );
 }
 
 

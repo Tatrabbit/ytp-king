@@ -20,16 +20,16 @@
 #include <wx/wx.h>
 
 
-typedef struct  _GstElement   GstElement;
-typedef struct  _GstPad       GstPad;
-
-
 	namespace ytpking
 	{
 
 namespace gst {
 	class GstreamerThread;
 	class Pipeline;
+	
+	namespace gnl {
+		class AudioComposition;
+	}
 }
 
 
@@ -66,14 +66,6 @@ public:
 
 	//// END wx Events
 
-
-	//// BEGIN GStreamer Events
-
-	static void
-		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
-
-	//// END GStreamer Events
-
 private:
 
 	enum EventId
@@ -82,8 +74,8 @@ private:
 		About
 	};
 
-	GstElement *m_audioComposition;
-	GstElement *m_videoComposition;
+	//GstElement *m_audioComposition;
+	//GstElement *m_videoComposition;
 
 	static unsigned int m_nSamples;
 
@@ -91,8 +83,10 @@ private:
 
 	wxTextCtrl *m_textControl;
 
-	gst::GstreamerThread *m_gstThread;
-	gst::Pipeline        *m_pipeline;
+	gst::GstreamerThread       *m_gstThread;
+	gst::Pipeline              *m_pipeline;
+
+	gst::gnl::AudioComposition *m_previewAudioComposition;
 
 	bool
 		addSample( int start, int mediaStart, int duration );

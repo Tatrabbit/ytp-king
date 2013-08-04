@@ -14,52 +14,49 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "Composition.h"
 
-
-typedef struct _GstElement GstElement;
-typedef struct _GstMessage GstMessage;
-typedef struct _GstBus     GstBus;
-
-typedef void    *gpointer;
-
-
-class wxWindow;
 
 	namespace ytpking
 	{
 	namespace gst
 	{
+	namespace gnl
+	{
 
+class FileSource;
 
-namespace gnl {
-	class Composition;
-}
-
-
-class Pipeline
+class AudioComposition : 
+	public Composition
 {
 public:
-	Pipeline( wxWindow *drawWindow );
+
+	AudioComposition( void );
+
+	virtual
+		~AudioComposition( void );
+
+private: // TODO macros for = delete when it becomes available.
+	AudioComposition( const AudioComposition &c );
+
+	AudioComposition
+		&operator=( const AudioComposition &c );
+
+public:
 
 	void
-		play( void );
-	void
-		stop( void );
-
-	GstElement
-		*operator*( void );
+		addTo( Pipeline &pipeline )
+		override;
 
 private:
-	GstElement *m_pipeline;
 
-	//// BEGIN GStreamer Events
-
-	static void
-		onSync ( GstBus *bus, GstMessage *message, gpointer data );
-
-	//// END GStreamer Events
+	// TODO add some necessary basic processing like audioconvert and audioresample
+	//      so it doesn't sound like crud for no reason.
+	//GstElement *m_convertElement;
+	//GstElement *m_resampleElement;
+	GstElement *m_queueElement;
+	GstElement *m_sinkElement;
 
 };
 
-
-	} }
+	} } }

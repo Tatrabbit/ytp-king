@@ -21,6 +21,8 @@
 
 #include <wx/window.h>
 
+#include "gnl/Composition.h"
+
 
 	namespace ytpking
 	{
@@ -40,12 +42,6 @@ Pipeline::Pipeline( wxWindow *drawWindow ) :
 }
 
 
-Pipeline::~Pipeline( void )
-{
-	gst_object_unref( m_pipeline );
-}
-
-
 void
 Pipeline::play( void )
 {
@@ -60,10 +56,10 @@ Pipeline::stop( void )
 }
 
 
-bool
-Pipeline::add( GstElement *element )
+GstElement
+*Pipeline::operator*( void )
 {
-	return gst_bin_add( GST_BIN(m_pipeline), element );
+	return m_pipeline;
 }
 
 

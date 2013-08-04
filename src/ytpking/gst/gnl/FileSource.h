@@ -14,52 +14,58 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-
 typedef struct _GstElement GstElement;
-typedef struct _GstMessage GstMessage;
-typedef struct _GstBus     GstBus;
 
-typedef void    *gpointer;
-
-
-class wxWindow;
 
 	namespace ytpking
 	{
 	namespace gst
 	{
 
+class Composition;
 
-namespace gnl {
-	class Composition;
-}
+	namespace gnl
+	{
 
 
-class Pipeline
+class FileSource
 {
-public:
-	Pipeline( wxWindow *drawWindow );
-
-	void
-		play( void );
-	void
-		stop( void );
-
-	GstElement
-		*operator*( void );
+friend class Composition;
 
 private:
-	GstElement *m_pipeline;
+	// Only a Composition class may construct me.
+	FileSource( void );
+	~FileSource( void );
 
-	//// BEGIN GStreamer Events
+	// TODO macros for = delete when it becomes available.
+	FileSource( const FileSource &c );
 
-	static void
-		onSync ( GstBus *bus, GstMessage *message, gpointer data );
+	FileSource
+		&operator=( const FileSource &c );
 
-	//// END GStreamer Events
+public:
+
+	void
+		setFilename( const char *filename );
+
+	void
+		setStart( __int64 startTime );
+
+	void
+		setDuration( __int64 duration );
+
+	void
+		setSpeed( float speed );
+
+private:
+
+	__int64 m_start;
+	__int64 m_duration;
+	float   m_speed;
+
+	GstElement *m_element;
 
 };
 
 
-	} }
+	} } }

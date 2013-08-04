@@ -96,6 +96,15 @@
     <ClCompile Include="src\ytpking\gst\Pipeline.cpp">
       <Filter>Source Files\gst : GStreamer</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\Composition.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\AudioComposition.cpp">
+      <Filter>Source Files\gst : GStreamer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\FileSource.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -154,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\Pipeline.h">
       <Filter>Header Files\gst : GStreamer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\Composition.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\AudioComposition.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\FileSource.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

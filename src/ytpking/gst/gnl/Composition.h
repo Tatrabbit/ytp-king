@@ -14,52 +14,69 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <string>
+#include <list>
 
 
-typedef struct _GstElement GstElement;
-typedef struct _GstMessage GstMessage;
-typedef struct _GstBus     GstBus;
+typedef struct  _GstElement   GstElement;
+typedef struct  _GstPad       GstPad;
 
-typedef void    *gpointer;
-
-
-class wxWindow;
 
 	namespace ytpking
 	{
 	namespace gst
 	{
 
+class Pipeline;
 
-namespace gnl {
-	class Composition;
-}
+	namespace gnl
+	{
+
+class FileSource;
 
 
-class Pipeline
+class Composition
 {
 public:
-	Pipeline( wxWindow *drawWindow );
 
-	void
-		play( void );
-	void
-		stop( void );
+	Composition( void );
 
-	GstElement
-		*operator*( void );
-
+	virtual
+		~Composition( void );
 private:
-	GstElement *m_pipeline;
+	// TODO macros for = delete when it becomes available.
+	Composition( const Composition &c );
 
-	//// BEGIN GStreamer Events
+	Composition
+		&operator=( const Composition &c );
+
+public:
+
+	virtual void
+		addTo( Pipeline &pipeline ) = 0;
+
+	
+	FileSource
+		*addSource( void );
+
+	void
+		deleteSource( FileSource *source );
+
+	void
+		update( void );
+
+
+protected:
+
+	GstElement *m_selfElement;
 
 	static void
-		onSync ( GstBus *bus, GstMessage *message, gpointer data );
+		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
 
-	//// END GStreamer Events
+private:
+	typedef std::list<FileSource *> FileSourceList;
+	FileSourceList m_sources;
 
 };
 
-
-	} }
+	} } }
