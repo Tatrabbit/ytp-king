@@ -35,7 +35,6 @@ public:
 	LibrarySizer( wxWindow *parent );
 
 	LibraryNotebook *m_notebook;
-	SourcesToolbar  *m_toolbar;
 
 };
 

@@ -15,6 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 //#include <wx/ribbon/toolbar.h>
+#ifndef __YTPKING_LNB_SourcesToolbar_h
+#define __YTPKING_LNB_SourcesToolbar_h
+
 #include <wx/sizer.h>
 
 
@@ -24,14 +27,24 @@
 	{
 
 
+// TODO rename to SamplesToolbar
 class SourcesToolbar :
-	public ::wxBoxSizer
+	public wxBoxSizer
 {
 public:
 
 	SourcesToolbar( wxWindow *parent );
 
+	enum EventId
+	{
+		ButtonAdd = 1,
+		ButtonDelete
+	};
+
 };
 
 
 	} }
+
+
+#endif

@@ -29,11 +29,9 @@
 LibrarySizer::LibrarySizer( wxWindow *parent ) :
 	wxBoxSizer( wxVERTICAL ),
 
-	m_notebook( new LibraryNotebook( parent ) ),
-	m_toolbar( new SourcesToolbar( parent ) )
+	m_notebook( new LibraryNotebook( parent ) )
 {
 	Add( m_notebook, 1, wxEXPAND );
-	Add( m_toolbar,  0, wxEXPAND );
 }
 
 

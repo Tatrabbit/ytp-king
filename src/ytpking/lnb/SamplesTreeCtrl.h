@@ -19,6 +19,12 @@
 
 	namespace ytpking
 	{
+
+namespace gst {
+namespace gnl {
+	class FileSource;
+} }
+
 	namespace lnb
 	{
 
@@ -32,6 +38,24 @@ public:
 
 	void
 		onBeginDrag( wxTreeEvent &event );
+
+	void
+		addSample( const char *name, const char *speaker,
+				gst::gnl::FileSource *audioSource,
+				gst::gnl::FileSource *videoSource );
+
+private:
+
+	class SamplesTreeData :
+		public wxTreeItemData
+	{
+	public:
+		// TODO constructor, default to NULL
+		gst::gnl::FileSource *m_audioSource;
+		gst::gnl::FileSource *m_videoSource;
+
+	};
+
 
 	wxDECLARE_EVENT_TABLE();
 

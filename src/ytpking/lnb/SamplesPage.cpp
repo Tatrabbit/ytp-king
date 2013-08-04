@@ -21,6 +21,9 @@
 #include <wx/event.h>
 
 #include "SamplesTreeCtrl.h"
+#include "SourcesToolbar.h"
+
+#include "../gst/gnl/Composition.h"
 
 
 	namespace ytpking
@@ -33,12 +36,33 @@ SamplesPage::SamplesPage( wxWindow *parent ) :
 	wxNotebookPage( parent, wxID_ANY )
 {
 	m_treeCtrl = new SamplesTreeCtrl( this );
+	m_toolbar = new SourcesToolbar( this );
 
 	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
 	mainSizer->Add( m_treeCtrl, 1, wxEXPAND|wxALL );
+	mainSizer->Add( m_toolbar, 0);
 
 	SetSizer( mainSizer );
 }
+
+void
+SamplesPage::onButtonAdd( wxCommandEvent& )
+{
+	//gst::gnl::FileSource *audioSource, *videoSource;
+
+	//m_audioPreviewComposition->update();
+	//m_videoPreviewComposition->update();
+
+	m_treeCtrl->addSample( "Derp", "Herp", NULL, NULL );
+}
+
+wxBEGIN_EVENT_TABLE( SamplesPage, wxNotebookPage )
+
+	EVT_BUTTON( SourcesToolbar::ButtonAdd, onButtonAdd )
+
+wxEND_EVENT_TABLE()
+
+
 
 
 	} }

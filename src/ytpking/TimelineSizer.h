@@ -14,31 +14,33 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_TimelineSizer_h
-#define __YTPKING_TimelineSizer_h
+#ifndef __YTPKING_TimelineWindow_h
+#define __YTPKING_TimelineWindow_h
 
-#include <wx/sizer.h>
+#include <wx/window.h>
 #include <wx/dnd.h>
+#include "gst/gnl/PreviewUser.h"
 
 	namespace ytpking
 	{
 
 
-class TimelineSizer :
-	public wxStaticBoxSizer
+class TimelineWindow :
+	public wxWindow
 {
 public:
 
-	TimelineSizer( wxWindow *parent );
+	TimelineWindow( wxWindow *parent );
 
 private:
 
 	class TimelineDropTarget :
-		public wxDropTarget
+		public wxDropTarget,
+		public gst::gnl::PreviewUser
 	{
 	public:
 
-		TimelineDropTarget( void );
+		TimelineDropTarget( wxWindow *parent, wxSizer *sizer );
 
 		/// TODO Only show drags will be accepted if they've originated from
 		//       certain controls fromthis program.
@@ -50,7 +52,12 @@ private:
 
 		wxDragResult
 			OnData( wxCoord x, wxCoord y, wxDragResult defResult )
-			override;	
+			override;
+
+	private:
+
+		wxWindow *m_parent;
+		wxSizer  *m_sizer;
 
 	};
 	

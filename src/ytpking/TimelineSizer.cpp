@@ -15,30 +15,68 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "ytpking/TimelineSizer.h"
-#include "SampleDataObject.h"
 
 #include <wx/wx.h>
+
+#include "SampleDataObject.h"
+#include "SampleComponent.h"
+
+#include "gst/gnl/Composition.h"
+#include "gst/gnl/FileSource.h"
+
 
 	namespace ytpking
 	{
 
 
-TimelineSizer::
-TimelineDropTarget::TimelineDropTarget( void ) :
-	wxDropTarget( new SampleDataObject )
+TimelineWindow::
+TimelineDropTarget::TimelineDropTarget( wxWindow *parent, wxSizer *sizer ) :
+	wxDropTarget( new SampleDataObject ),
+	m_parent( parent ),
+	m_sizer( sizer )
 {
 }
 
 
 wxDragResult
-TimelineSizer::
+TimelineWindow::
 TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 {
+	using gst::gnl::FileSource;
+
 	if ( GetData() )
 	{
-		GetData();
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
-		wxSafeShowMessage( _("Derp"), dataObject->GetData() );
+		//wxSafeShowMessage( _("Derp"), dataObject->GetData() );
+
+		FileSource *audioSource, *videoSource;
+		audioSource = m_audioPreviewComposition->addSource();
+		videoSource = m_videoPreviewComposition->addSource();
+
+		//if ( (audioSource = dataObject->GetAudioSource()) )
+		{		
+			audioSource->setStart( 0 );
+
+			audioSource->setDuration( 5 );
+			audioSource->setFilename( "file:///C:/zelda.mp4" );
+
+			m_audioPreviewComposition->update();
+		}
+
+		//if ( (videoSource = dataObject->GetAudioSource()) )
+		{
+			videoSource->setStart( 0 );
+
+			videoSource->setDuration( 5 );
+			videoSource->setFilename( "file:///C:/zelda.mp4" );
+
+			m_videoPreviewComposition->update();
+		}
+
+		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), NULL, NULL );
+
+		m_sizer->Add( component, 0 );
+		m_sizer->Layout();
 
 		return defResult;
 	}
@@ -48,15 +86,16 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 
 
 
-TimelineSizer::TimelineSizer( wxWindow *parent ) :
-	wxStaticBoxSizer( wxHORIZONTAL, parent, "Tape Mixer" )
+TimelineWindow::TimelineWindow( wxWindow *parent ) :
+	wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 150 ) )
 {
-	wxWindow *container = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
+	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, "Tape Mixer" );
+	SetDropTarget( new TimelineDropTarget( this, sizer ) );
+	SetSizer( sizer );
+	//wxWindow *container = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
 	//container->SetOwnBackgroundColour( wxColour( "red" ) );
 
-	container->SetDropTarget( new TimelineDropTarget );
-
-	Add( container, 0 );
+	//sizer->Add( container, 1, wxEXPAND|wxALL );
 }
 
 

@@ -30,13 +30,13 @@ SourcesToolbar::SourcesToolbar( wxWindow *parent ) :
 {
 	wxButton *button;
 
-	button = new wxButton( parent, -1 );
+	button = new wxButton( parent, EventId::ButtonAdd );
 
 	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
 	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
 	Add( button, 1 );
 
-	button = new wxButton( parent, -1 );
+	button = new wxButton( parent, EventId::ButtonDelete );
 	button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
 	button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
 	Add( button, 1 );

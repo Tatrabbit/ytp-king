@@ -14,10 +14,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <wx/frame.h>
+#include "gst/gnl/PreviewUser.h"
+
 #include <string>
 #include <sstream>
 
-#include <wx/wx.h>
+#include <wx/menu.h>
+#include <wx/textctrl.h>
 
 
 	namespace ytpking
@@ -35,7 +39,8 @@ namespace gst {
 
 
 class MainWindow :
-	public wxFrame
+	public wxFrame,
+	public gst::gnl::PreviewUser
 {
 public:
 
@@ -51,10 +56,9 @@ private: // TODO macros for = delete when it becomes available.
 public:
 
 	wxWindow *m_moviePanel;
-
-	wxSizer *m_sourcesSizer;
-	wxSizer *m_timelineSizer;
-	wxSizer *m_samplePropertiesSizer;
+	wxSizer  *m_sourcesSizer;
+	wxWindow *m_timelineWindow;
+	wxSizer  *m_samplePropertiesSizer;
 
 
 	//// BEGIN wx Events
@@ -75,9 +79,6 @@ private:
 		About
 	};
 
-	//GstElement *m_audioComposition;
-	//GstElement *m_videoComposition;
-
 	static unsigned int m_nSamples;
 
 	std::string m_filename;
@@ -86,9 +87,6 @@ private:
 
 	gst::GstreamerThread       *m_gstThread;
 	gst::Pipeline              *m_pipeline;
-
-	gst::gnl::AudioComposition *m_previewAudioComposition;
-	gst::gnl::VideoComposition *m_previewVideoComposition;
 
 	bool
 		addSample( int start, int duration );

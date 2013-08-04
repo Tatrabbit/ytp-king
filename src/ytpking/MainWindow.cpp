@@ -28,6 +28,8 @@
 #include "TimelineSizer.h"
 #include "SamplePropertiesSizer.h"
 
+//#include "lnb/LibraryNotebook.h" // Debug
+
 
 	namespace ytpking
 	{
@@ -39,15 +41,13 @@ unsigned int
 
 MainWindow::MainWindow( void ) :
 	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
-	m_gstThread( new gst::GstreamerThread ),
-	m_previewAudioComposition( new gst::gnl::AudioComposition ),
-	m_previewVideoComposition( new gst::gnl::VideoComposition )
+	m_gstThread( new gst::GstreamerThread )
 {
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
 	m_sourcesSizer          = new lnb::LibrarySizer( this );
-	m_timelineSizer         = new TimelineSizer( this );
+	m_timelineWindow        = new TimelineWindow( this );
 	m_samplePropertiesSizer = new SamplePropertiesSizer( this );
 
 	wxMenu *menuFile = new wxMenu;
@@ -81,7 +81,7 @@ MainWindow::MainWindow( void ) :
 	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
 
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
-	movieSizer->Add( m_timelineSizer, 0, wxALL|wxEXPAND );
+	movieSizer->Add( m_timelineWindow, 0, wxALL|wxEXPAND );
 
 	sampleAndMovieSizer->Add( m_samplePropertiesSizer );
 	sampleAndMovieSizer->Add( movieSizer, 1, wxALL|wxEXPAND );
@@ -93,10 +93,16 @@ MainWindow::MainWindow( void ) :
 	CreateStatusBar();
 	SetStatusText( "Roll your cursor over something and look here for help." );
 
-	m_pipeline                = new gst::Pipeline( m_moviePanel );
+	m_pipeline = new gst::Pipeline( m_moviePanel );
 
-	m_previewAudioComposition->addTo( *m_pipeline );
-	m_previewVideoComposition->addTo( *m_pipeline );
+	PreviewUser::init( m_pipeline );
+
+
+	//addSample( 5, 5 );
+	//addSample( 0, 5 );
+
+	//lnb::LibrarySizer *sizer = (lnb::LibrarySizer *)m_sourcesSizer;
+	//sizer->m_notebook->
 
 	//GstElement *audioQueue = gst_element_factory_make( "queue", "queue_a" );
 	//GstElement *videoQueue = gst_element_factory_make( "queue", "queue_v" );
@@ -133,8 +139,8 @@ MainWindow::~MainWindow( void )
 {
 	m_pipeline->stop();
 
-	delete m_previewAudioComposition;
-	delete m_previewVideoComposition;
+	PreviewUser::cleanup();
+
 	delete m_pipeline;
 	delete m_gstThread;
 }
@@ -143,17 +149,17 @@ MainWindow::~MainWindow( void )
 bool
 MainWindow::addSample( int start, int duration )
 {
-	gst::gnl::FileSource *audio = m_previewAudioComposition->addSource();
+	gst::gnl::FileSource *audio = m_audioPreviewComposition->addSource();
 	audio->setStart( start );
 	audio->setDuration( duration );
 	audio->setFilename( "file:///C:/zelda.mp4" );
-	m_previewAudioComposition->update();
+	m_audioPreviewComposition->update();
 
-	gst::gnl::FileSource *video = m_previewVideoComposition->addSource();
+	gst::gnl::FileSource *video = m_videoPreviewComposition->addSource();
 	video->setStart( start );
 	video->setDuration( duration );
 	video->setFilename( "file:///C:/zelda.mp4" );
-	m_previewVideoComposition->update();
+	m_videoPreviewComposition->update();
 
 	//GstElement *videoSource, *audioSource;
 
@@ -222,8 +228,6 @@ MainWindow::OnAbout( wxCommandEvent &WXUNUSED(event) )
 
 	// Start playing
 	m_filename = m_textControl->GetValue();
-	addSample( 5, 5 );
-	addSample( 0, 5 );
 
 	m_pipeline->play();
 }

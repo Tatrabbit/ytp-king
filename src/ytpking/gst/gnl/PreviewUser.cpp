@@ -14,44 +14,43 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_LNB_SamplesPage_h
-#define __YTPKING_LNB_SamplesPage_h
+#include "PreviewUser.h"
 
-#include <wx/notebook.h>
-#include "../gst/gnl/PreviewUser.h"
+#include "../Pipeline.h"
 
+#include "AudioComposition.h"
+#include "VideoComposition.h"
 
 	namespace ytpking
 	{
-	namespace lnb
+	namespace gst
+	{
+	namespace gnl
 	{
 
+Composition *PreviewUser::m_audioPreviewComposition( NULL );
+Composition *PreviewUser::m_videoPreviewComposition( NULL );
 
-class SourcesToolbar;
-class SamplesTreeCtrl;
 
-
-class SamplesPage :
-	public wxNotebookPage,
-	public gst::gnl::PreviewUser
+void
+PreviewUser::init( Pipeline *pipeline )
 {
-public:
+	m_audioPreviewComposition = new AudioComposition;
+	m_videoPreviewComposition = new VideoComposition;
 
-	SamplesPage( wxWindow *parent );
-
-	SamplesTreeCtrl *m_treeCtrl;
-	SourcesToolbar  *m_toolbar;
-
-	void
-		onButtonAdd( wxCommandEvent& event );
+	m_audioPreviewComposition->addTo( *pipeline );
+	m_videoPreviewComposition->addTo( *pipeline );
+}
 
 
-	wxDECLARE_EVENT_TABLE();
-};
+void
+PreviewUser::cleanup( void )
+{
+	delete m_audioPreviewComposition;
+	delete m_videoPreviewComposition;
+}
 
 
-	} }
 
 
-#endif	
-
+	} } }

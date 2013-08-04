@@ -43,10 +43,10 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
 
 	wxTreeItemId root = AddRoot( "" );
 
-	wxTreeItemId derpItem = AppendItem( root, "Derp" );
+	//wxTreeItemId derpItem = AppendItem( root, "Derp" );
 
-	wxTreeItemId herpItem = AppendItem( derpItem, "Herp" );
-	AppendItem( herpItem, "Poppins", 0 );
+	//wxTreeItemId herpItem = AppendItem( derpItem, "Herp" );
+	//AppendItem( herpItem, "Poppins", 0 );
 }
 
 
@@ -56,22 +56,38 @@ SamplesTreeCtrl::onBeginDrag( wxTreeEvent& event )
 	// It's confusing to drag something, and not see it affected.
 	SelectItem( event.GetItem() );
 
-	// TODO debugging stuff for now
-	SampleDataObject dataObject( "Derp" );
-
-	wxDropSource dropSource( this );
-	dropSource.SetData( dataObject );
-	wxDragResult result = dropSource.DoDragDrop( wxDrag_CopyOnly );
-
-	switch (result)
+	wxTreeItemData *data = GetItemData( event.GetItem() );
+	if ( data )
 	{
-	case wxDragCopy:
-		wxSafeShowMessage( "Derp", "Dragged" );
-		break;
-	
-	default:
-		break;
+		SamplesTreeData *treeData = (SamplesTreeData *)data;
+		SampleDataObject dataObject( GetItemText( event.GetItem() ) );
+
+		dataObject.SetAudioSource( treeData->m_audioSource );
+		dataObject.SetVideoSource( treeData->m_videoSource );
+
+		wxDropSource dropSource( this );
+		dropSource.SetData( dataObject );
+
+		// wxDragResult result = // should I maybe check this?
+		dropSource.DoDragDrop( wxDrag_CopyOnly );
 	}
+}
+
+
+void
+SamplesTreeCtrl::addSample( const char *name, const char *speaker,
+		gst::gnl::FileSource *audioSource,
+		gst::gnl::FileSource *videoSource )
+{
+	SamplesTreeData *data = new SamplesTreeData;
+	data->m_audioSource = NULL;
+	data->m_videoSource = NULL;
+
+	wxTreeItemId root, speakerItem, speechItem;
+	
+	root = GetRootItem();
+	speakerItem = AppendItem( root, speaker );
+	speechItem  = AppendItem( speakerItem, name, -1, -1, data );
 }
 
 

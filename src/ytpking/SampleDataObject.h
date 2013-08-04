@@ -22,6 +22,11 @@
 	namespace ytpking
 	{
 
+namespace gst {
+namespace gnl {
+	class FileSource;
+} }
+
 
 class SampleDataObject :
 	public wxDataObjectSimple
@@ -34,16 +39,32 @@ public:
 	virtual
 		~SampleDataObject( void );
 
-	const char
-		*GetData( void ) const;
+	gst::gnl::FileSource
+		*GetAudioSource( void ) const;
 
 	void
-		SetData( const char *sampleName );
+		SetAudioSource( gst::gnl::FileSource *audioSource );
+
+
+	gst::gnl::FileSource
+		*GetVideoSource( void ) const;
+
+	void
+		SetVideoSource( gst::gnl::FileSource *videoSource );
+
+	const char
+		*GetSampleName( void ) const;
+
+	void
+		SetSampleName( const char *sampleName );
 
 private:
 
 	size_t m_dataSize;
-	char  *m_data;
+
+	char *m_name;
+	gst::gnl::FileSource *m_audioSource;
+	gst::gnl::FileSource *m_videoSource;
 
 	inline void
 		SetFormat( const wxDataFormat &format )

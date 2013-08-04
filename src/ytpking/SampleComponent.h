@@ -14,44 +14,45 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_LNB_SamplesPage_h
-#define __YTPKING_LNB_SamplesPage_h
+#ifndef __YTPKING_SampleComponent_h
+#define __YTPKING_SampleComponent_h
 
-#include <wx/notebook.h>
-#include "../gst/gnl/PreviewUser.h"
+#include <wx/sizer.h>
+#include <wx/dnd.h>
 
 
 	namespace ytpking
 	{
-	namespace lnb
-	{
+
+namespace gst {
+namespace gnl {
+	class FileSource;
+} }
 
 
-class SourcesToolbar;
-class SamplesTreeCtrl;
-
-
-class SamplesPage :
-	public wxNotebookPage,
-	public gst::gnl::PreviewUser
+class SampleComponent :
+	public wxStaticBoxSizer
 {
 public:
 
-	SamplesPage( wxWindow *parent );
+	SampleComponent( wxWindow *parent, const char *name,
+			gst::gnl::FileSource *audio,
+			gst::gnl::FileSource *video );
 
-	SamplesTreeCtrl *m_treeCtrl;
-	SourcesToolbar  *m_toolbar;
+private:
 
-	void
-		onButtonAdd( wxCommandEvent& event );
+	enum EventId
+	{
+		ButtonDelete = 1
+	};
 
+	gst::gnl::FileSource *m_audioSource;
+	gst::gnl::FileSource *m_videoSource;
 
-	wxDECLARE_EVENT_TABLE();
 };
 
 
-	} }
+	}
 
 
-#endif	
-
+#endif

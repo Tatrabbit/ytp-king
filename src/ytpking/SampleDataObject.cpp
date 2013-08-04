@@ -23,10 +23,12 @@
 
 SampleDataObject::SampleDataObject( void ) :
 	wxDataObjectSimple( wxFormatInvalid ),
-	m_dataSize( 0 ),
-	m_data( new char [1] )
+	m_dataSize( 1 ),
+	m_name( new char [1] ),
+	m_audioSource( NULL ),
+	m_videoSource( NULL )
 {
-	m_data[0] = '\0';
+	m_name[0] = '\0';
 
 	wxDataFormat dataFormat;
 	dataFormat.SetId( "asset" );
@@ -36,10 +38,12 @@ SampleDataObject::SampleDataObject( void ) :
 
 SampleDataObject::SampleDataObject( const char *sampleName ) :
 	wxDataObjectSimple( wxFormatInvalid ),
-	m_dataSize( strlen( sampleName ) ),
-	m_data( new char [m_dataSize + 1] )
+	m_dataSize( strlen( sampleName ) + sizeof(void *) * 2 + 1 ),
+	m_name( new char [m_dataSize - sizeof(void *) * 2] ),
+	m_audioSource( NULL ),
+	m_videoSource( NULL )
 {
-	strcpy( m_data, sampleName );
+	strcpy( m_name, sampleName );
 
 	wxDataFormat dataFormat;
 	dataFormat.SetId( "asset" );
@@ -49,26 +53,54 @@ SampleDataObject::SampleDataObject( const char *sampleName ) :
 
 SampleDataObject::~SampleDataObject( void )
 {
-	delete [] m_data;
+	delete [] m_name;
+}
+
+
+gst::gnl::FileSource
+*SampleDataObject::GetAudioSource( void ) const
+{
+	return m_audioSource;
+}
+
+void
+SampleDataObject::SetAudioSource( gst::gnl::FileSource *audioSource )
+{
+	m_audioSource = audioSource;
+}
+
+
+gst::gnl::FileSource
+*SampleDataObject::GetVideoSource( void ) const
+{	
+	return m_videoSource;
+}
+
+void
+SampleDataObject::SetVideoSource( gst::gnl::FileSource *videoSource )
+{
+	m_videoSource = videoSource;
 }
 
 
 const char
-*SampleDataObject::GetData( void ) const
+*SampleDataObject::GetSampleName( void ) const
 {
-	return m_data;
+	return m_name;
 }
 
 
 void
-SampleDataObject::SetData( const char *sampleName )
+SampleDataObject::SetSampleName( const char *sampleName )
 {
-	delete [] m_data;
+	delete [] m_name;
 
-	m_dataSize = strlen( sampleName );
+	int len = strlen( sampleName ) + 1;
+	m_dataSize = len + sizeof(void *) * 2;
 
-	m_data = new char [m_dataSize + 1];
-	strcpy( m_data, sampleName );
+	m_name = new char [len];
+
+	strcpy( m_name, sampleName );
 }
 
 
@@ -84,7 +116,19 @@ SampleDataObject::GetDataSize( void ) const
 bool
 SampleDataObject::GetDataHere( void *buf ) const
 {
-	memcpy( buf, m_data, m_dataSize );
+#ifndef NDEBUG
+	unsigned char *notMyPointer = ((unsigned char*)buf) + GetDataSize();
+	unsigned char notMyData = *notMyPointer;
+#endif
+
+	char *charBuf = (char *)buf;
+
+	memcpy( charBuf, &m_audioSource, sizeof(void *) );
+	memcpy( charBuf + sizeof(void *), &m_videoSource, sizeof(void *) );
+	strcpy( charBuf+ sizeof(void *) * 2, m_name );
+
+	// Let's just be sure I didn't touch other people's things.
+	assert( *notMyPointer == notMyData );
 
 	return true;
 }
@@ -93,12 +137,20 @@ SampleDataObject::GetDataHere( void *buf ) const
 bool
 SampleDataObject::SetData( size_t len, const void *buf )
 {
-	delete [] m_data;
 
-	m_data = new char [len + 1];
-	memcpy( m_data, buf, len );
+	// TODO no need to deal with those crazy buffers, just copy in and out here.
+	delete [] m_name;
 
-	m_data[len] = '\0';
+	char *charBuf = (char *)buf;
+
+	memcpy( &m_audioSource, charBuf, sizeof(void *) );
+	memcpy( &m_videoSource, charBuf + sizeof(void *), sizeof(void *) );
+
+
+	// let's not use strcpy. What if the ending null char is missing?
+	int strSize = len - sizeof(void *) * 2;
+	m_name = new char [strSize];
+	memcpy( m_name, charBuf + sizeof(void *) * 2, strSize );
 
 	m_dataSize = len;
 
