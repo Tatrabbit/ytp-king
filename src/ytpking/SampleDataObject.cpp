@@ -25,8 +25,7 @@ SampleDataObject::SampleDataObject( void ) :
 	wxDataObjectSimple( wxFormatInvalid ),
 	m_dataSize( 1 ),
 	m_name( new char [1] ),
-	m_audioSource( NULL ),
-	m_videoSource( NULL )
+	m_sample( NULL )
 {
 	m_name[0] = '\0';
 
@@ -38,10 +37,9 @@ SampleDataObject::SampleDataObject( void ) :
 
 SampleDataObject::SampleDataObject( const char *sampleName ) :
 	wxDataObjectSimple( wxFormatInvalid ),
-	m_dataSize( strlen( sampleName ) + sizeof(void *) * 2 + 1 ),
-	m_name( new char [m_dataSize - sizeof(void *) * 2] ),
-	m_audioSource( NULL ),
-	m_videoSource( NULL )
+	m_dataSize( strlen( sampleName ) + sizeof(void *) + 1 ),
+	m_name( new char [m_dataSize - sizeof(void *)] ),
+	m_sample( NULL )
 {
 	strcpy( m_name, sampleName );
 
@@ -54,32 +52,6 @@ SampleDataObject::SampleDataObject( const char *sampleName ) :
 SampleDataObject::~SampleDataObject( void )
 {
 	delete [] m_name;
-}
-
-
-gst::gnl::FileSource
-*SampleDataObject::GetAudioSource( void ) const
-{
-	return m_audioSource;
-}
-
-void
-SampleDataObject::SetAudioSource( gst::gnl::FileSource *audioSource )
-{
-	m_audioSource = audioSource;
-}
-
-
-gst::gnl::FileSource
-*SampleDataObject::GetVideoSource( void ) const
-{	
-	return m_videoSource;
-}
-
-void
-SampleDataObject::SetVideoSource( gst::gnl::FileSource *videoSource )
-{
-	m_videoSource = videoSource;
 }
 
 
@@ -96,7 +68,7 @@ SampleDataObject::SetSampleName( const char *sampleName )
 	delete [] m_name;
 
 	int len = strlen( sampleName ) + 1;
-	m_dataSize = len + sizeof(void *) * 2;
+	m_dataSize = len + sizeof(void *);
 
 	m_name = new char [len];
 
@@ -123,9 +95,8 @@ SampleDataObject::GetDataHere( void *buf ) const
 
 	char *charBuf = (char *)buf;
 
-	memcpy( charBuf, &m_audioSource, sizeof(void *) );
-	memcpy( charBuf + sizeof(void *), &m_videoSource, sizeof(void *) );
-	strcpy( charBuf+ sizeof(void *) * 2, m_name );
+	memcpy( charBuf, &m_sample, sizeof(void *) );
+	strcpy( charBuf+ sizeof(void *), m_name );
 
 	// Let's just be sure I didn't touch other people's things.
 	assert( *notMyPointer == notMyData );
@@ -143,14 +114,13 @@ SampleDataObject::SetData( size_t len, const void *buf )
 
 	char *charBuf = (char *)buf;
 
-	memcpy( &m_audioSource, charBuf, sizeof(void *) );
-	memcpy( &m_videoSource, charBuf + sizeof(void *), sizeof(void *) );
+	memcpy( &m_sample, charBuf, sizeof(void *) );
 
 
 	// let's not use strcpy. What if the ending null char is missing?
-	int strSize = len - sizeof(void *) * 2;
+	int strSize = len - sizeof(void *);
 	m_name = new char [strSize];
-	memcpy( m_name, charBuf + sizeof(void *) * 2, strSize );
+	memcpy( m_name, charBuf + sizeof(void *), strSize );
 
 	m_dataSize = len;
 

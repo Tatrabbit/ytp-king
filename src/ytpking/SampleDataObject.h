@@ -22,6 +22,8 @@
 	namespace ytpking
 	{
 
+class Sample;
+
 namespace gst {
 namespace gnl {
 	class FileSource;
@@ -39,18 +41,9 @@ public:
 	virtual
 		~SampleDataObject( void );
 
-	gst::gnl::FileSource
-		*GetAudioSource( void ) const;
 
-	void
-		SetAudioSource( gst::gnl::FileSource *audioSource );
+	Sample *m_sample;
 
-
-	gst::gnl::FileSource
-		*GetVideoSource( void ) const;
-
-	void
-		SetVideoSource( gst::gnl::FileSource *videoSource );
 
 	const char
 		*GetSampleName( void ) const;
@@ -63,8 +56,6 @@ private:
 	size_t m_dataSize;
 
 	char *m_name;
-	gst::gnl::FileSource *m_audioSource;
-	gst::gnl::FileSource *m_videoSource;
 
 	inline void
 		SetFormat( const wxDataFormat &format )

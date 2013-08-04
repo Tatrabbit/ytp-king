@@ -14,45 +14,38 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SampleComponent_h
-#define __YTPKING_SampleComponent_h
+#include "ytpking/Sample.h"
 
-#include <wx/sizer.h>
-#include <wx/dnd.h>
-
+#include "gst/gnl/Composition.h"
+#include "gst/gnl/FileSource.h"
 
 	namespace ytpking
 	{
 
-namespace gst {
-namespace gnl {
-	class FileSource;
-} }
 
-
-class SampleComponent :
-	public wxStaticBoxSizer
+Sample::Sample( const char *filename )  :
+	m_filename( filename ),
+	m_start( 0u ),
+	m_duration( 5u )
 {
-public:
+}
 
-	SampleComponent( wxWindow *parent, const char *name,
-			const gst::gnl::FileSource *audio,
-			const gst::gnl::FileSource *video );
 
-private:
+const gst::gnl::FileSource
+*Sample::addToComposition( gst::gnl::Composition *composition ) const
+{
+	using gst::gnl::FileSource;
+	
+	FileSource *source = composition->addSource();
 
-	enum EventId
-	{
-		ButtonDelete = 1
-	};
+	source->setFilename( m_filename.c_str() );
+	source->setStart( m_start );
+	source->setDuration( m_duration );
 
-	const gst::gnl::FileSource *m_audioSource;
-	const gst::gnl::FileSource *m_videoSource;
+	composition->update();
 
-};
+	return source;
+}
 
 
 	}
-
-
-#endif

@@ -24,8 +24,8 @@
 
 
 SampleComponent::SampleComponent( wxWindow *parent, const char *name,
-		gst::gnl::FileSource *audio,
-		gst::gnl::FileSource *video ) :
+		const gst::gnl::FileSource *audio,
+		const gst::gnl::FileSource *video ) :
 
 	wxStaticBoxSizer( wxLI_HORIZONTAL, parent, name ),
 	m_audioSource( audio ),

@@ -114,6 +114,9 @@
     <ClCompile Include="src\ytpking\gst\gnl\PreviewUser.cpp">
       <Filter>Source Files\gst : GStreamer</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\Sample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\gnl\PreviewUser.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\Sample.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

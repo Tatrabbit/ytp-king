@@ -22,11 +22,25 @@
 #include <wx/dnd.h>
 
 #include "ytpking/SampleDataObject.h"
+#include "ytpking/Sample.h"
 
 	namespace ytpking
 	{
 	namespace lnb
 	{
+
+
+SamplesTreeCtrl::
+SamplesTreeData::SamplesTreeData( char const *filename ) :
+	m_sample( new Sample( filename ) )
+{
+}
+
+SamplesTreeCtrl::
+SamplesTreeData::~SamplesTreeData( void )
+{
+	delete m_sample;
+}
 
 
 SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
@@ -42,11 +56,6 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
 	//AssignImageList( imageList );
 
 	wxTreeItemId root = AddRoot( "" );
-
-	//wxTreeItemId derpItem = AppendItem( root, "Derp" );
-
-	//wxTreeItemId herpItem = AppendItem( derpItem, "Herp" );
-	//AppendItem( herpItem, "Poppins", 0 );
 }
 
 
@@ -62,8 +71,7 @@ SamplesTreeCtrl::onBeginDrag( wxTreeEvent& event )
 		SamplesTreeData *treeData = (SamplesTreeData *)data;
 		SampleDataObject dataObject( GetItemText( event.GetItem() ) );
 
-		dataObject.SetAudioSource( treeData->m_audioSource );
-		dataObject.SetVideoSource( treeData->m_videoSource );
+		dataObject.m_sample = treeData->m_sample;
 
 		wxDropSource dropSource( this );
 		dropSource.SetData( dataObject );
@@ -79,9 +87,7 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 		gst::gnl::FileSource *audioSource,
 		gst::gnl::FileSource *videoSource )
 {
-	SamplesTreeData *data = new SamplesTreeData;
-	data->m_audioSource = NULL;
-	data->m_videoSource = NULL;
+	SamplesTreeData *data = new SamplesTreeData( "file:///C:/zelda.mp4" );
 
 	wxTreeItemId root, speakerItem, speechItem;
 	

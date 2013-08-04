@@ -21,8 +21,7 @@
 #include "SampleDataObject.h"
 #include "SampleComponent.h"
 
-#include "gst/gnl/Composition.h"
-#include "gst/gnl/FileSource.h"
+#include "Sample.h"
 
 
 	namespace ytpking
@@ -47,33 +46,12 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 	if ( GetData() )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
-		//wxSafeShowMessage( _("Derp"), dataObject->GetData() );
 
-		FileSource *audioSource, *videoSource;
-		audioSource = m_audioPreviewComposition->addSource();
-		videoSource = m_videoPreviewComposition->addSource();
+		const FileSource *audioSource, *videoSource;
+		audioSource = dataObject->m_sample->addToComposition( m_audioPreviewComposition );
+		videoSource = dataObject->m_sample->addToComposition( m_videoPreviewComposition );
 
-		//if ( (audioSource = dataObject->GetAudioSource()) )
-		{		
-			audioSource->setStart( 0 );
-
-			audioSource->setDuration( 5 );
-			audioSource->setFilename( "file:///C:/zelda.mp4" );
-
-			m_audioPreviewComposition->update();
-		}
-
-		//if ( (videoSource = dataObject->GetAudioSource()) )
-		{
-			videoSource->setStart( 0 );
-
-			videoSource->setDuration( 5 );
-			videoSource->setFilename( "file:///C:/zelda.mp4" );
-
-			m_videoPreviewComposition->update();
-		}
-
-		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), NULL, NULL );
+		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), audioSource, videoSource );
 
 		m_sizer->Add( component, 0 );
 		m_sizer->Layout();
@@ -92,10 +70,6 @@ TimelineWindow::TimelineWindow( wxWindow *parent ) :
 	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, "Tape Mixer" );
 	SetDropTarget( new TimelineDropTarget( this, sizer ) );
 	SetSizer( sizer );
-	//wxWindow *container = new wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 100 ) );
-	//container->SetOwnBackgroundColour( wxColour( "red" ) );
-
-	//sizer->Add( container, 1, wxEXPAND|wxALL );
 }
 
 

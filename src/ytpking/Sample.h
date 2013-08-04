@@ -14,11 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SampleComponent_h
-#define __YTPKING_SampleComponent_h
+#ifndef __YTPKING_GST_GNL_Sample_h
+#define __YTPKING_GST_GNL_Sample_h
 
-#include <wx/sizer.h>
-#include <wx/dnd.h>
+#include <string>
 
 
 	namespace ytpking
@@ -26,28 +25,23 @@
 
 namespace gst {
 namespace gnl {
+	class Composition;
 	class FileSource;
 } }
 
 
-class SampleComponent :
-	public wxStaticBoxSizer
+class Sample
 {
 public:
+	Sample( const char *filename );
 
-	SampleComponent( wxWindow *parent, const char *name,
-			const gst::gnl::FileSource *audio,
-			const gst::gnl::FileSource *video );
+	std::string m_filename;
 
-private:
+	unsigned int m_start;
+	unsigned int m_duration;
 
-	enum EventId
-	{
-		ButtonDelete = 1
-	};
-
-	const gst::gnl::FileSource *m_audioSource;
-	const gst::gnl::FileSource *m_videoSource;
+	const gst::gnl::FileSource
+		*addToComposition( gst::gnl::Composition *composition) const;
 
 };
 

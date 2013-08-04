@@ -14,11 +14,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_GST_GNL_SamplesTreeCtrl_h
+#define __YTPKING_GST_GNL_SamplesTreeCtrl_h
+
 #include <wx/treectrl.h>
 
 
 	namespace ytpking
 	{
+
+class Sample;
 
 namespace gst {
 namespace gnl {
@@ -50,9 +55,20 @@ private:
 		public wxTreeItemData
 	{
 	public:
+		SamplesTreeData( char const *filename );
+		virtual
+			~SamplesTreeData( void );
+
+	private: // TODO macros for = delete when it becomes available.
+		SamplesTreeData( const SamplesTreeData &c );
+
+		SamplesTreeData
+			&operator=( const SamplesTreeData &c );
+
+	public:
+
 		// TODO constructor, default to NULL
-		gst::gnl::FileSource *m_audioSource;
-		gst::gnl::FileSource *m_videoSource;
+		Sample *m_sample;
 
 	};
 
@@ -63,3 +79,6 @@ private:
 
 
 	} }
+
+
+#endif
