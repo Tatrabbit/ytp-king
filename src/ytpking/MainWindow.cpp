@@ -17,9 +17,9 @@
 #include "ytpking/MainWindow.h"
 
 #include <gst/gst.h>
-#include <gst/interfaces/xoverlay.h>
 
 #include "gst/GstreamerThread.h"
+#include "gst/Pipeline.h"
 
 #include "lnb/LibrarySizer.h"
 #include "TimelineSizer.h"
@@ -88,8 +88,7 @@ MainWindow::MainWindow( void ) :
 	CreateStatusBar();
 	SetStatusText( "Roll your cursor over something and look here for help." );
 
-	// Build the pipeline
-	m_gstPipeline = gst_pipeline_new( "pipeline" );
+	m_pipeline = new gst::Pipeline( m_moviePanel );
 
 	GstElement *audioQueue = gst_element_factory_make( "queue", "queue_a" );
 	GstElement *videoQueue = gst_element_factory_make( "queue", "queue_v" );
@@ -106,7 +105,12 @@ MainWindow::MainWindow( void ) :
 	GstElement *audioSink  = gst_element_factory_make( "autoaudiosink", "audio-sink" );
 	GstElement *videoSink  = gst_element_factory_make( "autovideosink", "video-sink" );
 
-	gst_bin_add_many( GST_BIN( m_gstPipeline ), m_audioComposition, m_videoComposition, audioQueue, videoQueue, videoSink, audioSink, NULL );
+	m_pipeline->add( m_audioComposition );
+	m_pipeline->add( m_videoComposition );
+	m_pipeline->add( audioQueue );
+	m_pipeline->add( videoQueue );
+	m_pipeline->add( videoSink );
+	m_pipeline->add( audioSink );
 
 
 	if ( !gst_element_link( audioQueue, audioSink ) )
@@ -114,18 +118,12 @@ MainWindow::MainWindow( void ) :
 
 	if ( !gst_element_link( videoQueue, videoSink ) )
 		g_printerr ("Video Queue/Sink could not be linked.\n");
-
-	// connect to the x-window callback
-	GstBus *bus = gst_element_get_bus( m_gstPipeline );
-	gst_bus_enable_sync_message_emission( bus );
-	gst_bus_add_signal_watch( bus );
-
-	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, this );
 }
 
 
 MainWindow::~MainWindow( void )
 {
+	delete m_pipeline;
 	delete m_gstThread;
 }
 
@@ -185,11 +183,7 @@ addSample_RETURN_FALSE:
 void
 MainWindow::OnQuit( wxCommandEvent &WXUNUSED(event) )
 {
-	gst_element_set_state( m_gstPipeline, GST_STATE_NULL );
-	gst_object_unref( m_gstPipeline );
-
-	
-
+	m_pipeline->stop();
 	Close( true );
 }
 
@@ -206,7 +200,7 @@ MainWindow::OnAbout( wxCommandEvent &WXUNUSED(event) )
 	addSample( 0, 2, 4 );
 	addSample( 4, 10, 4 );
 
-	gst_element_set_state( m_gstPipeline, GST_STATE_PLAYING );
+	m_pipeline->play();
 }
 
 
@@ -226,24 +220,6 @@ void MainWindow::onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink)
 	}
 	else
 		g_print( "Skipping incompatible pad.\n" );
-}
-
-
-void MainWindow::onSync( GstBus *bus, GstMessage *message, gpointer data )
-{
-	const GstStructure *structure = gst_message_get_structure( message );
-	const char *structureName = gst_structure_get_name( structure );
-
-	g_print( "Called '%s'\n", structureName );
-	
-	MainWindow *frame = (MainWindow *)data;
-
-	if ( strcmp( structureName, "prepare-xwindow-id" ) == 0 )
-	{
-		GstObject *imagesink = GST_MESSAGE_SRC( message );
-		g_object_set( imagesink, "force-aspect-ratio", true, NULL );
-		gst_x_overlay_set_xwindow_id( GST_X_OVERLAY( imagesink ), (gulong)frame->m_moviePanel->GetHWND() );
-	}
 }
 
 

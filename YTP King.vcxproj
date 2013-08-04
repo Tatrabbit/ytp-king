@@ -15,6 +15,7 @@
     <ClCompile Include="src\ytpking\Application.cpp" />
     <ClCompile Include="src\ytpking\EndFrameSpinCtrl.cpp" />
     <ClCompile Include="src\ytpking\gst\GstreamerThread.cpp" />
+    <ClCompile Include="src\ytpking\gst\Pipeline.cpp" />
     <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp" />
     <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\ytpking\EndFrameSpinCtrl.h" />
     <ClInclude Include="src\ytpking\gst\GstreamerThread.h" />
+    <ClInclude Include="src\ytpking\gst\Pipeline.h" />
     <ClInclude Include="src\ytpking\lnb\SamplesPage.h" />
     <ClInclude Include="src\ytpking\lnb\SamplesTreeCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\SourcesListCtrl.h" />

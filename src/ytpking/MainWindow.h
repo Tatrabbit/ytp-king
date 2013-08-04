@@ -21,12 +21,7 @@
 
 
 typedef struct  _GstElement   GstElement;
-typedef struct  _GstMessage   GstMessage;
-typedef struct  _GThread      GThread;
 typedef struct  _GstPad       GstPad;
-typedef struct  _GstBus       GstBus;
-
-typedef void    *gpointer;
 
 
 	namespace ytpking
@@ -34,6 +29,7 @@ typedef void    *gpointer;
 
 namespace gst {
 	class GstreamerThread;
+	class Pipeline;
 }
 
 
@@ -76,9 +72,6 @@ public:
 	static void
 		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
 
-	static void
-		onSync( GstBus *bus, GstMessage *message, gpointer data );
-
 	//// END GStreamer Events
 
 private:
@@ -88,8 +81,6 @@ private:
 		Quit = 1,
 		About
 	};
-
-	GstElement *m_gstPipeline;
 
 	GstElement *m_audioComposition;
 	GstElement *m_videoComposition;
@@ -101,6 +92,7 @@ private:
 	wxTextCtrl *m_textControl;
 
 	gst::GstreamerThread *m_gstThread;
+	gst::Pipeline        *m_pipeline;
 
 	bool
 		addSample( int start, int mediaStart, int duration );

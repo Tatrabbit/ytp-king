@@ -93,6 +93,9 @@
     <ClCompile Include="src\ytpking\gst\GstreamerThread.cpp">
       <Filter>Source Files\gst : GStreamer</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\gst\Pipeline.cpp">
+      <Filter>Source Files\gst : GStreamer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\GstreamerThread.h">
+      <Filter>Header Files\gst : GStreamer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\Pipeline.h">
       <Filter>Header Files\gst : GStreamer</Filter>
     </ClInclude>
   </ItemGroup>
