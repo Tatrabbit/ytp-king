@@ -14,9 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_AudioComposition_h
-#define __YTPKING_GST_GNL_AudioComposition_h
-
 #include "Composition.h"
 
 
@@ -29,12 +26,12 @@
 
 class FileSource;
 
-class AudioComposition : 
+class VideoComposition : 
 	public Composition
 {
 public:
 
-	AudioComposition( void );
+	VideoComposition( void );
 
 public:
 
@@ -44,15 +41,9 @@ public:
 
 private:
 
-	// TODO add some necessary basic processing like audioconvert and audioresample
-	//      so it doesn't sound like crud for no reason.
-	//GstElement *m_convertElement;
-	//GstElement *m_resampleElement;
 	//GstElement *m_queueElement;
 	GstElement *m_sinkElement;
 
 };
 
 	} } }
-
-#endif

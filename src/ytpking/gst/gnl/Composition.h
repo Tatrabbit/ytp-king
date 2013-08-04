@@ -14,6 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_GST_GNL_Composition_h
+#define __YTPKING_GST_GNL_Composition_h
+
+
 #include <string>
 #include <list>
 
@@ -80,3 +84,5 @@ private:
 };
 
 	} } }
+
+#endif

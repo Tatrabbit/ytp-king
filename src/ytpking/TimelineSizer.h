@@ -14,6 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_TimelineSizer_h
+#define __YTPKING_TimelineSizer_h
+
 #include <wx/sizer.h>
 #include <wx/dnd.h>
 
@@ -55,3 +58,6 @@ private:
 
 
 	}
+
+
+#endif

@@ -105,6 +105,9 @@
     <ClCompile Include="src\ytpking\gst\gnl\FileSource.cpp">
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\VideoComposition.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -171,6 +174,9 @@
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\gnl\FileSource.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\VideoComposition.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
   </ItemGroup>

@@ -100,14 +100,16 @@ Composition::deleteSource( FileSource *source )
 void
 Composition::update( void )
 {
-	__int64 mediaStart = 0i64;
+	__int64 start = 0i64;
 
 	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
 	{
-		g_object_set( (*it)->m_element, "media-start", mediaStart * GST_SECOND, NULL );
+		g_object_set( (*it)->m_element, "start", start * GST_SECOND, NULL );
+
+		// TODO account for (*it)->m_speed
 		g_object_set( (*it)->m_element, "media-duration", (*it)->m_duration * GST_SECOND, NULL );
 
-		mediaStart += (*it)->m_duration;
+		start += (*it)->m_duration;
 	}
 }
 

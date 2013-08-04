@@ -14,10 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_AudioComposition_h
-#define __YTPKING_GST_GNL_AudioComposition_h
+#include "VideoComposition.h"
 
-#include "Composition.h"
+#include <gst/gst.h>
+
+#include "../Pipeline.h"
 
 
 	namespace ytpking
@@ -27,32 +28,25 @@
 	namespace gnl
 	{
 
-class FileSource;
 
-class AudioComposition : 
-	public Composition
+VideoComposition::VideoComposition( void ) :
+	//m_queueElement( gst_element_factory_make( "queue",         NULL ) ),
+	m_sinkElement ( gst_element_factory_make( "autovideosink", NULL ) )
 {
-public:
+	//if ( !gst_element_link( m_queueElement, m_sinkElement ) )
+	//	GST_ERROR( "Audio Queue/Sink could not be linked.\n" );
 
-	AudioComposition( void );
+	g_signal_connect( m_selfElement, "pad-added", G_CALLBACK( onPadAdded ), m_sinkElement );
+	
+	g_object_set( m_selfElement, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 
+}
 
-public:
 
-	void
-		addTo( Pipeline &pipeline )
-		override;
+void
+VideoComposition::addTo( Pipeline &pipeline )
+{
+	gst_bin_add_many( GST_BIN( *pipeline ), m_selfElement, m_sinkElement, NULL );
+}
 
-private:
-
-	// TODO add some necessary basic processing like audioconvert and audioresample
-	//      so it doesn't sound like crud for no reason.
-	//GstElement *m_convertElement;
-	//GstElement *m_resampleElement;
-	//GstElement *m_queueElement;
-	GstElement *m_sinkElement;
-
-};
 
 	} } }
-
-#endif

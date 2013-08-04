@@ -21,6 +21,7 @@
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
 #include "gst/gnl/AudioComposition.h"
+#include "gst/gnl/VideoComposition.h"
 #include "gst/gnl/FileSource.h"
 
 #include "lnb/LibrarySizer.h"
@@ -39,7 +40,8 @@ unsigned int
 MainWindow::MainWindow( void ) :
 	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
 	m_gstThread( new gst::GstreamerThread ),
-	m_previewAudioComposition( new gst::gnl::AudioComposition )
+	m_previewAudioComposition( new gst::gnl::AudioComposition ),
+	m_previewVideoComposition( new gst::gnl::VideoComposition )
 {
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
@@ -94,6 +96,7 @@ MainWindow::MainWindow( void ) :
 	m_pipeline                = new gst::Pipeline( m_moviePanel );
 
 	m_previewAudioComposition->addTo( *m_pipeline );
+	m_previewVideoComposition->addTo( *m_pipeline );
 
 	//GstElement *audioQueue = gst_element_factory_make( "queue", "queue_a" );
 	//GstElement *videoQueue = gst_element_factory_make( "queue", "queue_v" );
@@ -128,19 +131,29 @@ MainWindow::MainWindow( void ) :
 
 MainWindow::~MainWindow( void )
 {
+	m_pipeline->stop();
+
 	delete m_previewAudioComposition;
+	delete m_previewVideoComposition;
 	delete m_pipeline;
 	delete m_gstThread;
 }
 
 
 bool
-MainWindow::addSample( int start, int mediaStart, int duration )
+MainWindow::addSample( int start, int duration )
 {
 	gst::gnl::FileSource *audio = m_previewAudioComposition->addSource();
-	audio->setDuration( 10 );
+	audio->setStart( start );
+	audio->setDuration( duration );
 	audio->setFilename( "file:///C:/zelda.mp4" );
 	m_previewAudioComposition->update();
+
+	gst::gnl::FileSource *video = m_previewVideoComposition->addSource();
+	video->setStart( start );
+	video->setDuration( duration );
+	video->setFilename( "file:///C:/zelda.mp4" );
+	m_previewVideoComposition->update();
 
 	//GstElement *videoSource, *audioSource;
 
@@ -209,8 +222,8 @@ MainWindow::OnAbout( wxCommandEvent &WXUNUSED(event) )
 
 	// Start playing
 	m_filename = m_textControl->GetValue();
-	addSample( 0, 2, 4 );
-	//addSample( 4, 10, 4 );
+	addSample( 5, 5 );
+	addSample( 0, 5 );
 
 	m_pipeline->play();
 }

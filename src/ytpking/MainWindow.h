@@ -29,6 +29,7 @@ namespace gst {
 	
 	namespace gnl {
 		class AudioComposition;
+		class VideoComposition;
 	}
 }
 
@@ -87,9 +88,10 @@ private:
 	gst::Pipeline              *m_pipeline;
 
 	gst::gnl::AudioComposition *m_previewAudioComposition;
+	gst::gnl::VideoComposition *m_previewVideoComposition;
 
 	bool
-		addSample( int start, int mediaStart, int duration );
+		addSample( int start, int duration );
 
 	wxDECLARE_EVENT_TABLE();
 

@@ -54,7 +54,7 @@ FileSource::setFilename( const char *filename )
 void
 FileSource::setStart( __int64 startTime )
 {
-	g_object_set( m_element, "start", (m_start = startTime) * GST_SECOND, NULL );
+	g_object_set( m_element, "media-start", (m_start = startTime) * GST_SECOND, NULL );
 }
 
 
