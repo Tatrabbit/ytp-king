@@ -45,6 +45,11 @@ public:
 	int
 		getEnd( void ) const;
 
+	const char
+		*getSpeakerName( void ) const;
+	void
+		setSpeakerName( const char *speakerName );
+
 	void
 		updateConstraints( void );
 

@@ -67,6 +67,21 @@ SamplePropertiesSizer::getEnd( void ) const
 }
 
 
+const char
+*SamplePropertiesSizer::getSpeakerName( void ) const
+{
+	return m_speakerName->GetValue();
+}
+
+
+void
+SamplePropertiesSizer::setSpeakerName( const char *speakerName )
+{
+	m_speakerName->ChangeValue( speakerName );
+	m_speakerName->SetInsertionPointEnd();
+}
+
+
 void
 SamplePropertiesSizer::updateConstraints( void )
 {

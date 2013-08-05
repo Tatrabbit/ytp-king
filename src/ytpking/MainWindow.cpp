@@ -145,14 +145,14 @@ MainWindow::onAbout( wxCommandEvent &WXUNUSED(event) )
 void
 MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 {
-	wxTreeItemId id =  event.GetItem();
+	wxTreeItemId selectedItem =  event.GetItem();
 
-	if ( !id.IsOk() )
+	if ( !selectedItem.IsOk() )
 		return;
 
-	wxTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
+	lnb::SamplesTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
 
-	wxTreeItemData *data = tree->GetItemData( id );
+	wxTreeItemData *data = tree->GetItemData( selectedItem );
 
 	if ( data )
 	{
@@ -169,6 +169,11 @@ MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 
 		m_samplePropertiesSizer->setStart( start );
 		m_samplePropertiesSizer->setEnd( end );
+
+		wxTreeItemId speakerItem = tree->getSpeaker( selectedItem );
+
+		if ( speakerItem.IsOk() )
+			m_samplePropertiesSizer->setSpeakerName( tree->GetItemText( speakerItem ) );
 	}
 	else
 	{
