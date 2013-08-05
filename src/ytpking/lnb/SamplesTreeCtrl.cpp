@@ -103,6 +103,20 @@ SamplesTreeCtrl::onBeginEditLabel( wxTreeEvent &event )
 
 
 void
+SamplesTreeCtrl::onCollapsing( wxTreeEvent &event )
+{
+	wxTreeItemId item = event.GetItem();
+
+	wxTreeItemData *data = GetItemData( item );
+	if ( !data ) // Prevent collapsing of speakers
+	{
+		event.Veto();
+		return;
+	}
+}
+
+
+void
 SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 		gst::gnl::FileSource *audioSource,
 		gst::gnl::FileSource *videoSource )
@@ -129,6 +143,9 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 
 	speakerItem = AppendItem( root, speaker );
 	AppendItem( speakerItem, name, -1, -1, data );
+
+	Expand( speakerItem );
+
 }
 
 
@@ -136,6 +153,7 @@ wxBEGIN_EVENT_TABLE( SamplesTreeCtrl, wxTreeCtrl )
 
 	EVT_TREE_BEGIN_DRAG( wxID_ANY, onBeginDrag  )
 	EVT_TREE_BEGIN_LABEL_EDIT( wxID_ANY, onBeginEditLabel )
+	EVT_TREE_ITEM_COLLAPSING( wxID_ANY, onCollapsing )
 
 wxEND_EVENT_TABLE()
 

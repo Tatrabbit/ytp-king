@@ -43,9 +43,10 @@ public:
 
 	void
 		onBeginDrag( wxTreeEvent &event );
-
 	void
 		onBeginEditLabel( wxTreeEvent &event );
+	void
+		onCollapsing( wxTreeEvent &event );
 
 	void
 		addSample( const char *name, const char *speaker,
