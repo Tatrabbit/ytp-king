@@ -44,6 +44,7 @@ SampleComponent::SampleComponent( wxWindow *parent, const char *name,
 	SetSizer( sizer );
 }
 
+
 void
 SampleComponent::onButtonDelete( wxCommandEvent& event )
 {
@@ -55,7 +56,6 @@ SampleComponent::onButtonDelete( wxCommandEvent& event )
 	
 	Destroy();
 }
-
 
 
 

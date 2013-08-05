@@ -45,6 +45,9 @@ public:
 		onBeginDrag( wxTreeEvent &event );
 
 	void
+		onBeginEditLabel( wxTreeEvent &event );
+
+	void
 		addSample( const char *name, const char *speaker,
 				gst::gnl::FileSource *audioSource,
 				gst::gnl::FileSource *videoSource );

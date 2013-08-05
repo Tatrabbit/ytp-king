@@ -46,7 +46,7 @@ SamplesTreeData::~SamplesTreeData( void )
 SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	wxTreeCtrl( parent, samplesId, wxDefaultPosition, wxDefaultSize,
 		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
-				wxTR_ROW_LINES|wxTR_HIDE_ROOT)
+			wxTR_ROW_LINES|wxTR_HIDE_ROOT|wxTR_EDIT_LABELS)
 {
 	// TODO Documentation says there must be an image list for item dragging in MSW.
 	//      Does this still apply?
@@ -81,6 +81,26 @@ SamplesTreeCtrl::onBeginDrag( wxTreeEvent& event )
 	}
 }
 
+	
+void
+SamplesTreeCtrl::onBeginEditLabel( wxTreeEvent &event )
+{
+	wxTreeItemId item = event.GetItem();
+
+	if ( !item.IsOk() )
+	{
+		event.Veto();
+		return;
+	}
+
+	wxTreeItemData *data = GetItemData( item );
+	if ( !data )
+	{
+		event.Veto();
+		return;
+	}
+}
+
 
 void
 SamplesTreeCtrl::addSample( const char *name, const char *speaker,
@@ -100,6 +120,7 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 wxBEGIN_EVENT_TABLE( SamplesTreeCtrl, wxTreeCtrl )
 
 	EVT_TREE_BEGIN_DRAG( wxID_ANY, onBeginDrag  )
+	EVT_TREE_BEGIN_LABEL_EDIT( wxID_ANY, onBeginEditLabel )
 
 wxEND_EVENT_TABLE()
 
