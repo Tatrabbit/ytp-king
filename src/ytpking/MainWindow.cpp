@@ -23,6 +23,8 @@
 #include <wx/treectrl.h>
 #include <wx/spinctrl.h>
 
+#include "ytpking/DataFile.h"
+
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
 #include "gst/gnl/AudioComposition.h"
@@ -50,6 +52,16 @@ MainWindow::MainWindow( void ) :
 	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
 	m_gstThread( new gst::GstreamerThread )
 {
+	m_moviePanel = new wxWindow( this, wxID_ANY );
+	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
+
+	m_pipeline = new gst::Pipeline( m_moviePanel );
+
+	PreviewUser::init( m_pipeline );
+
+	// Get the folder save path
+	DataFile::init();
+
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
@@ -84,9 +96,6 @@ MainWindow::MainWindow( void ) :
 
 	movieSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
-	m_moviePanel = new wxWindow( this, wxID_ANY );
-	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
-
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
 	movieSizer->Add( m_timelineWindow, 0, wxALL|wxEXPAND );
 
@@ -102,10 +111,6 @@ MainWindow::MainWindow( void ) :
 
 	CreateStatusBar();
 	SetStatusText( "Roll your cursor over something and look here for help." );
-
-	m_pipeline = new gst::Pipeline( m_moviePanel );
-
-	PreviewUser::init( m_pipeline );
 }
 
 

@@ -37,6 +37,9 @@
     <Filter Include="Header Files\gst : GStreamer\gnl : GNonlin">
       <UniqueIdentifier>{f5f33382-63e6-49f2-88ec-84135ae9c87d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\utf-8">
+      <UniqueIdentifier>{26568220-46c2-4f4c-8598-095a99a6afaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -111,6 +114,12 @@
     <ClCompile Include="src\ytpking\Sample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\DataFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\SamplesDataFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -183,6 +192,24 @@
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\Sample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utf8.h">
+      <Filter>Header Files\utf-8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utf8\unchecked.h">
+      <Filter>Header Files\utf-8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utf8\checked.h">
+      <Filter>Header Files\utf-8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utf8\core.h">
+      <Filter>Header Files\utf-8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\DataFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\SamplesDataFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

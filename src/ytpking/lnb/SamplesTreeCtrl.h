@@ -23,6 +23,8 @@
 	namespace ytpking
 	{
 
+class SamplesDataFile;
+
 class Sample;
 
 namespace gst {
@@ -87,6 +89,9 @@ public:
 
 	};
 
+private:
+
+	SamplesDataFile *m_samplesDataFile;
 
 	wxDECLARE_EVENT_TABLE();
 

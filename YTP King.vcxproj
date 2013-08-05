@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ytpking\Application.cpp" />
+    <ClCompile Include="src\ytpking\DataFile.cpp" />
     <ClCompile Include="src\ytpking\gst\gnl\AudioComposition.cpp" />
     <ClCompile Include="src\ytpking\gst\gnl\Composition.cpp" />
     <ClCompile Include="src\ytpking\gst\gnl\FileSource.cpp" />
@@ -33,12 +34,18 @@
     <ClCompile Include="src\ytpking\SampleComponent.cpp" />
     <ClCompile Include="src\ytpking\SampleDataObject.cpp" />
     <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp" />
+    <ClCompile Include="src\ytpking\SamplesDataFile.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\utf8.h" />
+    <ClInclude Include="src\utf8\checked.h" />
+    <ClInclude Include="src\utf8\core.h" />
+    <ClInclude Include="src\utf8\unchecked.h" />
+    <ClInclude Include="src\ytpking\DataFile.h" />
     <ClInclude Include="src\ytpking\gst\gnl\AudioComposition.h" />
     <ClInclude Include="src\ytpking\gst\gnl\Composition.h" />
     <ClInclude Include="src\ytpking\gst\gnl\FileSource.h" />
@@ -59,6 +66,7 @@
     <ClInclude Include="src\ytpking\SampleComponent.h" />
     <ClInclude Include="src\ytpking\SampleDataObject.h" />
     <ClInclude Include="src\ytpking\SamplePropertiesSizer.h" />
+    <ClInclude Include="src\ytpking\SamplesDataFile.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
   </ItemGroup>

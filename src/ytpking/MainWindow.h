@@ -14,6 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_MainWindow_h
+#define __YTPKING_MainWindow_h
+
 #include <wx/frame.h>
 #include "gst/gnl/PreviewUser.h"
 
@@ -25,8 +28,10 @@
 
 class wxTreeEvent;
 
+
 	namespace ytpking
 	{
+
 
 class SamplePropertiesSizer;
 
@@ -100,6 +105,7 @@ private:
 		SampleSpinEndFrame,
 		SampleTextSpeakerName
 	};
+
 	wxSizer *m_mainSizer;
 	wxSizer *m_sampleAndMovieSizer;
 
@@ -124,3 +130,6 @@ private:
 
 
 	}
+
+
+#endif

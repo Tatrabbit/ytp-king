@@ -23,6 +23,7 @@
 
 #include "ytpking/SampleDataObject.h"
 #include "ytpking/Sample.h"
+#include "ytpking/SamplesDataFile.h"
 
 	namespace ytpking
 	{
@@ -56,6 +57,10 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	//AssignImageList( imageList );
 
 	wxTreeItemId root = AddRoot( "" );
+
+	m_samplesDataFile = new SamplesDataFile( this );
+
+	m_samplesDataFile->loadAll();
 }
 
 
@@ -134,6 +139,8 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 	}
 
 	Expand( speakerItem );
+
+	m_samplesDataFile->addSample( name, speaker );
 }
 
 
@@ -234,6 +241,8 @@ SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechI
 			return true;
 		}
 	}
+
+	return false;
 }
 
 
