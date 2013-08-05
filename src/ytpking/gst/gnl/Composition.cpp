@@ -92,6 +92,8 @@ Composition::deleteSource( const FileSource *source )
 	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
 		if ( source == *it )
 		{
+			gst_bin_remove( GST_BIN( m_selfElement ), source->m_element );
+
 			delete *it;
 			m_sources.erase( it );
 			break;
