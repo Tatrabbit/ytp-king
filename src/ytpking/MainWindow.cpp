@@ -163,9 +163,12 @@ MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 		m_sampleAndMovieSizer->Layout();
 
 		int start = treeData->m_sample->m_start;
+		int end   = start + treeData->m_sample->m_duration;
+
+		m_samplePropertiesSizer->updateConstraints( start, end );
 
 		m_samplePropertiesSizer->setStart( start );
-		m_samplePropertiesSizer->setEnd( start + treeData->m_sample->m_duration );
+		m_samplePropertiesSizer->setEnd( end );
 	}
 	else
 	{
@@ -177,12 +180,6 @@ MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 void
 MainWindow::onSpinSamplePropertiesStartChange( wxSpinEvent& event )
 {
-	/*if ( event.GetInt() > 5 )
-	{
-		event.Veto();
-		return;
-	}*/
-
 	wxTreeCtrl *tree          =  m_librarySizer->getSamplesTreeCtrl();
 	wxTreeItemId selectedItem = tree->GetSelection();
 

@@ -53,23 +53,15 @@ SampleComponent::onButtonDelete( wxCommandEvent& event )
 	m_audioPreviewComposition->update();
 	m_videoPreviewComposition->update();
 	
-	Close();
-	m_parent->GetSizer()->Layout();
-}
-
-
-void
-SampleComponent::onClose( wxCloseEvent& event )
-{
 	Destroy();
-	m_parent->Layout();
 }
+
+
 
 
 BEGIN_EVENT_TABLE( SampleComponent, wxWindow )
 	
 	EVT_BUTTON( EventId::ButtonDelete, onButtonDelete )
-	EVT_CLOSE( onClose )
 
 END_EVENT_TABLE()
 

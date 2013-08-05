@@ -43,6 +43,9 @@ public:
 	void
 		updateConstraints( void );
 
+	void
+		updateConstraints( int start, int end );
+
 private:
 
 	wxSpinCtrl *m_startFrameSpinCtrl;

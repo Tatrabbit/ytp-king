@@ -56,9 +56,6 @@ private:
 	void
 		onButtonDelete( wxCommandEvent& event );
 
-	void
-		onClose( wxCloseEvent& event );
-
 
 	wxDECLARE_EVENT_TABLE();
 
