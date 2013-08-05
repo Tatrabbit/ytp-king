@@ -73,4 +73,17 @@ TimelineWindow::TimelineWindow( wxWindow *parent ) :
 }
 
 
+void
+TimelineWindow::onUpdate( wxUpdateUIEvent& event )
+{
+	Layout();
+}
+
+
+BEGIN_EVENT_TABLE( TimelineWindow, wxWindow )
+
+	EVT_UPDATE_UI( wxID_ANY, onUpdate )
+
+END_EVENT_TABLE()
+
 	}

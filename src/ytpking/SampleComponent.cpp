@@ -16,8 +16,11 @@
 */
 #include "ytpking/SampleComponent.h"
 
+#include <wx/sizer.h>
 #include <wx/button.h>
+#include <wx/log.h>
 
+#include "gst/gnl/Composition.h"
 
 	namespace ytpking
 	{
@@ -27,14 +30,48 @@ SampleComponent::SampleComponent( wxWindow *parent, const char *name,
 		const gst::gnl::FileSource *audio,
 		const gst::gnl::FileSource *video ) :
 
-	wxStaticBoxSizer( wxLI_HORIZONTAL, parent, name ),
+	wxWindow( parent, wxID_ANY ),
+	m_parent( parent ),
 	m_audioSource( audio ),
 	m_videoSource( video )
 {
-	wxButton *button = new wxButton( parent, EventId::ButtonDelete, "Delete" );
+	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, name );
 
-	Add( button, 0 );
+	wxButton *button = new wxButton( this, EventId::ButtonDelete, "Delete" );
+
+	sizer->Add( button, 0 );
+
+	SetSizer( sizer );
 }
+
+void
+SampleComponent::onButtonDelete( wxCommandEvent& event )
+{
+	m_audioPreviewComposition->deleteSource( m_audioSource );
+	m_videoPreviewComposition->deleteSource( m_videoSource );
+
+	m_audioPreviewComposition->update();
+	m_videoPreviewComposition->update();
+	
+	Close();
+	m_parent->GetSizer()->Layout();
+}
+
+
+void
+SampleComponent::onClose( wxCloseEvent& event )
+{
+	Destroy();
+	m_parent->Layout();
+}
+
+
+BEGIN_EVENT_TABLE( SampleComponent, wxWindow )
+	
+	EVT_BUTTON( EventId::ButtonDelete, onButtonDelete )
+	EVT_CLOSE( onClose )
+
+END_EVENT_TABLE()
 
 
 	}

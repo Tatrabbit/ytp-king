@@ -17,8 +17,9 @@
 #ifndef __YTPKING_SampleComponent_h
 #define __YTPKING_SampleComponent_h
 
-#include <wx/sizer.h>
+#include <wx/window.h>
 #include <wx/dnd.h>
+#include "gst/gnl/PreviewUser.h"
 
 
 	namespace ytpking
@@ -31,7 +32,8 @@ namespace gnl {
 
 
 class SampleComponent :
-	public wxStaticBoxSizer
+	public wxWindow,
+	public gst::gnl::PreviewUser
 {
 public:
 
@@ -41,6 +43,8 @@ public:
 
 private:
 
+	wxWindow *m_parent;
+
 	enum EventId
 	{
 		ButtonDelete = 1
@@ -48,6 +52,15 @@ private:
 
 	const gst::gnl::FileSource *m_audioSource;
 	const gst::gnl::FileSource *m_videoSource;
+
+	void
+		onButtonDelete( wxCommandEvent& event );
+
+	void
+		onClose( wxCloseEvent& event );
+
+
+	wxDECLARE_EVENT_TABLE();
 
 };
 

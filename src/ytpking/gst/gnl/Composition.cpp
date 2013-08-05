@@ -73,25 +73,27 @@ FileSource
 {
 	FileSource *source = new FileSource;
 
-	m_sources.push_back( source );
-
 	if ( !gst_bin_add( GST_BIN( m_selfElement ), source->m_element ) )
 	{
 		delete source;
 		return NULL;
 	}
 	else
+	{
+		m_sources.push_back( source );
 		return source;
+	}
 }
 
 
 void
-Composition::deleteSource( FileSource *source )
+Composition::deleteSource( const FileSource *source )
 {
 	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
 		if ( source == *it )
 		{
 			delete *it;
+			m_sources.erase( it );
 			break;
 		}
 }

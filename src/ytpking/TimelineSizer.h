@@ -60,6 +60,12 @@ private:
 		wxSizer  *m_sizer;
 
 	};
+
+
+	void
+		onUpdate( wxUpdateUIEvent& event );
+
+	wxDECLARE_EVENT_TABLE();
 	
 };
 

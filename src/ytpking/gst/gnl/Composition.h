@@ -64,7 +64,7 @@ public:
 		*addSource( void );
 
 	void
-		deleteSource( FileSource *source );
+		deleteSource( const FileSource *source );
 
 	void
 		update( void );
