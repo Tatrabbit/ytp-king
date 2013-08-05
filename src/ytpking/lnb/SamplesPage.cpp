@@ -48,12 +48,7 @@ SamplesPage::SamplesPage( wxWindow *parent, int samplesId ) :
 void
 SamplesPage::onButtonAdd( wxCommandEvent& )
 {
-	//gst::gnl::FileSource *audioSource, *videoSource;
-
-	//m_audioPreviewComposition->update();
-	//m_videoPreviewComposition->update();
-
-	m_treeCtrl->addSample( "Derp", "Herp", NULL, NULL );
+	m_treeCtrl->addSample( "Speech", "Dick Johnson", NULL, NULL );
 }
 
 wxBEGIN_EVENT_TABLE( SamplesPage, wxNotebookPage )

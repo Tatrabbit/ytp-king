@@ -109,11 +109,26 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 {
 	SamplesTreeData *data = new SamplesTreeData( "file:///C:/zelda.mp4" );
 
-	wxTreeItemId root, speakerItem, speechItem;
+	wxTreeItemId root, speakerItem;
 	
 	root = GetRootItem();
+
+	wxTreeItemIdValue cookie;
+
+	speakerItem = GetFirstChild( root, cookie );
+	while( speakerItem.IsOk() )
+	{
+		if ( strcmp( GetItemText( speakerItem ), speaker ) == 0 )
+		{
+			AppendItem( speakerItem, name, -1, -1, data );
+			return;
+		}
+
+		speakerItem = GetNextChild( root, cookie );
+	}
+
 	speakerItem = AppendItem( root, speaker );
-	speechItem  = AppendItem( speakerItem, name, -1, -1, data );
+	AppendItem( speakerItem, name, -1, -1, data );
 }
 
 
