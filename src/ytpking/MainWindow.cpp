@@ -193,9 +193,12 @@ MainWindow::onSpinSamplePropertiesStartChange( wxSpinEvent& event )
 		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
 		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
 
-		int end = m_samplePropertiesSizer->getEnd();
+		int start    = event.GetInt();
+		int end      = m_samplePropertiesSizer->getEnd();
+		int duration = end - start;
 
-		treeData->m_sample->m_start = event.GetInt();
+		treeData->m_sample->m_start    = start;
+		treeData->m_sample->m_duration = duration;
 
 		m_audioPreviewComposition->update();
 		m_videoPreviewComposition->update();
