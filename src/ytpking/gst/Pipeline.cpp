@@ -38,6 +38,7 @@ Pipeline::Pipeline( wxWindow *drawWindow ) :
 	gst_bus_enable_sync_message_emission( bus );
 	gst_bus_add_signal_watch( bus );
 
+	g_signal_connect( bus, "message", (GCallback)onMessage, this );
 	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, drawWindow );
 }
 
@@ -63,7 +64,25 @@ GstElement
 }
 
 
-void Pipeline::onSync( GstBus *bus, GstMessage *message, gpointer data )
+void
+Pipeline::onMessage( GstBus *bus, GstMessage *message, gpointer data )
+{
+	Pipeline *pipeline = (Pipeline *)data;
+
+	switch ( GST_MESSAGE_TYPE( message ) )
+	{
+	case GST_MESSAGE_EOS:
+	case GST_MESSAGE_ERROR:
+		pipeline->stop();
+
+	default:
+		break;
+	}
+}
+
+
+void
+Pipeline::onSync( GstBus *bus, GstMessage *message, gpointer data )
 {
 	const GstStructure *structure = gst_message_get_structure( message );
 	const char *structureName = gst_structure_get_name( structure );

@@ -57,6 +57,9 @@ private:
 	//// BEGIN GStreamer Events
 
 	static void
+		onMessage ( GstBus *bus, GstMessage *message, gpointer data );
+
+	static void
 		onSync ( GstBus *bus, GstMessage *message, gpointer data );
 
 	//// END GStreamer Events
