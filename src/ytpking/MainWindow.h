@@ -84,6 +84,9 @@ public:
 	void
 		onSpinSamplePropertiesEndChange( wxSpinEvent& event );
 
+	void
+		onSampleTextSpeakerNameChange( wxCommandEvent& event );
+
 	//// END wx Events
 
 private:
@@ -93,8 +96,9 @@ private:
 		MenuQuit = 1,
 		MenuAbout,
 		PageSamples,
-		SpinSampleStartFrame,
-		SpinSampleEndFrame
+		SampleSpinStartFrame,
+		SampleSpinEndFrame,
+		SampleTextSpeakerName
 	};
 	wxSizer *m_mainSizer;
 	wxSizer *m_sampleAndMovieSizer;

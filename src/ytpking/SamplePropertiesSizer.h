@@ -14,8 +14,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_SamplePropertiesSizer_h
+#define __YTPKING_SamplePropertiesSizer_h
+
 #include <wx/sizer.h>
 
+
+class wxTextCtrl;
 
 	namespace ytpking
 	{
@@ -50,8 +55,13 @@ private:
 
 	wxSpinCtrl *m_startFrameSpinCtrl;
 	wxSpinCtrl *m_endFrameSpinCtrl;
+
+	wxTextCtrl *m_speakerName;
 	
 };
 
 
 	}
+
+
+#endif

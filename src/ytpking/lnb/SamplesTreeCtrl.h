@@ -53,6 +53,19 @@ public:
 				gst::gnl::FileSource *audioSource,
 				gst::gnl::FileSource *videoSource );
 
+	wxTreeItemId
+		getSpeaker( const char *speakerName ) const;
+
+	wxTreeItemId
+		getSpeaker(	const wxTreeItemId &speech ) const;
+
+	wxTreeItemId
+		changeSpeaker( const wxTreeItemId &speech, const wxTreeItemId &currentSpeaker, const wxTreeItemId &newSpeaker );
+
+	bool
+		renameSpeaker( const char *newName, const wxTreeItemId &speechItem );
+
+
 	class SamplesTreeData :
 		public wxTreeItemData
 	{

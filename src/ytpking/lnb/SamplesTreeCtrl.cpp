@@ -123,29 +123,117 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 {
 	SamplesTreeData *data = new SamplesTreeData( "file:///C:/zelda.mp4" );
 
+	wxTreeItemId speakerItem = getSpeaker( speaker );
+	
+	if ( speakerItem.IsOk() )
+		AppendItem( speakerItem, name, -1, -1, data );
+	else
+	{
+		speakerItem = AppendItem( GetRootItem(), speaker );
+		AppendItem( speakerItem, name, -1, -1, data );
+	}
+
+	Expand( speakerItem );
+}
+
+
+wxTreeItemId
+SamplesTreeCtrl::getSpeaker( const char *speakerName ) const
+{
 	wxTreeItemId root, speakerItem;
 	
 	root = GetRootItem();
 
 	wxTreeItemIdValue cookie;
-
+	
 	speakerItem = GetFirstChild( root, cookie );
 	while( speakerItem.IsOk() )
 	{
-		if ( strcmp( GetItemText( speakerItem ), speaker ) == 0 )
-		{
-			AppendItem( speakerItem, name, -1, -1, data );
-			return;
-		}
+		if ( strcmp( GetItemText( speakerItem ), speakerName ) == 0 )
+			return speakerItem;
 
 		speakerItem = GetNextChild( root, cookie );
 	}
 
-	speakerItem = AppendItem( root, speaker );
-	AppendItem( speakerItem, name, -1, -1, data );
+	return speakerItem;
+}
 
-	Expand( speakerItem );
+wxTreeItemId
+SamplesTreeCtrl::getSpeaker( const wxTreeItemId &speech ) const
+{
+	wxTreeItemId parentItem = GetItemParent( speech );
+	while ( true )
+	{
+		if ( parentItem.IsOk() )
+		{
+			if ( GetItemData( parentItem ) == NULL )
+				return parentItem;
+		}
+		else
+			return parentItem;
 
+		parentItem = GetItemParent( parentItem );
+	}
+}
+
+
+wxTreeItemId
+SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
+                                const wxTreeItemId &currentSpeaker,
+                                const wxTreeItemId &newSpeaker )
+{
+	wxTreeItemId newSpeechItem;
+	newSpeechItem = AppendItem( newSpeaker, GetItemText( speech ), -1, -1, GetItemData( speech ) );
+
+	SetItemData( speech, NULL ); // replace the data with NULL; speech will not delete it now!
+	Delete( speech );
+
+	if ( GetChildrenCount( currentSpeaker ) == 0 )
+		Delete( currentSpeaker );
+
+	return newSpeechItem;
+}
+
+
+bool
+SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechItem )
+{
+	// Is there a speaker of this new name?
+	wxTreeItemId speakerItem = getSpeaker( newName );
+	if ( speakerItem.IsOk() )
+	{
+		// The speaker of this name already exists.
+		// So I merge the item into that tree.
+
+		wxTreeItemId currentSpeakerItem = getSpeaker( speechItem );
+		if ( currentSpeakerItem.IsOk() )
+		{
+			SelectItem( changeSpeaker( speechItem, currentSpeakerItem, speakerItem ) );
+			return true;
+		}
+	}
+	else
+	{
+		// The speaker doesn't already exist.
+
+		speakerItem = getSpeaker( speechItem );
+
+		// Do I have siblings?
+		if ( GetChildrenCount( speakerItem ) == 1 )
+		{
+			// There's nobody else. I should change the speaker name in place.
+			SetItemText( speakerItem, newName );
+			return false;
+		}
+		else
+		{
+			// I have a different name than my siblings, I should create a
+			// new parent and move there.
+			wxTreeItemId newSpeakerItem = AppendItem( GetRootItem(), newName );
+			SelectItem( changeSpeaker( speechItem, speakerItem, newSpeakerItem ) );
+			return true;
+		}
+	}
 }
 
 

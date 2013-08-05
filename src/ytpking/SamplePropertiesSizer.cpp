@@ -17,6 +17,8 @@
 #include "SamplePropertiesSizer.h"
 
 #include <wx/spinctrl.h>
+#include <wx/textctrl.h>
+
 
 	namespace ytpking
 	{
@@ -28,8 +30,12 @@ SamplePropertiesSizer::SamplePropertiesSizer( wxWindow *parent, int startId ) :
 	m_startFrameSpinCtrl = new wxSpinCtrl( parent, startId, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 0, 5  );
 	m_endFrameSpinCtrl   = new wxSpinCtrl( parent, startId + 1, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 1, 100  );
 
+	m_speakerName = new wxTextCtrl( parent, startId + 2 );
+
 	Add( m_startFrameSpinCtrl );
 	Add( m_endFrameSpinCtrl );
+
+	Add( m_speakerName, 0 );
 }
 
 

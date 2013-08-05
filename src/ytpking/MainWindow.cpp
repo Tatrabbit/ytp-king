@@ -55,7 +55,7 @@ MainWindow::MainWindow( void ) :
 
 	m_librarySizer          = new lnb::LibrarySizer( this, EventId::PageSamples );
 	m_timelineWindow        = new TimelineWindow( this );
-	m_samplePropertiesSizer = new SamplePropertiesSizer( this, EventId::SpinSampleStartFrame );
+	m_samplePropertiesSizer = new SamplePropertiesSizer( this, EventId::SampleSpinStartFrame );
 
 	wxMenu *menuFile = new wxMenu;
 
@@ -231,6 +231,21 @@ MainWindow::onSpinSamplePropertiesEndChange( wxSpinEvent& event )
 }
 
 
+void
+MainWindow::onSampleTextSpeakerNameChange( wxCommandEvent& event )
+{
+	lnb::SamplesTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
+	wxTreeItemId selectedItem = tree->GetSelection();
+
+	if ( selectedItem.IsOk() )
+		if ( tree->renameSpeaker( event.GetString(), selectedItem ) )
+		{
+			wxWindow *window = (wxWindow *)event.GetEventObject();
+			window->SetFocus();
+		}
+}
+
+
 const wxPoint
 &MainWindow::getStartupPosition( wxPoint &defaultPosition ) const
 {
@@ -254,9 +269,10 @@ BEGIN_EVENT_TABLE( MainWindow, wxFrame )
 
 	EVT_TREE_SEL_CHANGED( EventId::PageSamples, MainWindow::onSamplesTreeChange )
 
-	EVT_SPINCTRL(EventId::SpinSampleStartFrame, onSpinSamplePropertiesStartChange )
-	EVT_SPINCTRL(EventId::SpinSampleEndFrame, onSpinSamplePropertiesEndChange )
+	EVT_SPINCTRL(EventId::SampleSpinStartFrame, onSpinSamplePropertiesStartChange )
+	EVT_SPINCTRL(EventId::SampleSpinEndFrame, onSpinSamplePropertiesEndChange )
 
+	EVT_TEXT( EventId::SampleTextSpeakerName, onSampleTextSpeakerNameChange)
 END_EVENT_TABLE()
 
 
