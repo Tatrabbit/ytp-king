@@ -37,6 +37,7 @@ SamplesTreeData::SamplesTreeData( char const *filename ) :
 {
 }
 
+
 SamplesTreeCtrl::
 SamplesTreeData::~SamplesTreeData( void )
 {
@@ -92,17 +93,27 @@ SamplesTreeCtrl::onBeginEditLabel( wxTreeEvent &event )
 {
 	wxTreeItemId item = event.GetItem();
 
-	if ( !item.IsOk() )
-	{
-		event.Veto();
-		return;
-	}
-
 	wxTreeItemData *data = GetItemData( item );
 	if ( !data )
 	{
 		event.Veto();
 		return;
+	}
+}
+
+
+void
+SamplesTreeCtrl::onEndEditLabel( wxTreeEvent &event )
+{
+	wxTreeItemId    item = event.GetItem();
+	wxTreeItemData *data = GetItemData( item );
+
+	//SetItemText( event.GetItem(), event.GetString() );
+
+	if ( data )
+	{
+		SamplesTreeData *treeData = (SamplesTreeData *)data;
+		m_samplesDataFile->renameSample( event.GetLabel(), treeData->m_nodeReference );
 	}
 }
 
@@ -124,11 +135,17 @@ SamplesTreeCtrl::onCollapsing( wxTreeEvent &event )
 void
 SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 		gst::gnl::FileSource *audioSource,
-		gst::gnl::FileSource *videoSource )
+		gst::gnl::FileSource *videoSource,
+		SamplesDataFile::NodeReference *nodeReference )
 {
 	SamplesTreeData *data = new SamplesTreeData( "file:///C:/zelda.mp4" );
 
 	wxTreeItemId speakerItem = getSpeaker( speaker );
+
+	if ( nodeReference )
+		data->m_nodeReference = *nodeReference;
+	else
+		data->m_nodeReference = m_samplesDataFile->addSample( name, speaker );
 	
 	if ( speakerItem.IsOk() )
 		AppendItem( speakerItem, name, -1, -1, data );
@@ -139,8 +156,6 @@ SamplesTreeCtrl::addSample( const char *name, const char *speaker,
 	}
 
 	Expand( speakerItem );
-
-	m_samplesDataFile->addSample( name, speaker );
 }
 
 
@@ -164,6 +179,7 @@ SamplesTreeCtrl::getSpeaker( const char *speakerName ) const
 
 	return speakerItem;
 }
+
 
 wxTreeItemId
 SamplesTreeCtrl::getSpeaker( const wxTreeItemId &speech ) const
@@ -250,6 +266,7 @@ wxBEGIN_EVENT_TABLE( SamplesTreeCtrl, wxTreeCtrl )
 
 	EVT_TREE_BEGIN_DRAG( wxID_ANY, onBeginDrag  )
 	EVT_TREE_BEGIN_LABEL_EDIT( wxID_ANY, onBeginEditLabel )
+	EVT_TREE_END_LABEL_EDIT( wxID_ANY, onEndEditLabel )
 	EVT_TREE_ITEM_COLLAPSING( wxID_ANY, onCollapsing )
 
 wxEND_EVENT_TABLE()

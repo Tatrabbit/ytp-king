@@ -86,21 +86,41 @@ SamplesDataFile::~SamplesDataFile( void )
 }
 
 
-void
+SamplesDataFile::NodeReference
 SamplesDataFile::addSample( const char *name, const char *speaker )
 {
-	if ( m_isLocked )
-		return;
+	NodeReference nodeReference;
 
-	xml_node<> *speakerNode = getOrMakeSpeakerNode( speaker );
-	xml_node<> *speechNode  = m_xmlDocument.allocate_node( node_element, "speech" );
+	if ( m_isLocked )
+	{
+		nodeReference.m_speaker = NULL;
+		nodeReference.m_speech  = NULL;
+
+		return nodeReference;
+	}
+
+	nodeReference.m_speaker = getOrMakeSpeakerNode( speaker );
+	nodeReference.m_speech  = m_xmlDocument.allocate_node( node_element, "speech" );
 
 	const char *val = m_xmlDocument.allocate_string( name );
 	xml_attribute<> *nameAttribute = m_xmlDocument.allocate_attribute( "name", val );
 
-	speechNode->append_attribute( nameAttribute );
+	nodeReference.m_speech->append_attribute( nameAttribute );
+	nodeReference.m_speaker->append_node( nodeReference.m_speech );
 
-	speakerNode->append_node( speechNode );
+	saveToFile();
+
+	return nodeReference;
+}
+
+
+void
+SamplesDataFile::renameSample( const char *newName, NodeReference &nodeReference )
+{
+	xml_attribute<> *nameAttr = nodeReference.m_speech->first_attribute( "name" );
+
+	newName = m_xmlDocument.allocate_string( newName );
+	nameAttr->value( newName );
 
 	saveToFile();
 }
@@ -189,7 +209,11 @@ SamplesDataFile::loadAll( void )
 			audioSource = m_audioPreviewComposition->addSource();
 			videoSource = m_videoPreviewComposition->addSource();
 
-			m_treeCtrl->addSample( speechName, speakerName, audioSource, videoSource );
+			NodeReference nodeReference;
+			nodeReference.m_speaker = speakerNode;
+			nodeReference.m_speech  = speechNode;
+
+			m_treeCtrl->addSample( speechName, speakerName, audioSource, videoSource, &nodeReference );
 			speechNode = speechNode->next_sibling( "speech" );
 		}
 

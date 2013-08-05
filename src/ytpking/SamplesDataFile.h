@@ -41,8 +41,19 @@ public:
 	SamplesDataFile( lnb::SamplesTreeCtrl *samplesTreeCtrl );
 	~SamplesDataFile( void );
 
-	void
+	class NodeReference
+	{
+		friend class SamplesDataFile;
+
+	private:
+		rapidxml::xml_node<> *m_speaker;
+		rapidxml::xml_node<> *m_speech;
+	};
+
+	NodeReference
 		addSample( const char *name, const char *speaker );
+	void
+		renameSample( const char *newName, NodeReference &nodeReference );
 
 	// TODO I can optimize this by storing a hashmap of existing speaker nodes.
 	//      currently it's searched top to bottom each time.

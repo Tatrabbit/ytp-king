@@ -19,11 +19,11 @@
 
 #include <wx/treectrl.h>
 
+#include "ytpking/SamplesDataFile.h"
+
 
 	namespace ytpking
 	{
-
-class SamplesDataFile;
 
 class Sample;
 
@@ -48,16 +48,34 @@ public:
 	void
 		onBeginEditLabel( wxTreeEvent &event );
 	void
+		onEndEditLabel( wxTreeEvent &event );
+	void
 		onCollapsing( wxTreeEvent &event );
 
+	/** Adds a sample to me.
+	\param name the name of the sample, such as "Gee, it sure is boring around here".
+	\param speaker The name of the speaker, such as "Mario" or "Link"
+	\param audioSource the FileSource to be associated for audio.
+	\param videoSource the FileSource to be associated for video.
+	\param nodeReference If not NULL, the node is copied into to the tree item. If NULL,
+	                     the SavaData is notified of a new node, and the data will be saved. */
 	void
 		addSample( const char *name, const char *speaker,
 				gst::gnl::FileSource *audioSource,
-				gst::gnl::FileSource *videoSource );
+				gst::gnl::FileSource *videoSource,
+				SamplesDataFile::NodeReference *nodeReference = NULL );
 
+	/** Gets the speaker wxTreeItemId with the given name.
+	\param speakerName the name of the speaker to find
+	\return A wxTreeItemId regardless of whether it was found. to check, use IsOk() */
 	wxTreeItemId
 		getSpeaker( const char *speakerName ) const;
 
+	/** Gets the speaker node parent of the given node.
+	No matter how deep it's nested, this will return the speaker parent node.
+	\param speech the speech item to find the parent of.
+	\return If speech is a valid node, returns a valid Speaker node. If in doubht, check with
+	        IsOk() */
 	wxTreeItemId
 		getSpeaker(	const wxTreeItemId &speech ) const;
 
@@ -87,6 +105,7 @@ public:
 		// TODO constructor, default to NULL
 		Sample *m_sample;
 
+		SamplesDataFile::NodeReference m_nodeReference;
 	};
 
 private:
