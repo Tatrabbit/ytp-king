@@ -32,10 +32,10 @@
 	{
 
 
-SamplesPage::SamplesPage( wxWindow *parent ) :
+SamplesPage::SamplesPage( wxWindow *parent, int samplesId ) :
 	wxNotebookPage( parent, wxID_ANY )
 {
-	m_treeCtrl = new SamplesTreeCtrl( this );
+	m_treeCtrl = new SamplesTreeCtrl( this, samplesId );
 	m_toolbar = new SourcesToolbar( this );
 
 	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );

@@ -21,10 +21,6 @@
 	{
 
 
-class StartFrameSpinCtrl;
-class EndFrameSpinCtrl;
-
-
 class SamplePropertiesSizer :
 	// TODO Once things are a bit more ready, change this to derive from wxGridBagSizer
 	//      and position everything nicely.
@@ -32,11 +28,25 @@ class SamplePropertiesSizer :
 {
 public:
 
-	SamplePropertiesSizer( wxWindow *parent );
+	SamplePropertiesSizer( wxWindow *parent, int startId );
 
+	void
+		setStart( unsigned int start );
+	void
+		setEnd( unsigned int end );
 
-	StartFrameSpinCtrl *m_startFrameSpinCtrl;
-	EndFrameSpinCtrl   *m_endFrameSpinCtrl;
+	int
+		getStart( void ) const;
+	int
+		getEnd( void ) const;
+
+	void
+		updateConstraints( void );
+
+private:
+
+	wxSpinCtrl *m_startFrameSpinCtrl;
+	wxSpinCtrl *m_endFrameSpinCtrl;
 	
 };
 

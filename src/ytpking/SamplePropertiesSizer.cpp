@@ -16,23 +16,59 @@
 */
 #include "SamplePropertiesSizer.h"
 
-#include "StartFrameSpinCtrl.h"
-#include "EndFrameSpinCtrl.h"
+#include <wx/spinctrl.h>
 
 	namespace ytpking
 	{
 
 
-SamplePropertiesSizer::SamplePropertiesSizer( wxWindow *parent ) :
+SamplePropertiesSizer::SamplePropertiesSizer( wxWindow *parent, int startId ) :
 	wxGridSizer( 2, 8, 8 )
 {
-	m_startFrameSpinCtrl = new StartFrameSpinCtrl( parent );
-	m_endFrameSpinCtrl   = new EndFrameSpinCtrl( parent );
+	m_startFrameSpinCtrl = new wxSpinCtrl( parent, startId, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 0, 5  );
+	m_endFrameSpinCtrl   = new wxSpinCtrl( parent, startId + 1, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 1, 100  );
 
 	Add( m_startFrameSpinCtrl );
 	Add( m_endFrameSpinCtrl );
 }
 
+
+void
+SamplePropertiesSizer::setStart( unsigned int start )
+{
+	m_startFrameSpinCtrl->SetValue( start );
+	m_endFrameSpinCtrl->SetMin( start + 1 );
+}
+
+
+void
+SamplePropertiesSizer::setEnd( unsigned int end )
+{
+	m_endFrameSpinCtrl->SetValue( end );
+	m_startFrameSpinCtrl->SetMax( end - 1 );
+}
+
+
+int
+SamplePropertiesSizer::getStart( void ) const
+{
+	return m_startFrameSpinCtrl->GetValue();
+}
+
+
+int
+SamplePropertiesSizer::getEnd( void ) const
+{
+	return m_endFrameSpinCtrl->GetValue();
+}
+
+
+void
+SamplePropertiesSizer::updateConstraints( void )
+{
+	m_startFrameSpinCtrl->SetMax( m_endFrameSpinCtrl->GetValue() - 1 );
+	m_endFrameSpinCtrl->SetMin( m_startFrameSpinCtrl->GetValue() + 1 );
+}
 
 
 	} 

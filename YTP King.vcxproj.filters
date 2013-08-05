@@ -81,12 +81,6 @@
     <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\StartFrameSpinCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\EndFrameSpinCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\SampleDataObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,12 +153,6 @@
       <Filter>Header Files\lnb : Sources Notebook\Pages</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\SamplePropertiesSizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\StartFrameSpinCtrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\EndFrameSpinCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\SampleDataObject.h">

@@ -37,7 +37,7 @@ class SamplesPage :
 {
 public:
 
-	SamplesPage( wxWindow *parent );
+	SamplesPage( wxWindow *parent, int samplesId );
 
 	SamplesTreeCtrl *m_treeCtrl;
 	SourcesToolbar  *m_toolbar;

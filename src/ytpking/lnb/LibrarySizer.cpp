@@ -19,6 +19,7 @@
 #include "LibraryNotebook.h"
 #include "SourcesToolbar.h"
 
+#include "SamplesPage.h"
 
 	namespace ytpking
 	{
@@ -26,13 +27,19 @@
 	{
 
 
-LibrarySizer::LibrarySizer( wxWindow *parent ) :
+LibrarySizer::LibrarySizer( wxWindow *parent, int samplesId ) :
 	wxBoxSizer( wxVERTICAL ),
 
-	m_notebook( new LibraryNotebook( parent ) )
+	m_notebook( new LibraryNotebook( parent, samplesId ) )
 {
 	Add( m_notebook, 1, wxEXPAND );
 }
 
+
+SamplesTreeCtrl
+*LibrarySizer::getSamplesTreeCtrl( void ) const
+{
+	return m_notebook->m_samplesPage->m_treeCtrl;
+}
 
 	} }

@@ -27,13 +27,13 @@
 	{
 
 
-LibraryNotebook::LibraryNotebook( wxWindow *parent ) :
+LibraryNotebook::LibraryNotebook( wxWindow *parent, int samplesId ) :
 	wxNotebook( parent, -1, wxDefaultPosition, wxDefaultSize )
 {
 	m_sourcesPage = new SourcesPage( this );
 	AddPage( m_sourcesPage, "Sources" );
 
-	m_samplesPage = new SamplesPage( this );
+	m_samplesPage = new SamplesPage( this, samplesId );
 	AddPage( m_samplesPage, "Samples" );
 
 	m_tapesPage = new TapesPage( this );

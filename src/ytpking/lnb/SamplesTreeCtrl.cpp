@@ -43,8 +43,8 @@ SamplesTreeData::~SamplesTreeData( void )
 }
 
 
-SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent ) :
-	wxTreeCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
+SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
+	wxTreeCtrl( parent, samplesId, wxDefaultPosition, wxDefaultSize,
 		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
 				wxTR_ROW_LINES|wxTR_HIDE_ROOT)
 {

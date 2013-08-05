@@ -20,12 +20,19 @@
 #include <string>
 #include <sstream>
 
-#include <wx/menu.h>
 #include <wx/textctrl.h>
 
 
+class wxTreeEvent;
+
 	namespace ytpking
 	{
+
+class SamplePropertiesSizer;
+
+namespace lnb {
+	class LibrarySizer;
+}
 
 namespace gst {
 	class GstreamerThread;
@@ -55,19 +62,27 @@ private: // TODO macros for = delete when it becomes available.
 
 public:
 
-	wxWindow *m_moviePanel;
-	wxSizer  *m_sourcesSizer;
-	wxWindow *m_timelineWindow;
-	wxSizer  *m_samplePropertiesSizer;
+	wxWindow              *m_moviePanel;
+	lnb::LibrarySizer     *m_librarySizer;
+	wxWindow              *m_timelineWindow;
+	SamplePropertiesSizer *m_samplePropertiesSizer;
 
 
 	//// BEGIN wx Events
 
 	void
-		OnQuit( wxCommandEvent &event );
+		onQuit( wxCommandEvent &event );
 
 	void
-		OnAbout( wxCommandEvent &event );
+		onAbout( wxCommandEvent &event );
+
+	void
+		onSamplesTreeChange( wxTreeEvent& event );
+
+	void
+		onSpinSamplePropertiesStartChange( wxSpinEvent& event );
+	void
+		onSpinSamplePropertiesEndChange( wxSpinEvent& event );
 
 	//// END wx Events
 
@@ -75,9 +90,14 @@ private:
 
 	enum EventId
 	{
-		Quit = 1,
-		About
+		MenuQuit = 1,
+		MenuAbout,
+		PageSamples,
+		SpinSampleStartFrame,
+		SpinSampleEndFrame
 	};
+	wxSizer *m_mainSizer;
+	wxSizer *m_sampleAndMovieSizer;
 
 	static unsigned int m_nSamples;
 
@@ -87,9 +107,6 @@ private:
 
 	gst::GstreamerThread       *m_gstThread;
 	gst::Pipeline              *m_pipeline;
-
-	bool
-		addSample( int start, int duration );
 
 	wxDECLARE_EVENT_TABLE();
 

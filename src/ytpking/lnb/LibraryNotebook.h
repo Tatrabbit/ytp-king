@@ -22,16 +22,17 @@
 	namespace lnb
 	{
 
+class SamplesPage;
 
 class LibraryNotebook :
 	public ::wxNotebook
 {
 public:
 
-	LibraryNotebook( wxWindow *parent );
+	LibraryNotebook( wxWindow *parent, int samplesId );
 
 	wxNotebookPage *m_sourcesPage;
-	wxNotebookPage *m_samplesPage;
+	SamplesPage *m_samplesPage;
 	wxNotebookPage *m_tapesPage;
 
 };

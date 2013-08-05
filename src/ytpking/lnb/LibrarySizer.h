@@ -21,6 +21,7 @@
 	{
 	namespace lnb
 	{
+class SamplesTreeCtrl;
 
 
 class LibraryNotebook;
@@ -32,9 +33,12 @@ class LibrarySizer :
 {
 public:
 
-	LibrarySizer( wxWindow *parent );
+	LibrarySizer( wxWindow *parent, int samplesId );
 
 	LibraryNotebook *m_notebook;
+
+	SamplesTreeCtrl
+		*getSamplesTreeCtrl( void ) const;
 
 };
 

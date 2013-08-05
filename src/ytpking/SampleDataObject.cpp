@@ -23,7 +23,7 @@
 
 SampleDataObject::SampleDataObject( void ) :
 	wxDataObjectSimple( wxFormatInvalid ),
-	m_dataSize( 1 ),
+	m_dataSize( 1 + sizeof(void *) ),
 	m_name( new char [1] ),
 	m_sample( NULL )
 {

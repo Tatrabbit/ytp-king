@@ -39,7 +39,7 @@ class SamplesTreeCtrl :
 {
 public:
 
-	SamplesTreeCtrl( wxWindow *parent );
+	SamplesTreeCtrl( wxWindow *parent, int samplesId );
 
 	void
 		onBeginDrag( wxTreeEvent &event );
@@ -48,8 +48,6 @@ public:
 		addSample( const char *name, const char *speaker,
 				gst::gnl::FileSource *audioSource,
 				gst::gnl::FileSource *videoSource );
-
-private:
 
 	class SamplesTreeData :
 		public wxTreeItemData
