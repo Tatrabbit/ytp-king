@@ -221,8 +221,14 @@ SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
 bool
 SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechItem )
 {
+	// Changemy savedata
+	SamplesTreeData *data = (SamplesTreeData *)GetItemData( speechItem );
+	if ( data )
+		m_samplesDataFile->changeSampleSpeaker( newName, data->m_nodeReference );
+
 	// Is there a speaker of this new name?
 	wxTreeItemId speakerItem = getSpeaker( newName );
+
 	if ( speakerItem.IsOk() )
 	{
 		// The speaker of this name already exists.

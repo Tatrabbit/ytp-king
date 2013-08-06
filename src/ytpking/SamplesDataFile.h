@@ -55,6 +55,9 @@ public:
 	void
 		renameSample( const char *newName, NodeReference &nodeReference );
 
+	void
+		changeSampleSpeaker( const char *newSpeakerName, NodeReference &nodeReference );
+
 	// TODO I can optimize this by storing a hashmap of existing speaker nodes.
 	//      currently it's searched top to bottom each time.
 	rapidxml::xml_node<>

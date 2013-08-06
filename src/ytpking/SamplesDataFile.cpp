@@ -126,6 +126,24 @@ SamplesDataFile::renameSample( const char *newName, NodeReference &nodeReference
 }
 
 
+void
+SamplesDataFile::changeSampleSpeaker( const char *newSpeakerName, NodeReference &nodeReference )
+{
+	nodeReference.m_speaker->remove_node( nodeReference.m_speech );
+
+	if ( nodeReference.m_speaker->first_node() == NULL )
+	{
+		xml_node<> *rootNode = m_xmlDocument.first_node();
+		rootNode->remove_node( nodeReference.m_speaker );
+	}
+
+	nodeReference.m_speaker = getOrMakeSpeakerNode( newSpeakerName );
+	nodeReference.m_speaker->append_node( nodeReference.m_speech );
+
+	saveToFile();
+}
+
+
 xml_node<>
 *SamplesDataFile::getOrMakeSpeakerNode( const char *speakerName )
 {
