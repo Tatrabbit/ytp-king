@@ -61,8 +61,6 @@ public:
 	                     the SavaData is notified of a new node, and the data will be saved. */
 	void
 		addSample( const char *name, const char *speaker,
-				gst::gnl::FileSource *audioSource,
-				gst::gnl::FileSource *videoSource,
 				SamplesDataFile::NodeReference *nodeReference = NULL );
 
 	/** Gets the speaker wxTreeItemId with the given name.

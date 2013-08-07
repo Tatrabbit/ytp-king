@@ -51,7 +51,7 @@ SamplesPage::SamplesPage( wxWindow *parent, int firstId ) :
 void
 SamplesPage::onButtonAdd( wxCommandEvent& )
 {
-	m_treeCtrl->addSample( "Speech", "Dick Johnson", NULL, NULL );
+	m_treeCtrl->addSample( "Speech", "Dick Johnson" );
 }
 
 

@@ -224,14 +224,11 @@ SamplesDataFile::loadAll( void )
 
 			FileSource *audioSource, *videoSource;
 
-			audioSource = m_audioPreviewComposition->addSource();
-			videoSource = m_videoPreviewComposition->addSource();
-
 			NodeReference nodeReference;
 			nodeReference.m_speaker = speakerNode;
 			nodeReference.m_speech  = speechNode;
 
-			m_treeCtrl->addSample( speechName, speakerName, audioSource, videoSource, &nodeReference );
+			m_treeCtrl->addSample( speechName, speakerName, &nodeReference );
 			speechNode = speechNode->next_sibling( "speech" );
 		}
 

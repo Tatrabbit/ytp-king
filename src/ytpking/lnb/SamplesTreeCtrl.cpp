@@ -134,8 +134,6 @@ SamplesTreeCtrl::onCollapsing( wxTreeEvent &event )
 
 void
 SamplesTreeCtrl::addSample( const char *name, const char *speaker,
-		gst::gnl::FileSource *audioSource,
-		gst::gnl::FileSource *videoSource,
 		SamplesDataFile::NodeReference *nodeReference )
 {
 	SamplesTreeData *data = new SamplesTreeData( "file:///C:/zelda.mp4" );
