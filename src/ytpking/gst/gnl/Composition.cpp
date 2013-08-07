@@ -40,10 +40,6 @@ Composition::Composition( void ) :
 
 Composition::~Composition( void )
 {
-	// even if it's never added to something, I should have dibs on its refcount so I can
-	// delete it.
-	gst_object_unref( m_selfElement );
-
 	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
 		delete *it;
 }
@@ -52,19 +48,10 @@ Composition::~Composition( void )
 void
 Composition::onPadAdded( GstElement *src, GstPad *new_pad, GstElement *sink )
 {
-  g_print ("Received new pad '%s' from '%s':\n", GST_PAD_NAME (new_pad), GST_ELEMENT_NAME (src));
-
-  GstPad *compatiblePad = gst_element_get_compatible_pad( sink, new_pad, gst_pad_get_caps( new_pad ) );
+	GstPad *compatiblePad = gst_element_get_compatible_pad( sink, new_pad, gst_pad_get_caps( new_pad ) );
 
 	if ( compatiblePad )
-	{
-		if ( gst_pad_link( new_pad, compatiblePad ) == GST_PAD_LINK_OK )
-			g_print("  Link succeeded.\n" );
-		else
-			g_print( "Link to '%s' from '%s' Failed.\n", GST_PAD_NAME (compatiblePad), GST_ELEMENT_NAME (sink) );
-	}
-	else
-		g_print( "Skipping incompatible pad.\n" );
+		gst_pad_link( new_pad, compatiblePad );
 }
 
 
