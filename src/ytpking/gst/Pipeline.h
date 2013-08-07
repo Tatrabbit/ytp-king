@@ -38,33 +38,64 @@ namespace gnl {
 }
 
 
+/** A wrapper for a GStreamer pipeline. */
 class Pipeline
 {
 public:
-	Pipeline( wxWindow *drawWindow );
+
+	Pipeline( void );
+	~Pipeline( void );
+
+private:
+	Pipeline( Pipeline & );
 
 	void
+		operator=( const Pipeline & );
+
+public:
+
+	/** Initializes the Pipeline. Must be called after gst_init. */
+	void
+		initialize( void );
+
+	/** Sets the window to render onto.
+	\param renderWindow The wxWindow to render onto. This should preferably be
+	                  an empty control */
+	void
+		setRenderWindow( wxWindow *renderWindow );
+
+	/** Starts the pipeline playing. This will fail if setRenderWindow hasn't
+	    been called. */
+	void
 		play( void );
+
+	/** Stops the pipeline if playing. */
 	void
 		stop( void );
 
+	/** Access to the Gst pipeline.
+	\todo remove this, it's silly. */
 	GstElement
 		*operator*( void );
 
 private:
 	GstElement *m_pipeline;
-
-	//// BEGIN GStreamer Events
+	bool        m_hasSetRenderWindow;
 
 	static void
 		onMessage ( GstBus *bus, GstMessage *message, gpointer data );
 
 	static void
-		onSync ( GstBus *bus, GstMessage *message, gpointer data );
-
-	//// END GStreamer Events
+		onSyncMessage ( GstBus *bus, GstMessage *message, gpointer data );
 
 };
+
+#ifdef YTPKING_GST_Pipeline_cpp
+	Pipeline timelinePipeline;
+#else
+	/** The pipeline for the timeline preview. */
+	extern Pipeline timelinePipeline;
+#endif
 
 
 	} }

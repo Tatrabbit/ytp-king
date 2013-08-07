@@ -54,12 +54,9 @@ MainWindow::MainWindow( void ) :
 	wxFrame( NULL, -1, "YTP King", getStartupPosition( wxPoint(50, 50) ), getStartupSize( wxSize( 800, 600 ) ) ),
 	m_gstThread( new gst::GstreamerThread )
 {
-	m_moviePanel = new wxWindow( this, wxID_ANY );
-	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
+	gst::timelinePipeline.initialize();
 
-	m_pipeline = new gst::Pipeline( m_moviePanel );
-
-	PreviewUser::init( m_pipeline );
+	PreviewUser::init( &gst::timelinePipeline );
 
 	// Get the folder save path
 	DataFile::init();
@@ -98,6 +95,12 @@ MainWindow::MainWindow( void ) :
 
 	movieSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
 
+		// movie panel
+	m_moviePanel = new wxWindow( this, wxID_ANY );
+	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
+
+	gst::timelinePipeline.setRenderWindow( m_moviePanel );
+
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
 	movieSizer->Add( m_timelineWindow, 0, wxALL|wxEXPAND );
 
@@ -118,11 +121,7 @@ MainWindow::MainWindow( void ) :
 
 MainWindow::~MainWindow( void )
 {
-	m_pipeline->stop();
-
 	PreviewUser::cleanup();
-
-	delete m_pipeline;
 	delete m_gstThread;
 }
 
@@ -130,7 +129,6 @@ MainWindow::~MainWindow( void )
 void
 MainWindow::onQuit( wxCommandEvent &WXUNUSED(event) )
 {
-	m_pipeline->stop();
 	Close( true );
 }
 
@@ -145,7 +143,7 @@ MainWindow::onAbout( wxCommandEvent &WXUNUSED(event) )
 	// Start playing
 	m_filename = m_textControl->GetValue();
 
-	m_pipeline->play();
+	gst::timelinePipeline.play();
 }
 
 
@@ -261,7 +259,7 @@ MainWindow::onSampleTextSpeakerNameChange( wxCommandEvent& event )
 const wxPoint
 &MainWindow::getStartupPosition( wxPoint &defaultPosition ) const
 {
-	// TODO save the window position, check monitor size.
+	/** \todo TODO save the window position, check monitor size. */
 	return defaultPosition;
 }
 
@@ -269,7 +267,7 @@ const wxPoint
 const wxSize
 &MainWindow::getStartupSize( wxSize &defaultSize ) const
 {
-	// TODO save the window size, check monitor size.
+	/** \todo save the window size, check monitor size. */
 	return defaultSize;
 }
 

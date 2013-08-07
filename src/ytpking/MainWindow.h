@@ -106,7 +106,6 @@ private:
 	wxTextCtrl *m_textControl;
 
 	gst::GstreamerThread       *m_gstThread;
-	gst::Pipeline              *m_pipeline;
 
 	wxDECLARE_EVENT_TABLE();
 

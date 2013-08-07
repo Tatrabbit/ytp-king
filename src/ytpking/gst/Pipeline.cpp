@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#define YTPKING_GST_Pipeline_cpp
 #include "Pipeline.h"
 
 #include <gst/gst.h>
@@ -30,30 +31,62 @@
 	{
 
 
-Pipeline::Pipeline( wxWindow *drawWindow ) :
-	m_pipeline( gst_pipeline_new( "pipeline" ) )
+Pipeline::Pipeline( void ) :
+	m_pipeline( NULL ),
+	m_hasSetRenderWindow( false )
 {
-	// connect to the x-window callback
+}
+
+
+Pipeline::~Pipeline( void )
+{
+	if ( m_pipeline )
+	{
+		stop();
+		gst_object_unref( m_pipeline );
+	}
+}
+
+
+
+void
+Pipeline::initialize( void )
+{
+	m_pipeline = gst_pipeline_new( "pipeline" );
+
 	GstBus *bus = gst_element_get_bus( m_pipeline );
 	gst_bus_enable_sync_message_emission( bus );
 	gst_bus_add_signal_watch( bus );
 
 	g_signal_connect( bus, "message", (GCallback)onMessage, this );
-	g_signal_connect( bus, "sync-message::element", (GCallback)onSync, drawWindow );
+}
+
+void
+Pipeline::setRenderWindow( wxWindow *renderWindow )
+{
+	if ( m_pipeline != NULL )
+	{
+		GstBus *bus = gst_element_get_bus( m_pipeline );
+		g_signal_connect( bus, "sync-message::element", (GCallback)onSyncMessage, renderWindow );
+
+		m_hasSetRenderWindow = true;
+	}
 }
 
 
 void
 Pipeline::play( void )
 {
-	gst_element_set_state( m_pipeline, GST_STATE_PLAYING );
+	if ( m_hasSetRenderWindow )
+		gst_element_set_state( m_pipeline, GST_STATE_PLAYING );
 }
 
 
 void
 Pipeline::stop( void )
 {
-	gst_element_set_state( m_pipeline, GST_STATE_NULL );
+	if ( m_hasSetRenderWindow )
+		gst_element_set_state( m_pipeline, GST_STATE_NULL );
 }
 
 
@@ -82,12 +115,10 @@ Pipeline::onMessage( GstBus *bus, GstMessage *message, gpointer data )
 
 
 void
-Pipeline::onSync( GstBus *bus, GstMessage *message, gpointer data )
+Pipeline::onSyncMessage( GstBus *bus, GstMessage *message, gpointer data )
 {
 	const GstStructure *structure = gst_message_get_structure( message );
 	const char *structureName = gst_structure_get_name( structure );
-
-	g_print( "Called '%s'\n", structureName );
 	
 	wxWindow *window = (wxWindow *)data;
 
