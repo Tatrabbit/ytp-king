@@ -20,6 +20,8 @@
 #include <wx/sizer.h>
 #include <wx/event.h>
 
+#include "ytpking/EventId.h"
+
 #include "SamplesTreeCtrl.h"
 #include "SourcesToolbar.h"
 
@@ -32,10 +34,10 @@
 	{
 
 
-SamplesPage::SamplesPage( wxWindow *parent, int samplesId ) :
+SamplesPage::SamplesPage( wxWindow *parent, int firstId ) :
 	wxNotebookPage( parent, wxID_ANY )
 {
-	m_treeCtrl = new SamplesTreeCtrl( this, samplesId );
+	m_treeCtrl = new SamplesTreeCtrl( this, firstId );
 	m_toolbar = new SourcesToolbar( this );
 
 	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
@@ -45,19 +47,19 @@ SamplesPage::SamplesPage( wxWindow *parent, int samplesId ) :
 	SetSizer( mainSizer );
 }
 
+
 void
 SamplesPage::onButtonAdd( wxCommandEvent& )
 {
 	m_treeCtrl->addSample( "Speech", "Dick Johnson", NULL, NULL );
 }
 
+
 wxBEGIN_EVENT_TABLE( SamplesPage, wxNotebookPage )
 
-	EVT_BUTTON( SourcesToolbar::ButtonAdd, onButtonAdd )
+	EVT_BUTTON( GlobalEventId::SamplesButtonAddSample, onButtonAdd )
 
 wxEND_EVENT_TABLE()
-
-
 
 
 	} }

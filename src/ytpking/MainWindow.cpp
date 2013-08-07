@@ -23,6 +23,8 @@
 #include <wx/treectrl.h>
 #include <wx/spinctrl.h>
 
+#include "ytpking/EventId.h"
+
 #include "ytpking/DataFile.h"
 
 #include "gst/GstreamerThread.h"
@@ -65,15 +67,15 @@ MainWindow::MainWindow( void ) :
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
-	m_librarySizer          = new lnb::LibrarySizer( this, EventId::PageSamples );
+	m_librarySizer          = new lnb::LibrarySizer( this, GlobalEventId::SamplesTreeCtrl );
 	m_timelineWindow        = new TimelineWindow( this );
-	m_samplePropertiesSizer = new SamplePropertiesSizer( this, EventId::SampleSpinStartFrame );
+	m_samplePropertiesSizer = new SamplePropertiesSizer( this, GlobalEventId::SamplePropsSpinStartFrame );
 
 	wxMenu *menuFile = new wxMenu;
 
-	menuFile->Append( EventId::MenuAbout, _("&Play") );
+	menuFile->Append( GlobalEventId::MainMenuAbout, _("&Play") );
 	menuFile->AppendSeparator();
-	menuFile->Append( EventId::MenuQuit, _("&Quit") );
+	menuFile->Append( GlobalEventId::MainMenuQuit, _("&Quit") );
 
 	wxMenuBar *menuBar = new wxMenuBar;
 	menuBar->Append( menuFile, _("&File") );
@@ -274,15 +276,15 @@ const wxSize
 
 BEGIN_EVENT_TABLE( MainWindow, wxFrame )
 
-	EVT_MENU( EventId::MenuQuit,  MainWindow::onQuit  )
-	EVT_MENU( EventId::MenuAbout, MainWindow::onAbout )
+	EVT_MENU( GlobalEventId::MainMenuQuit,  onQuit  )
+	EVT_MENU( GlobalEventId::MainMenuAbout, onAbout )
 
-	EVT_TREE_SEL_CHANGED( EventId::PageSamples, MainWindow::onSamplesTreeChange )
+	EVT_TREE_SEL_CHANGED( GlobalEventId::SamplesTreeCtrl, onSamplesTreeChange )
 
-	EVT_SPINCTRL(EventId::SampleSpinStartFrame, onSpinSamplePropertiesStartChange )
-	EVT_SPINCTRL(EventId::SampleSpinEndFrame, onSpinSamplePropertiesEndChange )
+	EVT_SPINCTRL( GlobalEventId::SamplePropsSpinStartFrame, onSpinSamplePropertiesStartChange )
+	EVT_SPINCTRL( GlobalEventId::SamplePropsSpinEndFrame, onSpinSamplePropertiesEndChange )
 
-	EVT_TEXT( EventId::SampleTextSpeakerName, onSampleTextSpeakerNameChange)
+	EVT_TEXT( GlobalEventId::SamplePropsTextSpeakerName, onSampleTextSpeakerNameChange)
 END_EVENT_TABLE()
 
 

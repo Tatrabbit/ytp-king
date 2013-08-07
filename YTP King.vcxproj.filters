@@ -212,6 +212,9 @@
     <ClInclude Include="src\ytpking\SamplesDataFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ytpking\EventId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\Ytp-King.rc">

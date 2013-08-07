@@ -14,44 +14,33 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_LNB_SamplesPage_h
-#define __YTPKING_LNB_SamplesPage_h
+#ifndef __YTPKING_LNB_EventId_h
+#define __YTPKING_LNB_EventId_h
 
-#include <wx/notebook.h>
-#include "../gst/gnl/PreviewUser.h"
+#include <wx/event.h>
 
 
 	namespace ytpking
 	{
-	namespace lnb
-	{
 
 
-class SourcesToolbar;
-class SamplesTreeCtrl;
-
-
-class SamplesPage :
-	public wxNotebookPage,
-	public gst::gnl::PreviewUser
+enum GlobalEventId
 {
-public:
+	SamplesButtonAddSample        = wxID_HIGHEST+1,
+	SamplesButtonDeleteSample,
 
-	SamplesPage( wxWindow *parent, int firstId );
+	MainMenuAbout,
+	MainMenuQuit,
 
-	SamplesTreeCtrl *m_treeCtrl;
-	SourcesToolbar  *m_toolbar;
+	SamplesTreeCtrl,
 
-	void
-		onButtonAdd( wxCommandEvent& event );
-
-
-	wxDECLARE_EVENT_TABLE();
+	SamplePropsSpinStartFrame,
+	SamplePropsSpinEndFrame,
+	SamplePropsTextSpeakerName
 };
 
 
-	} }
+	}
 
 
-#endif	
-
+#endif

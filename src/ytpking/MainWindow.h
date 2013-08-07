@@ -96,16 +96,6 @@ public:
 
 private:
 
-	enum EventId
-	{
-		MenuQuit = 1,
-		MenuAbout,
-		PageSamples,
-		SampleSpinStartFrame,
-		SampleSpinEndFrame,
-		SampleTextSpeakerName
-	};
-
 	wxSizer *m_mainSizer;
 	wxSizer *m_sampleAndMovieSizer;
 

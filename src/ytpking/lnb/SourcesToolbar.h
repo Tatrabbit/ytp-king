@@ -35,12 +35,6 @@ public:
 
 	SourcesToolbar( wxWindow *parent );
 
-	enum EventId
-	{
-		ButtonAdd = 1,
-		ButtonDelete
-	};
-
 };
 
 

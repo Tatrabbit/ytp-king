@@ -46,6 +46,7 @@
     <ClInclude Include="src\utf8\core.h" />
     <ClInclude Include="src\utf8\unchecked.h" />
     <ClInclude Include="src\ytpking\DataFile.h" />
+    <ClInclude Include="src\ytpking\EventId.h" />
     <ClInclude Include="src\ytpking\gst\gnl\AudioComposition.h" />
     <ClInclude Include="src\ytpking\gst\gnl\Composition.h" />
     <ClInclude Include="src\ytpking\gst\gnl\FileSource.h" />
