@@ -206,15 +206,9 @@ SamplesTreeCtrl::onRenameSample( char const *newSampleName, Sample *sample )
 void
 SamplesTreeCtrl::onChangeSampleSpeaker( char const *speakerName, Sample *sample )
 {
-}
-
-
-bool
-SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechItem )
-{
-	/*
 	// Is there a speaker of this new name?
-	wxTreeItemId speakerItem = getSpeaker( newName );
+	wxTreeItemId speakerItem = getSpeaker( speakerName );
+	wxTreeItemId speechItem  = getTreeItem( sample );
 
 	if ( speakerItem.IsOk() )
 	{
@@ -223,10 +217,7 @@ SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechI
 
 		wxTreeItemId currentSpeakerItem = getSpeaker( speechItem );
 		if ( currentSpeakerItem.IsOk() )
-		{
 			SelectItem( changeSpeaker( speechItem, currentSpeakerItem, speakerItem ) );
-			return true;
-		}
 	}
 	else
 	{
@@ -236,22 +227,16 @@ SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechI
 
 		// Do I have siblings?
 		if ( GetChildrenCount( speakerItem ) == 1 )
-		{
 			// There's nobody else. I should change the speaker name in place.
-			SetItemText( speakerItem, newName );
-			return false;
-		}
+			SetItemText( speakerItem, speakerName );
 		else
 		{
 			// I have a different name than my siblings, I should create a
 			// new parent and move there.
-			wxTreeItemId newSpeakerItem = AppendItem( GetRootItem(), newName );
+			wxTreeItemId newSpeakerItem = AppendItem( GetRootItem(), speakerName );
 			SelectItem( changeSpeaker( speechItem, speakerItem, newSpeakerItem ) );
-			return true;
 		}
 	}
-	*/
-	return false;
 }
 
 
@@ -260,19 +245,17 @@ SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
                                 const wxTreeItemId &currentSpeaker,
                                 const wxTreeItemId &newSpeaker )
 {
-	/*
 	wxTreeItemId newSpeechItem;
 	newSpeechItem = AppendItem( newSpeaker, GetItemText( speech ), -1, -1, GetItemData( speech ) );
 
 	SetItemData( speech, NULL ); // replace the data with NULL; speech will not delete it now!
 	Delete( speech );
 
+	// Delete the speaker, if this was the only speech in it.
 	if ( GetChildrenCount( currentSpeaker ) == 0 )
 		Delete( currentSpeaker );
 
 	return newSpeechItem;
-	*/
-	return wxTreeItemId();
 }
 
 

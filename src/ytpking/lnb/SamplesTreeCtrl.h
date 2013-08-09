@@ -96,10 +96,6 @@ private:
 		onChangeSampleSpeaker( char const *speakerName, Sample *sample )
 		override;
 
-
-	bool
-		renameSpeaker( const char *newName, const wxTreeItemId &speechItem );
-
 	wxTreeItemId
 		changeSpeaker( const wxTreeItemId &speech, const wxTreeItemId &currentSpeaker, const wxTreeItemId &newSpeaker );
 
