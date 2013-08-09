@@ -14,12 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "PreviewUser.h"
+#include "SampleUser.h"
 
-#include "../Pipeline.h"
+#include "SampleManager.h"
 
-#include "AudioComposition.h"
-#include "VideoComposition.h"
 
 	namespace ytpking
 	{
@@ -28,29 +26,18 @@
 	namespace gnl
 	{
 
-Composition *PreviewUser::m_audioPreviewComposition( NULL );
-Composition *PreviewUser::m_videoPreviewComposition( NULL );
 
-
-void
-PreviewUser::initialize( Pipeline *pipeline )
+SampleUser::SampleUser( SampleManager &manager ) :
+	m_manager( &manager )
 {
-	m_audioPreviewComposition = new AudioComposition;
-	m_videoPreviewComposition = new VideoComposition;
-
-	m_audioPreviewComposition->addTo( *pipeline );
-	m_videoPreviewComposition->addTo( *pipeline );
+	manager.registerSampleUser( this );
 }
 
 
-void
-PreviewUser::cleanup( void )
+SampleUser::~SampleUser( void )
 {
-	delete m_audioPreviewComposition;
-	delete m_videoPreviewComposition;
+	m_manager->unregisterSampleUser( this );
 }
-
-
 
 
 	} } }

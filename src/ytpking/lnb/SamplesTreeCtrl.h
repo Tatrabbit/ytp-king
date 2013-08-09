@@ -18,8 +18,7 @@
 #define __YTPKING_GST_GNL_SamplesTreeCtrl_h
 
 #include <wx/treectrl.h>
-
-#include "ytpking/SamplesDataFile.h"
+#include "../gst/gnl/SampleUser.h"
 
 
 	namespace ytpking
@@ -37,7 +36,8 @@ namespace gnl {
 
 
 class SamplesTreeCtrl :
-	public wxTreeCtrl
+	public wxTreeCtrl,
+	public gst::gnl::SampleUser
 {
 public:
 
@@ -52,16 +52,6 @@ public:
 	void
 		onCollapsing( wxTreeEvent &event );
 
-	/** Adds a sample to me.
-	\param name the name of the sample, such as "Gee, it sure is boring around here".
-	\param speaker The name of the speaker, such as "Mario" or "Link"
-	\param audioSource the FileSource to be associated for audio.
-	\param videoSource the FileSource to be associated for video.
-	\param nodeReference If not NULL, the node is copied into to the tree item. If NULL,
-	                     the SavaData is notified of a new node, and the data will be saved. */
-	void
-		addSample( const char *name, const char *speaker,
-				SamplesDataFile::NodeReference *nodeReference = NULL );
 
 	/** Gets the speaker wxTreeItemId with the given name.
 	\param speakerName the name of the speaker to find
@@ -77,40 +67,43 @@ public:
 	wxTreeItemId
 		getSpeaker(	const wxTreeItemId &speech ) const;
 
-	wxTreeItemId
-		changeSpeaker( const wxTreeItemId &speech, const wxTreeItemId &currentSpeaker, const wxTreeItemId &newSpeaker );
-
-	bool
-		renameSpeaker( const char *newName, const wxTreeItemId &speechItem );
-
 
 	class SamplesTreeData :
 		public wxTreeItemData
 	{
 	public:
-		SamplesTreeData( char const *filename );
-		virtual
-			~SamplesTreeData( void );
+		SamplesTreeData( Sample *sample );
 
-	private: // TODO macros for = delete when it becomes available.
-		SamplesTreeData( const SamplesTreeData &c );
-
-		SamplesTreeData
-			&operator=( const SamplesTreeData &c );
-
-	public:
-
-		// TODO constructor, default to NULL
 		Sample *m_sample;
 
-		SamplesDataFile::NodeReference m_nodeReference;
 	};
 
 private:
 
-	SamplesDataFile *m_samplesDataFile;
-
 	wxDECLARE_EVENT_TABLE();
+
+	void
+		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
+		override;
+
+	void
+		onDeleteSample( Sample *deletedSample )
+		override;
+
+	void
+		onRenameSample( const char *newSampleName, Sample *sample )
+		override;
+
+
+	void
+		onChangeSampleSpeaker( char const *speakerName, Sample *sample )
+		override;
+
+	bool
+		renameSpeaker( const char *newName, const wxTreeItemId &speechItem );
+
+	wxTreeItemId
+		changeSpeaker( const wxTreeItemId &speech, const wxTreeItemId &currentSpeaker, const wxTreeItemId &newSpeaker );
 
 };
 

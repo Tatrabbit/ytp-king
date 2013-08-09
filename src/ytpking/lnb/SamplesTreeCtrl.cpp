@@ -25,6 +25,8 @@
 #include "ytpking/Sample.h"
 #include "ytpking/SamplesDataFile.h"
 
+#include "../gst/gnl/SampleManager.h"
+
 	namespace ytpking
 	{
 	namespace lnb
@@ -32,23 +34,17 @@
 
 
 SamplesTreeCtrl::
-SamplesTreeData::SamplesTreeData( char const *filename ) :
-	m_sample( new Sample( filename ) )
+SamplesTreeData::SamplesTreeData( Sample *sample ) :
+	m_sample( sample )
 {
-}
-
-
-SamplesTreeCtrl::
-SamplesTreeData::~SamplesTreeData( void )
-{
-	delete m_sample;
 }
 
 
 SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	wxTreeCtrl( parent, samplesId, wxDefaultPosition, wxDefaultSize,
 		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
-			wxTR_ROW_LINES|wxTR_HIDE_ROOT|wxTR_EDIT_LABELS)
+			wxTR_ROW_LINES|wxTR_HIDE_ROOT|wxTR_EDIT_LABELS),
+	gst::gnl::SampleUser( gst::gnl::sampleManager )
 {
 	// TODO Documentation says there must be an image list for item dragging in MSW.
 	//      Does this still apply?
@@ -58,10 +54,6 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	//AssignImageList( imageList );
 
 	wxTreeItemId root = AddRoot( "" );
-
-	m_samplesDataFile = new SamplesDataFile( this );
-
-	m_samplesDataFile->loadAll();
 }
 
 
@@ -105,6 +97,7 @@ SamplesTreeCtrl::onBeginEditLabel( wxTreeEvent &event )
 void
 SamplesTreeCtrl::onEndEditLabel( wxTreeEvent &event )
 {
+	/*
 	wxTreeItemId    item = event.GetItem();
 	wxTreeItemData *data = GetItemData( item );
 
@@ -113,8 +106,8 @@ SamplesTreeCtrl::onEndEditLabel( wxTreeEvent &event )
 	if ( data )
 	{
 		SamplesTreeData *treeData = (SamplesTreeData *)data;
-		m_samplesDataFile->renameSample( event.GetLabel(), treeData->m_nodeReference );
 	}
+	*/
 }
 
 
@@ -129,31 +122,6 @@ SamplesTreeCtrl::onCollapsing( wxTreeEvent &event )
 		event.Veto();
 		return;
 	}
-}
-
-
-void
-SamplesTreeCtrl::addSample( const char *name, const char *speaker,
-		SamplesDataFile::NodeReference *nodeReference )
-{
-	SamplesTreeData *data = new SamplesTreeData( "file:///C:/zelda.mp4" );
-
-	wxTreeItemId speakerItem = getSpeaker( speaker );
-
-	if ( nodeReference )
-		data->m_nodeReference = *nodeReference;
-	else
-		data->m_nodeReference = m_samplesDataFile->addSample( name, speaker );
-	
-	if ( speakerItem.IsOk() )
-		AppendItem( speakerItem, name, -1, -1, data );
-	else
-	{
-		speakerItem = AppendItem( GetRootItem(), speaker );
-		AppendItem( speakerItem, name, -1, -1, data );
-	}
-
-	Expand( speakerItem );
 }
 
 
@@ -198,32 +166,47 @@ SamplesTreeCtrl::getSpeaker( const wxTreeItemId &speech ) const
 }
 
 
-wxTreeItemId
-SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
-                                const wxTreeItemId &currentSpeaker,
-                                const wxTreeItemId &newSpeaker )
+void
+SamplesTreeCtrl::onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
 {
-	wxTreeItemId newSpeechItem;
-	newSpeechItem = AppendItem( newSpeaker, GetItemText( speech ), -1, -1, GetItemData( speech ) );
+	SamplesTreeData *data = new SamplesTreeData( addedSample );
 
-	SetItemData( speech, NULL ); // replace the data with NULL; speech will not delete it now!
-	Delete( speech );
+	wxTreeItemId speakerItem = getSpeaker( speakerName );
 
-	if ( GetChildrenCount( currentSpeaker ) == 0 )
-		Delete( currentSpeaker );
+	if ( speakerItem.IsOk() )
+		AppendItem( speakerItem, sampleName, -1, -1, data );
+	else
+	{
+		speakerItem = AppendItem( GetRootItem(), speakerName );
+		AppendItem( speakerItem, sampleName, -1, -1, data );
+	}
 
-	return newSpeechItem;
+	Expand( speakerItem );
+}
+
+
+void
+SamplesTreeCtrl::onDeleteSample( Sample *deletedSample )
+{
+}
+
+
+void
+SamplesTreeCtrl::onRenameSample( char const *newSampleName, Sample *sample )
+{
+}
+
+
+void
+SamplesTreeCtrl::onChangeSampleSpeaker( char const *speakerName, Sample *sample )
+{
 }
 
 
 bool
 SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechItem )
 {
-	// Changemy savedata
-	SamplesTreeData *data = (SamplesTreeData *)GetItemData( speechItem );
-	if ( data )
-		m_samplesDataFile->changeSampleSpeaker( newName, data->m_nodeReference );
-
+	/*
 	// Is there a speaker of this new name?
 	wxTreeItemId speakerItem = getSpeaker( newName );
 
@@ -261,8 +244,29 @@ SamplesTreeCtrl::renameSpeaker( const char *newName, const wxTreeItemId &speechI
 			return true;
 		}
 	}
-
+	*/
 	return false;
+}
+
+
+wxTreeItemId
+SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
+                                const wxTreeItemId &currentSpeaker,
+                                const wxTreeItemId &newSpeaker )
+{
+	/*
+	wxTreeItemId newSpeechItem;
+	newSpeechItem = AppendItem( newSpeaker, GetItemText( speech ), -1, -1, GetItemData( speech ) );
+
+	SetItemData( speech, NULL ); // replace the data with NULL; speech will not delete it now!
+	Delete( speech );
+
+	if ( GetChildrenCount( currentSpeaker ) == 0 )
+		Delete( currentSpeaker );
+
+	return newSpeechItem;
+	*/
+	return wxTreeItemId();
 }
 
 

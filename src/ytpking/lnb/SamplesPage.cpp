@@ -25,6 +25,7 @@
 #include "SamplesTreeCtrl.h"
 #include "SourcesToolbar.h"
 
+#include "../gst/gnl/SampleManager.h"
 #include "../gst/gnl/Composition.h"
 
 
@@ -51,7 +52,7 @@ SamplesPage::SamplesPage( wxWindow *parent, int firstId ) :
 void
 SamplesPage::onButtonAdd( wxCommandEvent& )
 {
-	m_treeCtrl->addSample( "Speech", "Dick Johnson" );
+	gst::gnl::sampleManager.addSample( "file:///C:/zelda.mp4", "Speech", "Dick Johnson" );
 }
 
 

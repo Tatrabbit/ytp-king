@@ -28,7 +28,7 @@ class DataFile
 {
 public:
 
-	static bool init( void );
+	static bool initialize( void );
 
 	/** Gets the path in the user's home directory to save data to.
 	/return the path usually, but NULL if something fatal happened during setup. */

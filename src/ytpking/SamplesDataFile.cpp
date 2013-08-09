@@ -20,12 +20,11 @@
 
 #include <wx/log.h>
 
-#include "lnb/SamplesTreeCtrl.h"
-
 #include "rapidxml/rapidxml_print.hpp"
 
 #include "gst/gnl/Composition.h"
 #include "gst/gnl/FileSource.h"
+#include "gst/gnl/SampleManager.h"
 
 
 using namespace rapidxml;
@@ -34,11 +33,11 @@ using namespace rapidxml;
 	namespace ytpking
 	{
 
-using lnb::SamplesTreeCtrl;
+		using gst::gnl::SampleManager;
 
 
-SamplesDataFile::SamplesDataFile( SamplesTreeCtrl *samplesTreeCtrl ) :
-	m_treeCtrl( samplesTreeCtrl ),
+SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
+	m_manager( manager ),
 	m_filename( getSaveDataPath() ),
 	m_isLocked( false )
 {
@@ -228,7 +227,7 @@ SamplesDataFile::loadAll( void )
 			nodeReference.m_speaker = speakerNode;
 			nodeReference.m_speech  = speechNode;
 
-			m_treeCtrl->addSample( speechName, speakerName, &nodeReference );
+			m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, &nodeReference );
 			speechNode = speechNode->next_sibling( "speech" );
 		}
 

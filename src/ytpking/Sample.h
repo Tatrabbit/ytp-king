@@ -19,6 +19,7 @@
 
 #include <string>
 
+// TODO move into namespace gst::gnl
 
 	namespace ytpking
 	{

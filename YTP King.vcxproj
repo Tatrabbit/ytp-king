@@ -18,6 +18,8 @@
     <ClCompile Include="src\ytpking\gst\gnl\Composition.cpp" />
     <ClCompile Include="src\ytpking\gst\gnl\FileSource.cpp" />
     <ClCompile Include="src\ytpking\gst\gnl\PreviewUser.cpp" />
+    <ClCompile Include="src\ytpking\gst\gnl\SampleManager.cpp" />
+    <ClCompile Include="src\ytpking\gst\gnl\SampleUser.cpp" />
     <ClCompile Include="src\ytpking\gst\gnl\VideoComposition.cpp" />
     <ClCompile Include="src\ytpking\gst\GstreamerThread.cpp" />
     <ClCompile Include="src\ytpking\gst\Pipeline.cpp" />
@@ -51,6 +53,8 @@
     <ClInclude Include="src\ytpking\gst\gnl\Composition.h" />
     <ClInclude Include="src\ytpking\gst\gnl\FileSource.h" />
     <ClInclude Include="src\ytpking\gst\gnl\PreviewUser.h" />
+    <ClInclude Include="src\ytpking\gst\gnl\SampleManager.h" />
+    <ClInclude Include="src\ytpking\gst\gnl\SampleUser.h" />
     <ClInclude Include="src\ytpking\gst\gnl\VideoComposition.h" />
     <ClInclude Include="src\ytpking\gst\GstreamerThread.h" />
     <ClInclude Include="src\ytpking\gst\Pipeline.h" />

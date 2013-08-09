@@ -120,6 +120,12 @@
     <ClCompile Include="src\ytpking\SamplesDataFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\SampleManager.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\SampleUser.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -214,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\EventId.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\SampleManager.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\SampleUser.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

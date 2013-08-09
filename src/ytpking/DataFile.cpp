@@ -34,7 +34,7 @@ bool         DataFile::m_hasSavedataPath( false );
 
 
 bool
-DataFile::init( void )
+DataFile::initialize( void )
 {
 // TODO for other platforms/compilers
 #ifdef _MSC_VER

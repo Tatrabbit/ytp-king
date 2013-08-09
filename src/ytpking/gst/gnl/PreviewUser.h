@@ -30,13 +30,13 @@ class Pipeline;
 
 class Composition;
 
-	
+// TODO refactor this to have both compositions as a global instead.
 class PreviewUser
 {
 protected:
 
 	static void
-		init( Pipeline *pipeline );
+		initialize( Pipeline *pipeline );
 
 	static void
 		cleanup( void );

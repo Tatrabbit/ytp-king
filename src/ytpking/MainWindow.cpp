@@ -29,6 +29,7 @@
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
+#include "gst/gnl/SampleManager.h"
 #include "gst/gnl/AudioComposition.h"
 #include "gst/gnl/VideoComposition.h"
 #include "gst/gnl/FileSource.h"
@@ -56,10 +57,10 @@ MainWindow::MainWindow( void ) :
 {
 	gst::timelinePipeline.initialize();
 
-	PreviewUser::init( &gst::timelinePipeline );
+	PreviewUser::initialize( &gst::timelinePipeline );
 
 	// Get the folder save path
-	DataFile::init();
+	DataFile::initialize();
 
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
@@ -116,6 +117,8 @@ MainWindow::MainWindow( void ) :
 
 	CreateStatusBar();
 	SetStatusText( "Roll your cursor over something and look here for help." );
+
+	gst::gnl::sampleManager.initialize();
 }
 
 
@@ -244,6 +247,7 @@ MainWindow::onSpinSamplePropertiesEndChange( wxSpinEvent& event )
 void
 MainWindow::onSampleTextSpeakerNameChange( wxCommandEvent& event )
 {
+	/*
 	lnb::SamplesTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
 	wxTreeItemId selectedItem = tree->GetSelection();
 
@@ -253,6 +257,7 @@ MainWindow::onSampleTextSpeakerNameChange( wxCommandEvent& event )
 			wxWindow *window = (wxWindow *)event.GetEventObject();
 			window->SetFocus();
 		}
+	*/
 }
 
 
