@@ -20,7 +20,9 @@
 #include <wx/spinctrl.h>
 #include <wx/textctrl.h>
 
+#include "gst/gnl/Composition.h"
 #include "gst/gnl/SampleManager.h"
+#include "Sample.h"
 
 
 	namespace ytpking
@@ -108,58 +110,33 @@ SamplePropertiesWindow::updateConstraints( int start, int end )
 void
 SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 {
-	/*
-	wxTreeCtrl *tree          =  m_librarySizer->getSamplesTreeCtrl();
-	wxTreeItemId selectedItem = tree->GetSelection();
-
-	wxTreeItemData *data = tree->GetItemData( selectedItem );
-
-	if ( data )
+	Sample *sample = gst::gnl::sampleManager.getSelectedSample();
+	if ( sample != NULL )
 	{
-		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
-		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
-
 		int start    = event.GetInt();
-		int end      = m_samplePropertiesSizer->getEnd();
+		int end      = getEnd();
 		int duration = end - start;
 
-		treeData->m_sample->m_start    = start;
-		treeData->m_sample->m_duration = duration;
+		sample->m_start    = start;
+		sample->m_duration = duration;
 
 		m_audioPreviewComposition->update();
 		m_videoPreviewComposition->update();
-
-		m_samplePropertiesSizer->updateConstraints();
 	}
-	*/
 }
 
 
 void
 SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 {
-	/*
-	wxTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
-	wxTreeItemId selectedItem = tree->GetSelection();
-
-	wxTreeItemData *data = tree->GetItemData( selectedItem );
-
-	if ( data )
+	Sample *sample = gst::gnl::sampleManager.getSelectedSample();
+	if ( sample != NULL )
 	{
-		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
-		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
-
-		int start = m_samplePropertiesSizer->getStart();
-		int duration = event.GetInt() - start;
-
-		treeData->m_sample->m_duration = duration;
+		sample->m_duration = event.GetInt() - sample->m_start;
 
 		m_audioPreviewComposition->update();
 		m_videoPreviewComposition->update();
-
-		m_samplePropertiesSizer->updateConstraints();
 	}
-	*/
 }
 
 
