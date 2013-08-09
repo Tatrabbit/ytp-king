@@ -16,6 +16,7 @@
 */
 #include "SamplePropertiesSizer.h"
 
+#include <wx/sizer.h>
 #include <wx/spinctrl.h>
 #include <wx/textctrl.h>
 
@@ -26,58 +27,62 @@
 	{
 
 
-SamplePropertiesSizer::SamplePropertiesSizer( wxWindow *parent, int startId ) :
-	wxGridSizer( 2, 8, 8 )
+SamplePropertiesWindow::SamplePropertiesWindow( wxWindow *parent ) :
+	wxWindow( parent, wxID_ANY )
 {
-	m_startFrameSpinCtrl = new wxSpinCtrl( parent, startId, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 0, 5  );
-	m_endFrameSpinCtrl   = new wxSpinCtrl( parent, startId + 1, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 1, 100  );
+	wxSizer *sizer = new wxGridSizer( 2, 8, 8 );
 
-	m_speakerName = new wxTextCtrl( parent, startId + 2 );
+	m_startFrameSpinCtrl = new wxSpinCtrl( this, SpinStartFrame, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 0, 5  );
+	m_endFrameSpinCtrl   = new wxSpinCtrl( this, SpinEndFrame, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 1, 100  );
 
-	Add( m_startFrameSpinCtrl );
-	Add( m_endFrameSpinCtrl );
+	m_speakerName = new wxTextCtrl( this, TextSpeakerName );
 
-	Add( m_speakerName, 0 );
+	sizer->Add( m_startFrameSpinCtrl );
+	sizer->Add( m_endFrameSpinCtrl );
+
+	sizer->Add( m_speakerName, 0 );
+
+	SetSizer( sizer );
 }
 
 
 void
-SamplePropertiesSizer::setStart( unsigned int start )
+SamplePropertiesWindow::setStart( unsigned int start )
 {
 	m_startFrameSpinCtrl->SetValue( start );
 }
 
 
 void
-SamplePropertiesSizer::setEnd( unsigned int end )
+SamplePropertiesWindow::setEnd( unsigned int end )
 {
 	m_endFrameSpinCtrl->SetValue( end );
 }
 
 
 int
-SamplePropertiesSizer::getStart( void ) const
+SamplePropertiesWindow::getStart( void ) const
 {
 	return m_startFrameSpinCtrl->GetValue();
 }
 
 
 int
-SamplePropertiesSizer::getEnd( void ) const
+SamplePropertiesWindow::getEnd( void ) const
 {
 	return m_endFrameSpinCtrl->GetValue();
 }
 
 
 const char
-*SamplePropertiesSizer::getSpeakerName( void ) const
+*SamplePropertiesWindow::getSpeakerName( void ) const
 {
 	return m_speakerName->GetValue();
 }
 
 
 void
-SamplePropertiesSizer::setSpeakerName( const char *speakerName )
+SamplePropertiesWindow::setSpeakerName( const char *speakerName )
 {
 	m_speakerName->ChangeValue( speakerName );
 	m_speakerName->SetInsertionPointEnd();
@@ -85,7 +90,7 @@ SamplePropertiesSizer::setSpeakerName( const char *speakerName )
 
 
 void
-SamplePropertiesSizer::updateConstraints( void )
+SamplePropertiesWindow::updateConstraints( void )
 {
 	m_startFrameSpinCtrl->SetMax( m_endFrameSpinCtrl->GetValue() - 1 );
 	m_endFrameSpinCtrl->SetMin( m_startFrameSpinCtrl->GetValue() + 1 );
@@ -93,14 +98,73 @@ SamplePropertiesSizer::updateConstraints( void )
 
 
 void
-SamplePropertiesSizer::updateConstraints( int start, int end )
+SamplePropertiesWindow::updateConstraints( int start, int end )
 {
 	m_startFrameSpinCtrl->SetMax( end - 1 );
 	m_endFrameSpinCtrl->SetMin( start + 1 );
 }
 
+
 void
-SamplePropertiesSizer::onSpeakerNameChange( wxCommandEvent& event )
+SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
+{
+	/*
+	wxTreeCtrl *tree          =  m_librarySizer->getSamplesTreeCtrl();
+	wxTreeItemId selectedItem = tree->GetSelection();
+
+	wxTreeItemData *data = tree->GetItemData( selectedItem );
+
+	if ( data )
+	{
+		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
+		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
+
+		int start    = event.GetInt();
+		int end      = m_samplePropertiesSizer->getEnd();
+		int duration = end - start;
+
+		treeData->m_sample->m_start    = start;
+		treeData->m_sample->m_duration = duration;
+
+		m_audioPreviewComposition->update();
+		m_videoPreviewComposition->update();
+
+		m_samplePropertiesSizer->updateConstraints();
+	}
+	*/
+}
+
+
+void
+SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
+{
+	/*
+	wxTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
+	wxTreeItemId selectedItem = tree->GetSelection();
+
+	wxTreeItemData *data = tree->GetItemData( selectedItem );
+
+	if ( data )
+	{
+		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
+		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
+
+		int start = m_samplePropertiesSizer->getStart();
+		int duration = event.GetInt() - start;
+
+		treeData->m_sample->m_duration = duration;
+
+		m_audioPreviewComposition->update();
+		m_videoPreviewComposition->update();
+
+		m_samplePropertiesSizer->updateConstraints();
+	}
+	*/
+}
+
+
+void
+SamplePropertiesWindow::onTextSpeakerNameChange( wxCommandEvent& event )
 {
 	Sample *selectedSample = gst::gnl::sampleManager.getSelectedSample();
 	if ( selectedSample != NULL )
@@ -114,13 +178,14 @@ SamplePropertiesSizer::onSpeakerNameChange( wxCommandEvent& event )
 }
 
 
-/*
-BEGIN_EVENT_TABLE( MainWindow, wxFrame )
+BEGIN_EVENT_TABLE( SamplePropertiesWindow, wxWindow )
 
-	EVT_TEXT( GlobalEventId::SamplePropsTextSpeakerName, onSampleTextSpeakerNameChange)
+	EVT_SPINCTRL( SpinStartFrame,  onSpinStartChange )
+	EVT_SPINCTRL( SpinEndFrame,    onSpinEndChange )
+
+	EVT_TEXT(     TextSpeakerName, onTextSpeakerNameChange )
 
 END_EVENT_TABLE()
-*/
 
 
 	} 

@@ -65,9 +65,9 @@ MainWindow::MainWindow( void ) :
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
-	m_librarySizer          = new lnb::LibrarySizer( this, GlobalEventId::SamplesTreeCtrl );
-	m_timelineWindow        = new TimelineWindow( this );
-	m_samplePropertiesSizer = new SamplePropertiesSizer( this, GlobalEventId::SamplePropsSpinStartFrame );
+	m_librarySizer           = new lnb::LibrarySizer( this, GlobalEventId::SamplesTreeCtrl );
+	m_timelineWindow         = new TimelineWindow( this );
+	m_samplePropertiesWindow = new SamplePropertiesWindow( this );
 
 	wxMenu *menuFile = new wxMenu;
 
@@ -105,12 +105,12 @@ MainWindow::MainWindow( void ) :
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
 	movieSizer->Add( m_timelineWindow, 0, wxALL|wxEXPAND );
 
-	m_sampleAndMovieSizer->Add( m_samplePropertiesSizer );
+	m_sampleAndMovieSizer->Add( m_samplePropertiesWindow );
 	m_sampleAndMovieSizer->Add( movieSizer, 1, wxALL|wxEXPAND );
 
 	m_mainSizer->Add( m_sampleAndMovieSizer, 3, wxEXPAND );
 
-	m_sampleAndMovieSizer->Hide( m_samplePropertiesSizer );
+	m_sampleAndMovieSizer->Hide( m_samplePropertiesWindow );
 	m_sampleAndMovieSizer->Layout();
 
 	this->SetSizer( m_mainSizer );
@@ -167,96 +167,26 @@ MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
 		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
 
-		m_sampleAndMovieSizer->Show( m_samplePropertiesSizer );
+		m_sampleAndMovieSizer->Show( m_samplePropertiesWindow );
 		m_sampleAndMovieSizer->Layout();
 
 		int start = treeData->m_sample->m_start;
 		int end   = start + treeData->m_sample->m_duration;
 
-		m_samplePropertiesSizer->updateConstraints( start, end );
+		m_samplePropertiesWindow->updateConstraints( start, end );
 
-		m_samplePropertiesSizer->setStart( start );
-		m_samplePropertiesSizer->setEnd( end );
+		m_samplePropertiesWindow->setStart( start );
+		m_samplePropertiesWindow->setEnd( end );
 
 		wxTreeItemId speakerItem = tree->getSpeaker( selectedItem );
 
 		if ( speakerItem.IsOk() )
-			m_samplePropertiesSizer->setSpeakerName( tree->GetItemText( speakerItem ) );
+			m_samplePropertiesWindow->setSpeakerName( tree->GetItemText( speakerItem ) );
 	}
 	else
 	{
-		m_sampleAndMovieSizer->Hide( m_samplePropertiesSizer );
+		m_sampleAndMovieSizer->Hide( m_samplePropertiesWindow );
 		m_sampleAndMovieSizer->Layout();
-	}
-}
-
-
-void
-MainWindow::onSpinSamplePropertiesStartChange( wxSpinEvent& event )
-{
-	wxTreeCtrl *tree          =  m_librarySizer->getSamplesTreeCtrl();
-	wxTreeItemId selectedItem = tree->GetSelection();
-
-	wxTreeItemData *data = tree->GetItemData( selectedItem );
-
-	if ( data )
-	{
-		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
-		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
-
-		int start    = event.GetInt();
-		int end      = m_samplePropertiesSizer->getEnd();
-		int duration = end - start;
-
-		treeData->m_sample->m_start    = start;
-		treeData->m_sample->m_duration = duration;
-
-		m_audioPreviewComposition->update();
-		m_videoPreviewComposition->update();
-
-		m_samplePropertiesSizer->updateConstraints();
-	}
-}
-
-
-void
-MainWindow::onSpinSamplePropertiesEndChange( wxSpinEvent& event )
-{
-	wxTreeCtrl *tree =  m_librarySizer->getSamplesTreeCtrl();
-	wxTreeItemId selectedItem = tree->GetSelection();
-
-	wxTreeItemData *data = tree->GetItemData( selectedItem );
-
-	if ( data )
-	{
-		lnb::SamplesTreeCtrl::SamplesTreeData *treeData;
-		treeData = (lnb::SamplesTreeCtrl::SamplesTreeData *)data;
-
-		int start = m_samplePropertiesSizer->getStart();
-		int duration = event.GetInt() - start;
-
-		treeData->m_sample->m_duration = duration;
-
-		m_audioPreviewComposition->update();
-		m_videoPreviewComposition->update();
-
-		m_samplePropertiesSizer->updateConstraints();
-	}
-}
-
-
-// TODO refactor this, shouldn't involve the TreeCtrl
-void
-MainWindow::onSampleTextSpeakerNameChange( wxCommandEvent& event )
-{
-	Sample *selectedSample = gst::gnl::sampleManager.getSelectedSample();
-	if ( selectedSample != NULL )
-	{
-		gst::gnl::sampleManager.changeSpeaker( selectedSample, event.GetString().c_str() );
-
-		// refocus me
-		wxWindow *window = (wxWindow *)event.GetEventObject();
-		window->SetFocus();
 	}
 }
 
@@ -284,10 +214,6 @@ BEGIN_EVENT_TABLE( MainWindow, wxFrame )
 
 	EVT_TREE_SEL_CHANGED( GlobalEventId::SamplesTreeCtrl, onSamplesTreeChange )
 
-	EVT_SPINCTRL( GlobalEventId::SamplePropsSpinStartFrame, onSpinSamplePropertiesStartChange )
-	EVT_SPINCTRL( GlobalEventId::SamplePropsSpinEndFrame, onSpinSamplePropertiesEndChange )
-
-	EVT_TEXT( GlobalEventId::SamplePropsTextSpeakerName, onSampleTextSpeakerNameChange)
 END_EVENT_TABLE()
 
 

@@ -33,7 +33,7 @@ class wxTreeEvent;
 	{
 
 
-class SamplePropertiesSizer;
+class SamplePropertiesWindow;
 
 namespace lnb {
 	class LibrarySizer;
@@ -67,13 +67,11 @@ private: // TODO macros for = delete when it becomes available.
 
 public:
 
-	wxWindow              *m_moviePanel;
-	lnb::LibrarySizer     *m_librarySizer;
-	wxWindow              *m_timelineWindow;
-	SamplePropertiesSizer *m_samplePropertiesSizer;
+	wxWindow               *m_moviePanel;
+	lnb::LibrarySizer      *m_librarySizer;
+	wxWindow               *m_timelineWindow;
+	SamplePropertiesWindow *m_samplePropertiesWindow;
 
-
-	//// BEGIN wx Events
 
 	void
 		onQuit( wxCommandEvent &event );
@@ -83,16 +81,6 @@ public:
 
 	void
 		onSamplesTreeChange( wxTreeEvent& event );
-
-	void
-		onSpinSamplePropertiesStartChange( wxSpinEvent& event );
-	void
-		onSpinSamplePropertiesEndChange( wxSpinEvent& event );
-
-	void
-		onSampleTextSpeakerNameChange( wxCommandEvent& event );
-
-	//// END wx Events
 
 private:
 

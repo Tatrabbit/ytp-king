@@ -17,7 +17,7 @@
 #ifndef __YTPKING_SamplePropertiesSizer_h
 #define __YTPKING_SamplePropertiesSizer_h
 
-#include <wx/sizer.h>
+#include <wx/window.h>
 
 
 class wxTextCtrl;
@@ -26,14 +26,14 @@ class wxTextCtrl;
 	{
 
 
-class SamplePropertiesSizer :
+class SamplePropertiesWindow :
 	// TODO Once things are a bit more ready, change this to derive from wxGridBagSizer
 	//      and position everything nicely.
-	public wxGridSizer
+	public wxWindow
 {
 public:
 
-	SamplePropertiesSizer( wxWindow *parent, int startId );
+	SamplePropertiesWindow( wxWindow *parent );
 
 	void
 		setStart( unsigned int start );
@@ -65,10 +65,24 @@ private:
 
 
 	void
-		onSpeakerNameChange( wxCommandEvent& event );
+		onSpinStartChange( wxSpinEvent& event );
+	void
+		onSpinEndChange( wxSpinEvent& event );
+
+	void
+		onTextSpeakerNameChange( wxCommandEvent& event );
 
 
-	//wxDECLARE_EVENT_TABLE();
+	enum EventId
+	{
+		SpinStartFrame = 1,
+		SpinEndFrame,
+
+		TextSpeakerName
+	};
+
+
+	wxDECLARE_EVENT_TABLE();
 	
 };
 

@@ -32,11 +32,7 @@ enum GlobalEventId
 	MainMenuAbout,
 	MainMenuQuit,
 
-	SamplesTreeCtrl,
-
-	SamplePropsSpinStartFrame,
-	SamplePropsSpinEndFrame,
-	SamplePropsTextSpeakerName
+	SamplesTreeCtrl
 };
 
 
