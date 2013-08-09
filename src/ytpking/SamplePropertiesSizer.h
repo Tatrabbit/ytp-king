@@ -62,6 +62,13 @@ private:
 	wxSpinCtrl *m_endFrameSpinCtrl;
 
 	wxTextCtrl *m_speakerName;
+
+
+	void
+		onSpeakerNameChange( wxCommandEvent& event );
+
+
+	//wxDECLARE_EVENT_TABLE();
 	
 };
 

@@ -50,6 +50,11 @@ protected:
 	virtual void
 		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample ) = 0;
 
+	/** Called when a Sample is selected.
+	\param selectedSample The newly selected Sample */
+	virtual void
+		onSelectSample( Sample *selectedSample ) = 0;
+
 	/** Called when a Sample is about to be deleted.
 	If a pointer matching deletedSample is held, it should be set to NULL or otherwise
 	set to no longer match the sample, as that data is soon to be destroyed.

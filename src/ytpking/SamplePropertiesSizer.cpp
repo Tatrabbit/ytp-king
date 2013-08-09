@@ -19,6 +19,8 @@
 #include <wx/spinctrl.h>
 #include <wx/textctrl.h>
 
+#include "gst/gnl/SampleManager.h"
+
 
 	namespace ytpking
 	{
@@ -96,6 +98,29 @@ SamplePropertiesSizer::updateConstraints( int start, int end )
 	m_startFrameSpinCtrl->SetMax( end - 1 );
 	m_endFrameSpinCtrl->SetMin( start + 1 );
 }
+
+void
+SamplePropertiesSizer::onSpeakerNameChange( wxCommandEvent& event )
+{
+	Sample *selectedSample = gst::gnl::sampleManager.getSelectedSample();
+	if ( selectedSample != NULL )
+	{
+		gst::gnl::sampleManager.changeSpeaker( selectedSample, event.GetString().c_str() );
+
+		// refocus me
+		wxWindow *window = (wxWindow *)event.GetEventObject();
+		window->SetFocus();
+	}
+}
+
+
+/*
+BEGIN_EVENT_TABLE( MainWindow, wxFrame )
+
+	EVT_TEXT( GlobalEventId::SamplePropsTextSpeakerName, onSampleTextSpeakerNameChange)
+
+END_EVENT_TABLE()
+*/
 
 
 	} 

@@ -65,6 +65,16 @@ public:
 	void
 		unregisterSampleUser( SampleUser *sampleUser );
 
+
+	/** Get the currently active sample. */
+	Sample
+		*getSelectedSample( void ) const;
+
+	/** Set the currently active sample. */
+	void
+		selectSample( Sample *sample );
+
+
 	/** Adds a new sample.
 	    SampleUser::onAdd will be called.
 	\param filename The filename of the sample.
@@ -98,7 +108,7 @@ public:
 private:
 
 	SamplesDataFile *m_samplesDataFile;
-
+	Sample          *m_selectedSample;
 
 	typedef std::set<SampleUser *> SampleUserSet;
 
@@ -119,6 +129,7 @@ private:
 
 	SampleSet     m_samples;
 	SampleUserSet m_sampleUsers;
+
 };
 
 

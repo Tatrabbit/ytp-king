@@ -51,6 +51,8 @@ public:
 		onEndEditLabel( wxTreeEvent &event );
 	void
 		onCollapsing( wxTreeEvent &event );
+	void
+		onSelectionChanging( wxTreeEvent &event );
 
 
 	/** Gets the speaker wxTreeItemId with the given name.
@@ -80,8 +82,14 @@ public:
 
 private:
 
+	const Sample *m_selectedSample;
+
 	void
 		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
+		override;
+
+	void
+		onSelectSample( Sample *selectedSample )
 		override;
 
 	void

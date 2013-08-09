@@ -45,7 +45,8 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	wxTreeCtrl( parent, samplesId, wxDefaultPosition, wxDefaultSize,
 		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
 			wxTR_ROW_LINES|wxTR_HIDE_ROOT|wxTR_EDIT_LABELS),
-	gst::gnl::SampleUser( gst::gnl::sampleManager )
+	gst::gnl::SampleUser( gst::gnl::sampleManager ),
+	m_selectedSample( NULL )
 {
 	// TODO Documentation says there must be an image list for item dragging in MSW.
 	//      Does this still apply?
@@ -128,6 +129,29 @@ SamplesTreeCtrl::onCollapsing( wxTreeEvent &event )
 }
 
 
+void
+SamplesTreeCtrl::onSelectionChanging( wxTreeEvent &event )
+{
+	SamplesTreeData *data = (SamplesTreeData *)GetItemData(event.GetItem() );
+
+	if ( data != NULL )
+		gst::gnl::sampleManager.selectSample( data->m_sample );
+	else
+	{
+		wxTreeItemIdValue cookie;
+		wxTreeItemId firstSpeech = GetFirstChild( event.GetItem(), cookie );
+
+		if ( firstSpeech.IsOk() )
+		{
+			event.Veto();
+
+			data = (SamplesTreeData *)GetItemData( firstSpeech );
+			gst::gnl::sampleManager.selectSample( data->m_sample );
+		}
+	}
+}
+
+
 wxTreeItemId
 SamplesTreeCtrl::getSpeaker( const char *speakerName ) const
 {
@@ -189,6 +213,13 @@ SamplesTreeCtrl::onAddSample( char const *sampleName, char const *speakerName, S
 
 
 void
+SamplesTreeCtrl::onSelectSample( Sample *selectedSample )
+{
+	m_selectedSample = selectedSample;
+}
+
+
+void
 SamplesTreeCtrl::onDeleteSample( Sample *deletedSample )
 {
 }
@@ -245,8 +276,9 @@ SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
                                 const wxTreeItemId &currentSpeaker,
                                 const wxTreeItemId &newSpeaker )
 {
-	wxTreeItemId newSpeechItem;
-	newSpeechItem = AppendItem( newSpeaker, GetItemText( speech ), -1, -1, GetItemData( speech ) );
+	// Do be sure that these aren't made invalid when the item is deleted.
+	std::string name     = GetItemText( speech );
+	wxTreeItemData *data = GetItemData( speech );
 
 	SetItemData( speech, NULL ); // replace the data with NULL; speech will not delete it now!
 	Delete( speech );
@@ -255,7 +287,7 @@ SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
 	if ( GetChildrenCount( currentSpeaker ) == 0 )
 		Delete( currentSpeaker );
 
-	return newSpeechItem;
+	return AppendItem( newSpeaker, name.c_str(), -1, -1, data );
 }
 
 
@@ -286,26 +318,30 @@ SamplesTreeCtrl::getTreeItem( Sample *sample, const wxTreeItemId &parent ) const
 {
 	wxTreeItemIdValue cookie;
 
-	wxTreeItemId speakerItem = GetFirstChild( parent, cookie );
+	wxTreeItemId speechtem = GetFirstChild( parent, cookie );
 
 	wxTreeItemId foundItem;
-	while( speakerItem.IsOk() )
+	while( speechtem.IsOk() )
 	{
-		SamplesTreeData *data = (SamplesTreeData *)GetItemData( speakerItem );
+		SamplesTreeData *data = (SamplesTreeData *)GetItemData( speechtem );
 
-		assert( data != NULL );
+		if ( data == NULL )
+		{
+			speechtem = GetNextChild( parent, cookie );
+			continue;
+		}
 
 		if ( data->m_sample == sample )
-			return speakerItem;
+			return speechtem;
 
 		// call recursively on my children
-		getTreeItem( sample, speakerItem );
+		getTreeItem( sample, speechtem );
 
 		// continue with my next sibling
-		speakerItem = GetNextChild( parent, cookie );
+		speechtem = GetNextChild( parent, cookie );
 	}
 
-	return speakerItem;
+	return speechtem;
 }
 
 
@@ -315,6 +351,7 @@ wxBEGIN_EVENT_TABLE( SamplesTreeCtrl, wxTreeCtrl )
 	EVT_TREE_BEGIN_LABEL_EDIT( wxID_ANY, onBeginEditLabel )
 	EVT_TREE_END_LABEL_EDIT( wxID_ANY, onEndEditLabel )
 	EVT_TREE_ITEM_COLLAPSING( wxID_ANY, onCollapsing )
+	EVT_TREE_SEL_CHANGING( wxID_ANY, onSelectionChanging )
 
 wxEND_EVENT_TABLE()
 

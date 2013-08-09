@@ -190,6 +190,7 @@ MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 	}
 }
 
+
 void
 MainWindow::onSpinSamplePropertiesStartChange( wxSpinEvent& event )
 {
@@ -243,26 +244,19 @@ MainWindow::onSpinSamplePropertiesEndChange( wxSpinEvent& event )
 	}
 }
 
+
 // TODO refactor this, shouldn't involve the TreeCtrl
 void
 MainWindow::onSampleTextSpeakerNameChange( wxCommandEvent& event )
 {
-	using lnb::SamplesTreeCtrl;
-	lnb::SamplesTreeCtrl *tree = m_librarySizer->getSamplesTreeCtrl();
-	wxTreeItemId selectedItem  = tree->GetSelection();
-
-	if ( selectedItem.IsOk() )
+	Sample *selectedSample = gst::gnl::sampleManager.getSelectedSample();
+	if ( selectedSample != NULL )
 	{
-		SamplesTreeCtrl::SamplesTreeData *data;
-		data = (SamplesTreeCtrl::SamplesTreeData *)tree->GetItemData( selectedItem );
-		if ( data != NULL )
-		{
-			gst::gnl::sampleManager.changeSpeaker( data->m_sample, event.GetString().c_str() );
+		gst::gnl::sampleManager.changeSpeaker( selectedSample, event.GetString().c_str() );
 
-			// refocus me
-			wxWindow *window = (wxWindow *)event.GetEventObject();
-			window->SetFocus();
-		}
+		// refocus me
+		wxWindow *window = (wxWindow *)event.GetEventObject();
+		window->SetFocus();
 	}
 }
 

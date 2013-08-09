@@ -44,15 +44,17 @@ SamplePair::SamplePair( Sample *sample, const SamplesDataFile::NodeReference &no
 }
 
 
+SampleManager::SampleManager( void ) :
+	m_samplesDataFile( NULL ),
+	m_selectedSample( NULL )
+{
+}
+
+
 SampleManager::~SampleManager( void )
 {
 	if ( m_samplesDataFile )
 		delete m_samplesDataFile;
-}
-
-SampleManager::SampleManager( void ) :
-	m_samplesDataFile( NULL )
-{
 }
 
 
@@ -77,6 +79,25 @@ void
 SampleManager::unregisterSampleUser( SampleUser *sampleUser )
 {
 	m_sampleUsers.erase( sampleUser );
+}
+
+
+/** Get the currently active sample. */
+Sample
+*SampleManager::getSelectedSample( void ) const
+{
+	return m_selectedSample;
+}
+
+
+/** Set the currently active sample. */
+void
+SampleManager::selectSample( Sample *sample )
+{
+	m_selectedSample = sample;
+
+	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
+		(*it)->onSelectSample( sample );
 }
 
 
@@ -106,6 +127,9 @@ Sample
 void
 SampleManager::deleteSample( Sample *sample )
 {
+	if ( sample == NULL )
+		sample = m_selectedSample;
+
 	m_samples.erase( sample );
 
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
