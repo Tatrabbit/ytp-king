@@ -27,6 +27,7 @@
 
 #include "../gst/gnl/SampleManager.h"
 
+
 	namespace ytpking
 	{
 	namespace lnb
@@ -97,17 +98,19 @@ SamplesTreeCtrl::onBeginEditLabel( wxTreeEvent &event )
 void
 SamplesTreeCtrl::onEndEditLabel( wxTreeEvent &event )
 {
-	/*
-	wxTreeItemId    item = event.GetItem();
-	wxTreeItemData *data = GetItemData( item );
+	// The item will be renamed by onRenameSample
+	event.Veto();
 
-	//SetItemText( event.GetItem(), event.GetString() );
+	wxTreeItemId selectedItem = event.GetItem();
 
-	if ( data )
-	{
-		SamplesTreeData *treeData = (SamplesTreeData *)data;
-	}
-	*/
+	SamplesTreeData *data = (SamplesTreeData *)GetItemData( selectedItem );
+
+	// Don't allow speakers to be renamed (yet!)
+	// TODO allow speakers to be renamed this way.
+	if ( data == NULL )
+		return;
+
+	gst::gnl::sampleManager.renameSample( data->m_sample, event.GetLabel() );
 }
 
 
@@ -194,6 +197,9 @@ SamplesTreeCtrl::onDeleteSample( Sample *deletedSample )
 void
 SamplesTreeCtrl::onRenameSample( char const *newSampleName, Sample *sample )
 {
+	wxTreeItemId item = getTreeItem( sample );
+	if ( item.IsOk() )
+		SetItemText( item, newSampleName );
 }
 
 
@@ -267,6 +273,56 @@ SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
 	return newSpeechItem;
 	*/
 	return wxTreeItemId();
+}
+
+
+wxTreeItemId
+SamplesTreeCtrl::getTreeItem( Sample *sample ) const
+{
+	wxTreeItemId root = GetRootItem();
+
+	wxTreeItemIdValue cookie;
+
+	wxTreeItemId speakerItem = GetFirstChild( root, cookie );
+
+	wxTreeItemId foundItem;
+	while( speakerItem.IsOk() )
+	{
+		if ( (foundItem = getTreeItem( sample, speakerItem )).IsOk() )
+			return foundItem;
+
+		speakerItem = GetNextChild( root, cookie );
+	}
+
+	return foundItem;
+}
+
+
+wxTreeItemId
+SamplesTreeCtrl::getTreeItem( Sample *sample, const wxTreeItemId &parent ) const
+{
+	wxTreeItemIdValue cookie;
+
+	wxTreeItemId speakerItem = GetFirstChild( parent, cookie );
+
+	wxTreeItemId foundItem;
+	while( speakerItem.IsOk() )
+	{
+		SamplesTreeData *data = (SamplesTreeData *)GetItemData( speakerItem );
+
+		assert( data != NULL );
+
+		if ( data->m_sample == sample )
+			return speakerItem;
+
+		// call recursively on my children
+		getTreeItem( sample, speakerItem );
+
+		// continue with my next sibling
+		speakerItem = GetNextChild( parent, cookie );
+	}
+
+	return speakerItem;
 }
 
 

@@ -80,8 +80,6 @@ public:
 
 private:
 
-	wxDECLARE_EVENT_TABLE();
-
 	void
 		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
 		override;
@@ -94,16 +92,31 @@ private:
 		onRenameSample( const char *newSampleName, Sample *sample )
 		override;
 
-
 	void
 		onChangeSampleSpeaker( char const *speakerName, Sample *sample )
 		override;
+
 
 	bool
 		renameSpeaker( const char *newName, const wxTreeItemId &speechItem );
 
 	wxTreeItemId
 		changeSpeaker( const wxTreeItemId &speech, const wxTreeItemId &currentSpeaker, const wxTreeItemId &newSpeaker );
+
+	/** Gets the tree item with the provided sample, searhing the entire tree.
+	\param sample The sample to compare with. */
+	wxTreeItemId
+		getTreeItem( Sample *sample ) const;
+
+	/** Gets the tree item with the provided sample.
+		This can only be called on tree items that have speech attached.
+	\param sample The sample to compare with
+	\param parent the root to start looking at. All sub items will be searched, recursively. */
+	wxTreeItemId
+		getTreeItem( Sample *sample, const wxTreeItemId &parent ) const;
+
+
+	wxDECLARE_EVENT_TABLE();
 
 };
 
