@@ -1,5 +1,5 @@
 /*  YTP King - Easy to use sentence mixer
- *  Copyright (C) 2013  Alex "rainChu" Haddad
+ *  Copyright (C) 2013  Alex "rainChu" Haddad et al.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
