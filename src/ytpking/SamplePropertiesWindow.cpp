@@ -21,7 +21,7 @@
 #include <wx/textctrl.h>
 
 #include "gst/gnl/Composition.h"
-#include "gst/gnl/SampleManager.h"
+#include "smp/SampleManager.h"
 
 #include "smp/Sample.h"
 

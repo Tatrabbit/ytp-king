@@ -24,7 +24,8 @@
 
 #include "gst/gnl/Composition.h"
 #include "gst/gnl/FileSource.h"
-#include "gst/gnl/SampleManager.h"
+
+#include "smp/SampleManager.h"
 
 
 using namespace rapidxml;

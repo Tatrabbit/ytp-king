@@ -29,7 +29,6 @@
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
-#include "gst/gnl/SampleManager.h"
 #include "gst/gnl/AudioComposition.h"
 #include "gst/gnl/VideoComposition.h"
 #include "gst/gnl/FileSource.h"
@@ -40,6 +39,7 @@
 #include "TimelineSizer.h"
 #include "SamplePropertiesWindow.h"
 
+#include "smp/SampleManager.h"
 #include "smp/Sample.h"
 
 

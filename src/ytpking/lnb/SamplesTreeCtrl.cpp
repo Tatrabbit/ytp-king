@@ -25,7 +25,7 @@
 #include "ytpking/SamplesDataFile.h"
 #include "smp/Sample.h"
 
-#include "gst/gnl/SampleManager.h"
+#include "smp/SampleManager.h"
 
 
 	namespace ytpking

@@ -120,16 +120,16 @@
     <ClCompile Include="src\ytpking\SamplesDataFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\gst\gnl\SampleManager.cpp">
-      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\gst\gnl\SampleUser.cpp">
-      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\smp\Sample.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\smp\SampleManager.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\smp\SampleUser.cpp">
       <Filter>Source Files\smp : Samples and Mixers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -221,16 +221,16 @@
     <ClInclude Include="src\ytpking\EventId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\gst\gnl\SampleManager.h">
-      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\gst\gnl\SampleUser.h">
-      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
-    </ClInclude>
     <ClInclude Include="src\ytpking\SamplePropertiesWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\smp\Sample.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\SampleManager.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\SampleUser.h">
       <Filter>Header Files\smp : Samples and Mixers</Filter>
     </ClInclude>
   </ItemGroup>

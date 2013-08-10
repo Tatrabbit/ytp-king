@@ -25,8 +25,8 @@
 #include "SamplesTreeCtrl.h"
 #include "SourcesToolbar.h"
 
-#include "../gst/gnl/SampleManager.h"
-#include "../gst/gnl/Composition.h"
+#include "gst/gnl/Composition.h"
+#include "smp/SampleManager.h"
 
 
 	namespace ytpking

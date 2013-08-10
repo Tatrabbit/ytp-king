@@ -18,7 +18,7 @@
 #define __YTPKING_GST_GNL_SamplesTreeCtrl_h
 
 #include <wx/treectrl.h>
-#include "../gst/gnl/SampleUser.h"
+#include "smp/SampleUser.h"
 
 
 	namespace ytpking
