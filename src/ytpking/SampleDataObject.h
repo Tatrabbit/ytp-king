@@ -22,7 +22,10 @@
 	namespace ytpking
 	{
 
-class Sample;
+namespace smp
+{
+	class Sample;
+}
 
 namespace gst {
 namespace gnl {
@@ -42,7 +45,7 @@ public:
 		~SampleDataObject( void );
 
 
-	Sample *m_sample;
+	smp::Sample *m_sample;
 
 
 	const char

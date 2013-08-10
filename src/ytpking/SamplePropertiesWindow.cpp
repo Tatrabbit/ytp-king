@@ -111,7 +111,7 @@ SamplePropertiesWindow::updateConstraints( int start, int end )
 void
 SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 {
-	Sample *sample = gst::gnl::sampleManager.getSelectedSample();
+	smp::Sample *sample = gst::gnl::sampleManager.getSelectedSample();
 	if ( sample != NULL )
 	{
 		int start    = event.GetInt();
@@ -130,7 +130,7 @@ SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 void
 SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 {
-	Sample *sample = gst::gnl::sampleManager.getSelectedSample();
+	smp::Sample *sample = gst::gnl::sampleManager.getSelectedSample();
 	if ( sample != NULL )
 	{
 		sample->m_duration = event.GetInt() - sample->m_start;
@@ -144,7 +144,7 @@ SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 void
 SamplePropertiesWindow::onTextSpeakerNameChange( wxCommandEvent& event )
 {
-	Sample *selectedSample = gst::gnl::sampleManager.getSelectedSample();
+	smp::Sample *selectedSample = gst::gnl::sampleManager.getSelectedSample();
 	if ( selectedSample != NULL )
 	{
 		gst::gnl::sampleManager.changeSpeaker( selectedSample, event.GetString().c_str() );

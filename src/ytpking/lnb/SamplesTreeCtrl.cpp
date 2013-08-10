@@ -35,7 +35,7 @@
 
 
 SamplesTreeCtrl::
-SamplesTreeData::SamplesTreeData( Sample *sample ) :
+SamplesTreeData::SamplesTreeData( smp::Sample *sample ) :
 	m_sample( sample )
 {
 }
@@ -194,7 +194,7 @@ SamplesTreeCtrl::getSpeaker( const wxTreeItemId &speech ) const
 
 
 void
-SamplesTreeCtrl::onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
+SamplesTreeCtrl::onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample )
 {
 	SamplesTreeData *data = new SamplesTreeData( addedSample );
 
@@ -213,20 +213,20 @@ SamplesTreeCtrl::onAddSample( char const *sampleName, char const *speakerName, S
 
 
 void
-SamplesTreeCtrl::onSelectSample( Sample *selectedSample )
+SamplesTreeCtrl::onSelectSample( smp::Sample *selectedSample )
 {
 	m_selectedSample = selectedSample;
 }
 
 
 void
-SamplesTreeCtrl::onDeleteSample( Sample *deletedSample )
+SamplesTreeCtrl::onDeleteSample( smp::Sample *deletedSample )
 {
 }
 
 
 void
-SamplesTreeCtrl::onRenameSample( char const *newSampleName, Sample *sample )
+SamplesTreeCtrl::onRenameSample( char const *newSampleName, smp::Sample *sample )
 {
 	wxTreeItemId item = getTreeItem( sample );
 	if ( item.IsOk() )
@@ -235,7 +235,7 @@ SamplesTreeCtrl::onRenameSample( char const *newSampleName, Sample *sample )
 
 
 void
-SamplesTreeCtrl::onChangeSampleSpeaker( char const *speakerName, Sample *sample )
+SamplesTreeCtrl::onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample )
 {
 	// Is there a speaker of this new name?
 	wxTreeItemId speakerItem = getSpeaker( speakerName );
@@ -292,7 +292,7 @@ SamplesTreeCtrl::changeSpeaker( const wxTreeItemId &speech,
 
 
 wxTreeItemId
-SamplesTreeCtrl::getTreeItem( Sample *sample ) const
+SamplesTreeCtrl::getTreeItem( smp::Sample *sample ) const
 {
 	wxTreeItemId root = GetRootItem();
 
@@ -314,7 +314,7 @@ SamplesTreeCtrl::getTreeItem( Sample *sample ) const
 
 
 wxTreeItemId
-SamplesTreeCtrl::getTreeItem( Sample *sample, const wxTreeItemId &parent ) const
+SamplesTreeCtrl::getTreeItem( smp::Sample *sample, const wxTreeItemId &parent ) const
 {
 	wxTreeItemIdValue cookie;
 

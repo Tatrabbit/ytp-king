@@ -14,8 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_Sample_h
-#define __YTPKING_GST_GNL_Sample_h
+#ifndef __YTPKING_SMP_Sample_h
+#define __YTPKING_SMP_Sample_h
 
 #include <string>
 
@@ -29,6 +29,9 @@ namespace gnl {
 	class Composition;
 	class FileSource;
 } }
+
+	namespace smp
+	{
 
 
 class Sample
@@ -47,7 +50,7 @@ public:
 };
 
 
-	}
+	} }
 
 
 #endif

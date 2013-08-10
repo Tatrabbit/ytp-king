@@ -24,7 +24,9 @@
 	namespace ytpking
 	{
 
-class Sample;
+namespace smp {
+	class Sample;
+}
 
 namespace gst {
 namespace gnl {
@@ -74,34 +76,34 @@ public:
 		public wxTreeItemData
 	{
 	public:
-		SamplesTreeData( Sample *sample );
+		SamplesTreeData( smp::Sample *sample );
 
-		Sample *m_sample;
+		smp::Sample *m_sample;
 
 	};
 
 private:
 
-	const Sample *m_selectedSample;
+	const smp::Sample *m_selectedSample;
 
 	void
-		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
+		onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample )
 		override;
 
 	void
-		onSelectSample( Sample *selectedSample )
+		onSelectSample( smp::Sample *selectedSample )
 		override;
 
 	void
-		onDeleteSample( Sample *deletedSample )
+		onDeleteSample( smp::Sample *deletedSample )
 		override;
 
 	void
-		onRenameSample( const char *newSampleName, Sample *sample )
+		onRenameSample( const char *newSampleName, smp::Sample *sample )
 		override;
 
 	void
-		onChangeSampleSpeaker( char const *speakerName, Sample *sample )
+		onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample )
 		override;
 
 	wxTreeItemId
@@ -110,14 +112,14 @@ private:
 	/** Gets the tree item with the provided sample, searhing the entire tree.
 	\param sample The sample to compare with. */
 	wxTreeItemId
-		getTreeItem( Sample *sample ) const;
+		getTreeItem( smp::Sample *sample ) const;
 
 	/** Gets the tree item with the provided sample.
 		This can only be called on tree items that have speech attached.
 	\param sample The sample to compare with
 	\param parent the root to start looking at. All sub items will be searched, recursively. */
 	wxTreeItemId
-		getTreeItem( Sample *sample, const wxTreeItemId &parent ) const;
+		getTreeItem( smp::Sample *sample, const wxTreeItemId &parent ) const;
 
 
 	wxDECLARE_EVENT_TABLE();

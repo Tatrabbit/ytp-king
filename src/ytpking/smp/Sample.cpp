@@ -16,11 +16,13 @@
 */
 #include "Sample.h"
 
-#include "../gst/gnl/Composition.h"
-#include "../gst/gnl/FileSource.h"
+#include "gst/gnl/Composition.h"
+#include "gst/gnl/FileSource.h"
 
 
 	namespace ytpking
+	{
+	namespace smp
 	{
 
 
@@ -49,4 +51,4 @@ const gst::gnl::FileSource
 }
 
 
-	}
+	} }

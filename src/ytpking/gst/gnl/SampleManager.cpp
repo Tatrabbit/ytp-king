@@ -30,14 +30,14 @@
 
 
 SampleManager::
-SamplePair::SamplePair( Sample *sample ) :
+SamplePair::SamplePair( smp::Sample *sample ) :
 	m_sample( sample )
 {
 }
 
 
 SampleManager::
-SamplePair::SamplePair( Sample *sample, const SamplesDataFile::NodeReference &nodeReference ) :
+SamplePair::SamplePair( smp::Sample *sample, const SamplesDataFile::NodeReference &nodeReference ) :
 	m_sample( sample ),
 	m_nodeReference( nodeReference )
 {
@@ -83,7 +83,7 @@ SampleManager::unregisterSampleUser( SampleUser *sampleUser )
 
 
 /** Get the currently active sample. */
-Sample
+smp::Sample
 *SampleManager::getSelectedSample( void ) const
 {
 	return m_selectedSample;
@@ -92,7 +92,7 @@ Sample
 
 /** Set the currently active sample. */
 void
-SampleManager::selectSample( Sample *sample )
+SampleManager::selectSample( smp::Sample *sample )
 {
 	m_selectedSample = sample;
 
@@ -101,11 +101,11 @@ SampleManager::selectSample( Sample *sample )
 }
 
 
-Sample
+smp::Sample
 *SampleManager::addSample( const char *filename, const char *name, const char *speakerName,
                            SamplesDataFile::NodeReference *nodeReferencePtr )
 {
-	Sample *sample = new Sample( filename );
+	smp::Sample *sample = new smp::Sample( filename );
 
 	SamplesDataFile::NodeReference nodeReference;
 	if ( nodeReferencePtr != NULL )
@@ -125,7 +125,7 @@ Sample
 
 
 void
-SampleManager::deleteSample( Sample *sample )
+SampleManager::deleteSample( smp::Sample *sample )
 {
 	if ( sample == NULL )
 		sample = m_selectedSample;
@@ -140,7 +140,7 @@ SampleManager::deleteSample( Sample *sample )
 
 
 void
-SampleManager::renameSample( Sample *sample, const char *name )
+SampleManager::renameSample( smp::Sample *sample, const char *name )
 {
 	// I don't know if I'm doing this the right way, perhaps not, but
 	// I couldn't find out how to assign to it->m_name, it was treated by MSVC as a const std::string.
@@ -162,7 +162,7 @@ SampleManager::renameSample( Sample *sample, const char *name )
 
 
 void
-SampleManager::changeSpeaker( Sample *sample, const char *speakerName )
+SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 {
 	// I don't know if I'm doing this the right way, perhaps not, but
 	// I couldn't find out how to assign to it->m_name, it was treated by MSVC as a const std::string.

@@ -27,7 +27,9 @@
 	namespace ytpking
 	{
 
-class Sample;
+namespace smp {
+	class Sample;
+}
 
 	namespace gst
 	{
@@ -67,12 +69,12 @@ public:
 
 
 	/** Get the currently active sample. */
-	Sample
+	smp::Sample
 		*getSelectedSample( void ) const;
 
 	/** Set the currently active sample. */
 	void
-		selectSample( Sample *sample );
+		selectSample( smp::Sample *sample );
 
 
 	/** Adds a new sample.
@@ -81,7 +83,7 @@ public:
 	\param name     The name of the sample, such as "What's for dinner"
 	\param speakerName The name of the speaker, e.g. The King
 	\param nodeReference If NULL, the speaker will be created in the save DataFile. */
-	Sample
+	smp::Sample
 		*addSample( const char *filename, const char *name, const char *speakerName,
 		            SamplesDataFile::NodeReference *nodeReference = NULL );
 
@@ -90,37 +92,37 @@ public:
 		class using them has SampleUser::onDelete defined.
 	\param sample The sample to delete. */
 	void
-		deleteSample( Sample *sample );
+		deleteSample( smp::Sample *sample );
 
 	/** Renames a sample.
 	\param sample The sample to rename.
 	\param speechName   The new name. */
 	void
-		renameSample( Sample *sample, const char *speechName );
+		renameSample( smp::Sample *sample, const char *speechName );
 
 	/** Changes the speaker of sample.
 	\param sample The sample to rename.
 	\param speakerName   The new name. */
 	void
-		changeSpeaker( Sample *sample, const char *speakerName );
+		changeSpeaker( smp::Sample *sample, const char *speakerName );
 
 
 private:
 
 	SamplesDataFile *m_samplesDataFile;
-	Sample          *m_selectedSample;
+	smp::Sample          *m_selectedSample;
 
 	typedef std::set<SampleUser *> SampleUserSet;
 
 
 	struct SamplePair
 	{
-		SamplePair( Sample *sample );
-		SamplePair( Sample *sample, const SamplesDataFile::NodeReference &nodeReference );
+		SamplePair( smp::Sample *sample );
+		SamplePair( smp::Sample *sample, const SamplesDataFile::NodeReference &nodeReference );
 
 		inline bool operator<( const SamplePair &other ) const { return m_sample < other.m_sample; }
 
-		Sample            *m_sample;
+		smp::Sample            *m_sample;
 		SamplesDataFile::
 			NodeReference  m_nodeReference;
 	};
