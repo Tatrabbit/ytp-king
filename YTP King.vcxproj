@@ -40,7 +40,7 @@
     <ClCompile Include="src\ytpking\smp\Tape.cpp" />
     <ClCompile Include="src\ytpking\smp\TapeManager.cpp" />
     <ClCompile Include="src\ytpking\smp\TapeUser.cpp" />
-    <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
+    <ClCompile Include="src\ytpking\TimelineWindow.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +78,7 @@
     <ClInclude Include="src\ytpking\smp\Tape.h" />
     <ClInclude Include="src\ytpking\smp\TapeManager.h" />
     <ClInclude Include="src\ytpking\smp\TapeUser.h" />
-    <ClInclude Include="src\ytpking\TimelineSizer.h" />
+    <ClInclude Include="src\ytpking\TimelineWindow.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
   </ItemGroup>
   <ItemGroup>

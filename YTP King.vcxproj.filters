@@ -57,9 +57,6 @@
     <ClCompile Include="src\ytpking\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\TimelineSizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp">
       <Filter>Source Files\lnb : Sources Notebook</Filter>
     </ClCompile>
@@ -141,6 +138,9 @@
     <ClCompile Include="src\ytpking\smp\TapeUser.cpp">
       <Filter>Source Files\smp : Samples and Mixers</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\TimelineWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -151,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="res\resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\TimelineSizer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\lnb\SamplesTreeCtrl.h">
       <Filter>Header Files\lnb : Sources Notebook</Filter>
@@ -250,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\smp\TapeUser.h">
       <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\TimelineWindow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

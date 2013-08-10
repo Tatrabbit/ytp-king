@@ -25,8 +25,9 @@
 #include <wx/spinctrl.h>
 
 #include "ytpking/EventId.h"
-
 #include "ytpking/DataFile.h"
+#include "ytpking/TimelineWindow.h"
+#include "ytpking/SamplePropertiesWindow.h"
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
@@ -36,9 +37,6 @@
 
 #include "lnb/LibrarySizer.h"
 #include "lnb/SamplesTreeCtrl.h"
-
-#include "TimelineSizer.h"
-#include "SamplePropertiesWindow.h"
 
 #include "smp/SampleManager.h"
 #include "smp/Sample.h"

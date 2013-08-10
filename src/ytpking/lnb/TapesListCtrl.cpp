@@ -33,7 +33,6 @@ TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 }
 
 
-
 void
 TapesListCtrl::onAddTape( smp::Tape *addedTape )
 {
