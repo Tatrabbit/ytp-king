@@ -118,7 +118,7 @@ MainWindow::MainWindow( void ) :
 	CreateStatusBar();
 	SetStatusText( "Roll your cursor over something and look here for help." );
 
-	gst::gnl::sampleManager.initialize();
+	smp::sampleManager.initialize();
 }
 
 

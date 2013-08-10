@@ -21,9 +21,7 @@
 
 	namespace ytpking
 	{
-	namespace gst
-	{
-	namespace gnl
+	namespace smp
 	{
 
 
@@ -40,4 +38,4 @@ SampleUser::~SampleUser( void )
 }
 
 
-	} } }
+	} }

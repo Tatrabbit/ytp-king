@@ -17,15 +17,13 @@
 #define YTPKING_GST_GNL_SampleManager_cpp
 #include "SampleManager.h"
 
-#include "smp/Sample.h"
+#include "Sample.h"
 #include "SampleUser.h"
 
 
 	namespace ytpking
 	{
-	namespace gst
-	{
-	namespace gnl
+	namespace smp
 	{
 
 
@@ -183,4 +181,4 @@ SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 }
 
 
-	} } }
+	} }

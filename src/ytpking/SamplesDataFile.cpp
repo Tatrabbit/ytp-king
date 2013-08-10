@@ -34,7 +34,7 @@ using namespace rapidxml;
 	namespace ytpking
 	{
 
-		using gst::gnl::SampleManager;
+		using smp::SampleManager;
 
 
 SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
@@ -221,8 +221,6 @@ SamplesDataFile::loadAll( void )
 				continue;
 			}
 			const char *speechName = speechNameAttr->value();
-
-			FileSource *audioSource, *videoSource;
 
 			NodeReference nodeReference;
 			nodeReference.m_speaker = speakerNode;

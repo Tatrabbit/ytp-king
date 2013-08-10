@@ -18,17 +18,11 @@
 
 	namespace ytpking
 	{
-
-namespace smp {
-	class Sample;
-}
-
-	namespace gst
-	{
-	namespace gnl
+	namespace smp
 	{
 
 
+class Sample;
 class SampleManager;
 
 
@@ -82,4 +76,4 @@ private:
 };
 
 
-	} } }
+	} }

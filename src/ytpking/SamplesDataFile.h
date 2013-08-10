@@ -27,10 +27,10 @@
 
 	namespace ytpking
 	{
-namespace gst {
-namespace gnl {
+
+namespace smp {
 	class SampleManager;
-} }
+}
 
 
 class SamplesDataFile :
@@ -38,7 +38,7 @@ class SamplesDataFile :
 	public gst::gnl::PreviewUser
 {
 public:
-	SamplesDataFile( gst::gnl::SampleManager *manager );
+	SamplesDataFile( smp::SampleManager *manager );
 	~SamplesDataFile( void );
 
 	class NodeReference
@@ -77,7 +77,7 @@ private: // TODO macros for = delete when it becomes available.
 
 	std::string m_filename;
 
-	gst::gnl::SampleManager *m_manager;
+	smp::SampleManager *m_manager;
 	char *m_fileBuffer;
 	rapidxml::xml_document<> m_xmlDocument;
 	bool m_isLocked;

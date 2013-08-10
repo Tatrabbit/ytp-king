@@ -39,7 +39,7 @@ namespace gnl {
 
 class SamplesTreeCtrl :
 	public wxTreeCtrl,
-	public gst::gnl::SampleUser
+	public smp::SampleUser
 {
 public:
 

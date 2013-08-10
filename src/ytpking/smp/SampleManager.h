@@ -17,7 +17,6 @@
 #ifndef __YTPKING_GST_SampleManager_h
 #define __YTPKING_GST_SampleManager_h
 
-
 #include <set>
 #include <string>
 
@@ -26,16 +25,11 @@
 
 	namespace ytpking
 	{
-
-namespace smp {
-	class Sample;
-}
-
-	namespace gst
-	{
-	namespace gnl
+	namespace smp
 	{
 
+
+class Sample;
 class SampleUser;
 
 
@@ -142,7 +136,7 @@ private:
 #endif
 
 
-	} } }
+	} }
 
 
 #endif
