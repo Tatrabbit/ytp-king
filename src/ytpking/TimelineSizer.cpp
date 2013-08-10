@@ -21,7 +21,7 @@
 #include "SampleDataObject.h"
 #include "SampleComponent.h"
 
-#include "Sample.h"
+#include "smp/Sample.h"
 
 
 	namespace ytpking

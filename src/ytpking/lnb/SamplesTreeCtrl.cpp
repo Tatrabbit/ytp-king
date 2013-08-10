@@ -22,10 +22,10 @@
 #include <wx/dnd.h>
 
 #include "ytpking/SampleDataObject.h"
-#include "ytpking/Sample.h"
 #include "ytpking/SamplesDataFile.h"
+#include "smp/Sample.h"
 
-#include "../gst/gnl/SampleManager.h"
+#include "gst/gnl/SampleManager.h"
 
 
 	namespace ytpking

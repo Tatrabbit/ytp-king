@@ -40,7 +40,7 @@
 #include "TimelineSizer.h"
 #include "SamplePropertiesWindow.h"
 
-#include "Sample.h"
+#include "smp/Sample.h"
 
 
 	namespace ytpking

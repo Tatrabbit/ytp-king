@@ -14,10 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "ytpking/Sample.h"
+#include "Sample.h"
 
-#include "gst/gnl/Composition.h"
-#include "gst/gnl/FileSource.h"
+#include "../gst/gnl/Composition.h"
+#include "../gst/gnl/FileSource.h"
 
 
 	namespace ytpking

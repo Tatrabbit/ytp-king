@@ -40,6 +40,12 @@
     <Filter Include="Header Files\utf-8">
       <UniqueIdentifier>{26568220-46c2-4f4c-8598-095a99a6afaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\smp : Samples and Mixers">
+      <UniqueIdentifier>{3970c979-cd27-449c-9aa5-4070a4c94517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\smp : Samples and Mixers">
+      <UniqueIdentifier>{8896e88e-97b5-4845-a16a-34d17da35011}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -108,9 +114,6 @@
     <ClCompile Include="src\ytpking\gst\gnl\PreviewUser.cpp">
       <Filter>Source Files\gst : GStreamer</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\Sample.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\DataFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\smp\Sample.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +200,6 @@
     <ClInclude Include="src\ytpking\gst\gnl\PreviewUser.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\Sample.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\utf8.h">
       <Filter>Header Files\utf-8</Filter>
     </ClInclude>
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\SamplePropertiesWindow.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\Sample.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

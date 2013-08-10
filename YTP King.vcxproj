@@ -32,11 +32,11 @@
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesPage.cpp" />
-    <ClCompile Include="src\ytpking\Sample.cpp" />
     <ClCompile Include="src\ytpking\SampleComponent.cpp" />
     <ClCompile Include="src\ytpking\SampleDataObject.cpp" />
     <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp" />
     <ClCompile Include="src\ytpking\SamplesDataFile.cpp" />
+    <ClCompile Include="src\ytpking\smp\Sample.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
   </ItemGroup>
@@ -67,11 +67,11 @@
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h" />
     <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\TapesPage.h" />
-    <ClInclude Include="src\ytpking\Sample.h" />
     <ClInclude Include="src\ytpking\SampleComponent.h" />
     <ClInclude Include="src\ytpking\SampleDataObject.h" />
     <ClInclude Include="src\ytpking\SamplePropertiesWindow.h" />
     <ClInclude Include="src\ytpking\SamplesDataFile.h" />
+    <ClInclude Include="src\ytpking\smp\Sample.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />
   </ItemGroup>
@@ -108,13 +108,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\src;$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(GSTREAMER_SDK_ROOT_X86)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\src;$(SolutionDir)\src\ytpking;$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(GSTREAMER_SDK_ROOT_X86)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(WX_LIB_PATH)\vc110_dll;$(LibraryPath)</LibraryPath>
     <SourcePath>$(WX_INCLUDE_PATH);$(SourcePath)</SourcePath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\src;$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\src;$(SolutionDir)\src\ytpking;$(WX_INCLUDE_PATH);$(WX_INCLUDE_PATH)\msvc;$(GSTREAMER_SDK_ROOT_X86)\include\gstreamer-0.10;$(GSTREAMER_SDK_ROOT_X86)\include\glib-2.0;$(GSTREAMER_SDK_ROOT_X86)\lib\glib-2.0\include;$(GSTREAMER_SDK_ROOT_X86)\include\libxml2;$(IncludePath)</IncludePath>
     <LibraryPath>$(WX_LIB_PATH)\vc110_dll;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <SourcePath>$(WX_INCLUDE_PATH);$(SourcePath)</SourcePath>

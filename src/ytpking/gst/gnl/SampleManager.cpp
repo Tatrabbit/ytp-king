@@ -17,7 +17,7 @@
 #define YTPKING_GST_GNL_SampleManager_cpp
 #include "SampleManager.h"
 
-#include "ytpking/Sample.h"
+#include "smp/Sample.h"
 #include "SampleUser.h"
 
 

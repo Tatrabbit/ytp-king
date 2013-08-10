@@ -22,7 +22,8 @@
 
 #include "gst/gnl/Composition.h"
 #include "gst/gnl/SampleManager.h"
-#include "Sample.h"
+
+#include "smp/Sample.h"
 
 
 	namespace ytpking
