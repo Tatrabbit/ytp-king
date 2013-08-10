@@ -33,6 +33,7 @@ namespace gnl {
 	namespace smp
 	{
 
+
 class Sample;
 
 
@@ -42,8 +43,8 @@ public:
 	Tape( void );
 	~Tape( void );
 private:
-	explicit Tape( Tape &);
-	void operator=( Tape &);
+	explicit Tape( Tape & );
+	void operator=( Tape & );
 public:
 	class SampleInstance
 	{
@@ -108,5 +109,6 @@ private:
 
 
 	} }
+
 
 #endif

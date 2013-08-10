@@ -14,6 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_LNB_SourcesListCtrl_h
+#define __YTPKING_LNB_SourcesListCtrl_h
+
+
 #include <wx/listctrl.h>
 
 
@@ -21,6 +25,7 @@
 	{
 	namespace lnb
 	{
+
 
 class SourcesListCtrl :
 	public wxListCtrl
@@ -32,3 +37,6 @@ public:
 };
 
 	} }
+
+
+#endif

@@ -18,7 +18,7 @@
 #define __YTPKING_LNB_SamplesPage_h
 
 #include <wx/notebook.h>
-#include "../gst/gnl/PreviewUser.h"
+#include "gst/gnl/PreviewUser.h"
 
 
 	namespace ytpking

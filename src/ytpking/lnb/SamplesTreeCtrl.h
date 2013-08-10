@@ -24,10 +24,6 @@
 	namespace ytpking
 	{
 
-namespace smp {
-	class Sample;
-}
-
 namespace gst {
 namespace gnl {
 	class FileSource;
@@ -81,6 +77,7 @@ public:
 		smp::Sample *m_sample;
 
 	};
+
 
 private:
 

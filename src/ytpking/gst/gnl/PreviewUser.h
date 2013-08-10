@@ -28,6 +28,7 @@ class Pipeline;
 	namespace gnl
 	{
 
+
 class Composition;
 
 // TODO refactor this to have both compositions as a global instead.

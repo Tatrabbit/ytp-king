@@ -24,6 +24,7 @@
 	{
 
 
+// TODO put it BACK into MainWindow.
 enum GlobalEventId
 {
 	SamplesButtonAddSample        = wxID_HIGHEST+1,

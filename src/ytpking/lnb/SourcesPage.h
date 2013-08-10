@@ -14,8 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#ifndef __YTPKING_LNB_SourcesPage_h
+#define __YTPKING_LNB_SourcesPage_h
 
+
+#include <wx/notebook.h>
 
 class wxListCtrl;
 
@@ -33,9 +36,14 @@ public:
 
 	SourcesPage( wxWindow *parent );
 
+private:
+
 	wxListCtrl *m_listCtrl;
 
 };
 
 
 	} }
+
+
+#endif

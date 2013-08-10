@@ -14,12 +14,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_LNB_TapesPage_h
+#define __YTPKING_LNB_TapesPage_h
+
 #include <wx/notebook.h>
+
 
 	namespace ytpking
 	{
 	namespace lnb
 	{
+
 
 class TapesListCtrl;
 
@@ -47,3 +52,6 @@ private:
 
 
 	} }
+
+
+#endif

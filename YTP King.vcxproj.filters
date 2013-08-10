@@ -143,9 +143,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ytpking\MainWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>

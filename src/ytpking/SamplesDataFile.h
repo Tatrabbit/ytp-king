@@ -38,8 +38,12 @@ class SamplesDataFile :
 	public gst::gnl::PreviewUser
 {
 public:
-	SamplesDataFile( smp::SampleManager *manager );
-	~SamplesDataFile( void );
+	explicit SamplesDataFile( smp::SampleManager *manager );
+	virtual ~SamplesDataFile( void );
+private:
+	explicit SamplesDataFile( SamplesDataFile & );
+	void operator=( SamplesDataFile & );
+public:
 
 	class NodeReference
 	{
@@ -69,11 +73,7 @@ public:
 	void
 		loadAll( void );
 
-private: // TODO macros for = delete when it becomes available.
-	SamplesDataFile( const SamplesDataFile &c );
-
-	SamplesDataFile
-		&operator=( const SamplesDataFile &c );
+private:
 
 	std::string m_filename;
 
@@ -81,7 +81,6 @@ private: // TODO macros for = delete when it becomes available.
 	char *m_fileBuffer;
 	rapidxml::xml_document<> m_xmlDocument;
 	bool m_isLocked;
-
 
 };
 

@@ -14,6 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_LNB_LibraryNotebook_h
+#define __YTPKING_LNB_LibraryNotebook_h
+
+
 #include <wx/notebook.h>
 
 
@@ -21,6 +25,7 @@
 	{
 	namespace lnb
 	{
+
 
 class SamplesPage;
 
@@ -32,10 +37,13 @@ public:
 	LibraryNotebook( wxWindow *parent, int samplesId );
 
 	wxNotebookPage *m_sourcesPage;
-	SamplesPage *m_samplesPage;
+	SamplesPage    *m_samplesPage;
 	wxNotebookPage *m_tapesPage;
 
 };
 
 
 	} }
+
+
+#endif

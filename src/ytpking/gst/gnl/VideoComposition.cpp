@@ -30,12 +30,8 @@
 
 
 VideoComposition::VideoComposition( void ) :
-	//m_queueElement( gst_element_factory_make( "queue",         NULL ) ),
 	m_sinkElement ( gst_element_factory_make( "autovideosink", NULL ) )
 {
-	//if ( !gst_element_link( m_queueElement, m_sinkElement ) )
-	//	GST_ERROR( "Audio Queue/Sink could not be linked.\n" );
-
 	g_signal_connect( m_selfElement, "pad-added", G_CALLBACK( onPadAdded ), m_sinkElement );
 	
 	g_object_set( m_selfElement, "caps", gst_caps_from_string( "video/x-raw-yuv;video/x-raw-rgb" ), NULL ); 

@@ -42,17 +42,11 @@ class FileSource;
 class Composition
 {
 public:
-
 	Composition( void );
-
-	virtual
-		~Composition( void );
+	virtual ~Composition( void );
 private:
-	// TODO macros for = delete when it becomes available.
-	Composition( const Composition &c );
-
-	Composition
-		&operator=( const Composition &c );
+	explicit Composition( Composition & );
+	void operator=( Composition & );
 
 public:
 

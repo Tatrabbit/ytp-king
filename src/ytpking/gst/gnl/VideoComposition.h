@@ -14,6 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_GST_GNL_VideoComposition_h
+#define __YTPKING_GST_GNL_VideoComposition_h
+
+
 #include "Composition.h"
 
 
@@ -33,17 +37,17 @@ public:
 
 	VideoComposition( void );
 
-public:
-
 	void
 		addTo( Pipeline &pipeline )
 		override;
 
 private:
 
-	//GstElement *m_queueElement;
 	GstElement *m_sinkElement;
 
 };
 
 	} } }
+
+
+#endif

@@ -14,6 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_SampleDataObject_h
+#define __YTPKING_SampleDataObject_h
+
 #include <wx/dataobj.h>
 
 #include <string>
@@ -39,11 +42,13 @@ class SampleDataObject :
 public:
 
 	SampleDataObject( void );
-	SampleDataObject( const char *sampleName );
+	explicit SampleDataObject( const char *sampleName );
 
-	virtual
-		~SampleDataObject( void );
-
+	virtual ~SampleDataObject( void );
+private:
+	explicit SampleDataObject( SampleDataObject & );
+	void operator=( SampleDataObject & );
+public:
 
 	smp::Sample *m_sample;
 
@@ -81,3 +86,6 @@ private:
 
 
 	}
+
+
+#endif

@@ -26,8 +26,10 @@
 	namespace smp
 	{
 
+
 class Tape;
 class TapeUser;
+
 
 class TapeManager
 {

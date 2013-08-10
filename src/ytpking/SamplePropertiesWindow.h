@@ -23,6 +23,7 @@
 
 class wxTextCtrl;
 
+
 	namespace ytpking
 	{
 

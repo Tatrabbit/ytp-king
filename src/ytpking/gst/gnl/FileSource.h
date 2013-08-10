@@ -36,16 +36,12 @@ class FileSource
 {
 friend class Composition;
 
-private:
 	// Only a Composition class may construct me.
 	FileSource( void );
 	~FileSource( void );
 
-	// TODO macros for = delete when it becomes available.
-	FileSource( const FileSource &c );
-
-	FileSource
-		&operator=( const FileSource &c );
+	explicit FileSource( FileSource & );
+	void operator=( FileSource & );
 
 public:
 

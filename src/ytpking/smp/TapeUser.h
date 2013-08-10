@@ -34,12 +34,11 @@ class TapeUser
 friend class TapeManager;
 
 public:
-	TapeUser( TapeManager &manager );
-	virtual
-		~TapeUser( void );
+	explicit TapeUser( TapeManager &manager );
+	virtual ~TapeUser( void );
 private:
-	TapeUser( TapeUser &);
-	void operator=( const TapeUser & );
+	explicit TapeUser( TapeUser & );
+	void operator=( TapeUser & );
 protected:
 
 	/** A new Tape has been added to TapeManager object.
@@ -62,6 +61,7 @@ protected:
 private:
 
 	TapeManager *m_manager;
+
 };
 
 

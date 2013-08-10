@@ -34,13 +34,11 @@ class SampleUser
 friend class SampleManager;
 
 public:
-	SampleUser( SampleManager &manager );
-	virtual
-		~SampleUser( void );
+	explicit SampleUser( SampleManager &manager );
+	virtual ~SampleUser( void );
 private:
-	SampleUser( SampleUser &);
+	explicit SampleUser( SampleUser &);
 	void operator=( const SampleUser & );
-
 protected:
 	/** A new Sample has been added to SampleManager object.
 	\param sampleName  The name of the added Sample.
@@ -76,6 +74,7 @@ protected:
 private:
 
 	SampleManager *m_manager;
+
 };
 
 
