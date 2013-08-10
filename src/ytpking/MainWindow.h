@@ -95,13 +95,14 @@ private:
 
 	gst::GstreamerThread       *m_gstThread;
 
-	wxDECLARE_EVENT_TABLE();
-
 	const wxPoint
 		&getStartupPosition( wxPoint &defaultPosition ) const;
 
 	const wxSize
 		&getStartupSize( wxSize &defaultSize ) const;
+
+
+	wxDECLARE_EVENT_TABLE();
 
 };
 

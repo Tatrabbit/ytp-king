@@ -27,7 +27,8 @@
 	{
 
 
-// TODO rename to SamplesToolbar
+// TODO Collapse into SamplesPage
+//      Also, change EventId to not be global. Only the page accesses it now.
 class SourcesToolbar :
 	public wxBoxSizer
 {

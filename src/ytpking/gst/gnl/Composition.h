@@ -59,7 +59,6 @@ public:
 	virtual void
 		addTo( Pipeline &pipeline ) = 0;
 
-	
 	FileSource
 		*addSource( void );
 
@@ -78,6 +77,7 @@ protected:
 		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
 
 private:
+
 	typedef std::list<FileSource *> FileSourceList;
 	FileSourceList m_sources;
 

@@ -132,6 +132,15 @@
     <ClCompile Include="src\ytpking\smp\SampleUser.cpp">
       <Filter>Source Files\smp : Samples and Mixers</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\smp\Tape.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\smp\TapeManager.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\smp\TapeUser.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -231,6 +240,15 @@
       <Filter>Header Files\smp : Samples and Mixers</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\smp\SampleUser.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\Tape.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\TapeManager.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\TapeUser.h">
       <Filter>Header Files\smp : Samples and Mixers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,36 +14,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <wx/notebook.h>
+#include "TapeUser.h"
+
+#include "TapeManager.h"
 
 	namespace ytpking
 	{
-	namespace lnb
+	namespace smp
 	{
 
-class TapesListCtrl;
 
-class TapesPage :
-	public wxNotebookPage
+TapeUser::TapeUser( TapeManager &manager ) :
+	m_manager( &manager )
 {
-public:
+	m_manager->registerTapeUser( this );
+}
 
-	TapesPage( wxWindow *parent );
-	
-private:
 
-	TapesListCtrl *m_listCtrl;
-
-	enum EventId
-	{
-		ButtonAdd = 1
-	};
-
-	void
-		onButtonAdd( wxCommandEvent& event );
-
-	wxDECLARE_EVENT_TABLE();
-};
+TapeUser::~TapeUser( void )
+{
+	m_manager->unregisterTapeUser( this );
+}
 
 
 	} }

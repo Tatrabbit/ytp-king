@@ -14,6 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __YTPKING_SMP_SampleUser_h
+#define __YTPKING_SMP_SampleUser_h
 
 
 	namespace ytpking
@@ -33,42 +35,43 @@ friend class SampleManager;
 
 public:
 	SampleUser( SampleManager &manager );
-	~SampleUser( void );
+	virtual
+		~SampleUser( void );
 private:
 	SampleUser( SampleUser &);
 	void operator=( const SampleUser & );
 
 protected:
-	/** A new smp::Sample has been added to SampleManager object.
+	/** A new Sample has been added to SampleManager object.
 	\param sampleName  The name of the added Sample.
 	\param speakerName The name of the speaker
-	\param addedSample The newly added smp::Sample. */
+	\param addedSample The newly added Sample. */
 	virtual void
-		onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample ) = 0;
+		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample ) = 0;
 
-	/** Called when a smp::Sample is selected.
-	\param selectedSample The newly selected smp::Sample */
+	/** Called when a Sample is selected.
+	\param selectedSample The newly selected Sample */
 	virtual void
-		onSelectSample( smp::Sample *selectedSample ) = 0;
+		onSelectSample( Sample *selectedSample ) = 0;
 
-	/** Called when a smp::Sample is about to be deleted.
+	/** Called when a Sample is about to be deleted.
 	If a pointer matching deletedSample is held, it should be set to NULL or otherwise
 	set to no longer match the sample, as that data is soon to be destroyed.
 	\param deletedSample The sample which will soon be destroyed by SampleManager */
 	virtual void
-		onDeleteSample( smp::Sample *deletedSample ) = 0;
+		onDeleteSample( Sample *deletedSample ) = 0;
 
-	/** Called when a smp::Sample has been renamed.
+	/** Called when a Sample has been renamed.
 	\param newSampleName The new name of the sample
 	\param sample        A pointer to the sample being renamed. */
 	virtual void
-		onRenameSample( char const *newSampleName, smp::Sample *sample ) = 0;
+		onRenameSample( char const *newSampleName, Sample *sample ) = 0;
 
-	/** Called when a smp::Sample's speaker has been changed.
+	/** Called when a Sample's speaker has been changed.
 	\param newSampleName The new name of the sample
 	\param sample        A pointer to the sample being renamed. */
 	virtual void
-		onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample ) = 0;
+		onChangeSampleSpeaker( char const *speakerName, Sample *sample ) = 0;
 
 private:
 
@@ -77,3 +80,6 @@ private:
 
 
 	} }
+
+
+#endif

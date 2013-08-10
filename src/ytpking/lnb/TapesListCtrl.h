@@ -14,22 +14,46 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef YTPKING_LNB_TapesListCtrl_h
+#define YTPKING_LNB_TapesListCtrl_h
+
 #include <wx/listctrl.h>
+#include "smp/TapeUser.h"
 
 
 	namespace ytpking
 	{
+
+namespace smp {
+	class Tape;
+}
+
 	namespace lnb
 	{
 
 
 class TapesListCtrl :
-	public wxListCtrl
+	public wxListCtrl,
+	public smp::TapeUser
 {
 public:
 
 	TapesListCtrl( wxWindow *parent );
+
+	void
+		onAddTape( smp::Tape *addedTape )
+		override;
+	void
+		onSelectTape( smp::Tape *selectedTape )
+		override;
+	void
+		onDeleteTape( smp::Tape *deletedTape )
+		override;
+
 };
 
 
 	} }
+
+
+#endif

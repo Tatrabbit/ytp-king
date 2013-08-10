@@ -121,6 +121,7 @@ SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 		sample->m_start    = start;
 		sample->m_duration = duration;
 
+		// TODO these aren't needed, I think
 		m_audioPreviewComposition->update();
 		m_videoPreviewComposition->update();
 	}
@@ -135,6 +136,7 @@ SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 	{
 		sample->m_duration = event.GetInt() - sample->m_start;
 
+		// TODO these aren't needed, I think
 		m_audioPreviewComposition->update();
 		m_videoPreviewComposition->update();
 	}

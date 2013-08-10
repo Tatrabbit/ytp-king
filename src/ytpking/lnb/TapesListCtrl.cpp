@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TapesListCtrl.h"
-
+#include "smp/TapeManager.h"
 
 	namespace ytpking
 	{
@@ -26,11 +26,33 @@
 TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 	// TODO make this be wxLC_VIRTUAL
 	wxListCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
-	            wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES )
+	            wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES ),
+	smp::TapeUser( smp::tapeManager )
 {
-	AppendColumn( "Name" );
+	AppendColumn( "What's Said" );
+}
+
+
+
+void
+TapesListCtrl::onAddTape( smp::Tape *addedTape )
+{
 	InsertItem( 0, "Your Majesty" );
 }
+
+
+void
+TapesListCtrl::onSelectTape( smp::Tape *selectedTape )
+{
+}
+
+
+void
+TapesListCtrl::onDeleteTape( smp::Tape *deletedTape )
+{
+	DeleteItem( 0 );
+}
+
 
 
 	} }

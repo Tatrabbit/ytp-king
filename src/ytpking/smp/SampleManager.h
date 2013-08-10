@@ -14,8 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_SampleManager_h
-#define __YTPKING_GST_SampleManager_h
+#ifndef __YTPKING_SMP_SampleManager_h
+#define __YTPKING_SMP_SampleManager_h
 
 #include <set>
 #include <string>
@@ -63,60 +63,60 @@ public:
 
 
 	/** Get the currently active sample. */
-	smp::Sample
+	Sample
 		*getSelectedSample( void ) const;
 
 	/** Set the currently active sample. */
 	void
-		selectSample( smp::Sample *sample );
+		selectSample( Sample *sample );
 
 
-	/** Adds a new sample.
+	/** Adds a new Sample.
 	    SampleUser::onAdd will be called.
 	\param filename The filename of the sample.
 	\param name     The name of the sample, such as "What's for dinner"
 	\param speakerName The name of the speaker, e.g. The King
 	\param nodeReference If NULL, the speaker will be created in the save DataFile. */
-	smp::Sample
+	Sample
 		*addSample( const char *filename, const char *name, const char *speakerName,
 		            SamplesDataFile::NodeReference *nodeReference = NULL );
 
-	/** Deletes a sample, freeing the memeory.
+	/** Deletes a Sample, freeing the memeory.
 	    Once freed, all remaining pointers will dangle, be sure that any
-		class using them has SampleUser::onDelete defined.
+		class using them has SampleUser::onDelete defined to do so.
 	\param sample The sample to delete. */
 	void
-		deleteSample( smp::Sample *sample );
+		deleteSample( Sample *sample );
 
 	/** Renames a sample.
 	\param sample The sample to rename.
 	\param speechName   The new name. */
 	void
-		renameSample( smp::Sample *sample, const char *speechName );
+		renameSample( Sample *sample, const char *speechName );
 
 	/** Changes the speaker of sample.
 	\param sample The sample to rename.
 	\param speakerName   The new name. */
 	void
-		changeSpeaker( smp::Sample *sample, const char *speakerName );
+		changeSpeaker( Sample *sample, const char *speakerName );
 
 
 private:
 
 	SamplesDataFile *m_samplesDataFile;
-	smp::Sample          *m_selectedSample;
+	Sample          *m_selectedSample;
 
 	typedef std::set<SampleUser *> SampleUserSet;
 
 
 	struct SamplePair
 	{
-		SamplePair( smp::Sample *sample );
-		SamplePair( smp::Sample *sample, const SamplesDataFile::NodeReference &nodeReference );
+		SamplePair( Sample *sample );
+		SamplePair( Sample *sample, const SamplesDataFile::NodeReference &nodeReference );
 
 		inline bool operator<( const SamplePair &other ) const { return m_sample < other.m_sample; }
 
-		smp::Sample            *m_sample;
+		Sample            *m_sample;
 		SamplesDataFile::
 			NodeReference  m_nodeReference;
 	};

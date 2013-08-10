@@ -18,6 +18,7 @@
 
 #include <gst/gst.h>
 
+// TODO Trim these, how many do I really need?!
 #include <wx/log.h>
 #include <wx/menu.h>
 #include <wx/treectrl.h>
@@ -41,6 +42,7 @@
 
 #include "smp/SampleManager.h"
 #include "smp/Sample.h"
+#include "smp/TapeManager.h"
 
 
 	namespace ytpking

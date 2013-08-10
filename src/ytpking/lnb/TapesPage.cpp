@@ -18,8 +18,11 @@
 
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
+#include <wx/button.h>
 
 #include "TapesListCtrl.h"
+
+#include "smp/TapeManager.h"
 
 
 	namespace ytpking
@@ -31,14 +34,46 @@
 TapesPage::TapesPage( wxWindow *parent ) :
 	wxNotebookPage( parent, wxID_ANY )
 {
+	// Main Sizer
 	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
 
+	// Tapes ListCtrl
 	m_listCtrl = new TapesListCtrl( this );
-
 	mainSizer->Add( m_listCtrl, 1, wxEXPAND|wxALL );
 
+	// Toolbar
+	wxSizer *toolbarSizer = new wxBoxSizer( wxHORIZONTAL );
+	{
+		// Add button
+		wxButton *button;
+
+		button = new wxButton( this, EventId::ButtonAdd );
+
+		button->SetBitmap( wxBitmap( "ICO_SPIRALBOX", wxBITMAP_TYPE_ICO_RESOURCE ) );
+		button->SetWindowStyle( wxBU_EXACTFIT|wxBU_NOTEXT );
+		toolbarSizer->Add( button, 1 );
+	}
+	mainSizer->Add( toolbarSizer, 0 );
+
+	// Assign
 	SetSizer( mainSizer );
 }
+
+
+void
+TapesPage::onButtonAdd( wxCommandEvent& event )
+{
+	smp::tapeManager.addTape();
+}
+
+
+
+wxBEGIN_EVENT_TABLE( TapesPage, wxNotebookPage )
+
+	EVT_BUTTON( EventId::ButtonAdd,  onButtonAdd  )
+
+wxEND_EVENT_TABLE()
+
 
 
 	} }
