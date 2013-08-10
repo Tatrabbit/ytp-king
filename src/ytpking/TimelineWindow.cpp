@@ -21,6 +21,7 @@
 #include "SampleDataObject.h"
 #include "SampleComponent.h"
 
+#include "smp/TapeManager.h"
 #include "smp/Sample.h"
 
 
@@ -65,7 +66,8 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 
 
 TimelineWindow::TimelineWindow( wxWindow *parent ) :
-	wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 150 ) )
+	wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 150 ) ),
+	smp::TapeUser( smp::tapeManager )
 {
 	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, "Tape Mixer" );
 	SetDropTarget( new TimelineDropTarget( this, sizer ) );
@@ -77,6 +79,34 @@ void
 TimelineWindow::onUpdate( wxUpdateUIEvent& event )
 {
 	Layout();
+}
+
+
+void
+TimelineWindow::onAddTape( smp::Tape *addedTape )
+{
+}
+
+
+void
+TimelineWindow::onSelectTape( smp::Tape *selectedTape )
+{
+	wxSizer *sizer = GetContainingSizer();
+
+	assert( sizer != NULL );
+
+	if ( selectedTape != NULL )
+		sizer->Show( this );
+	else
+		sizer->Hide( this );
+
+	sizer->Layout();
+}
+
+
+void
+TimelineWindow::onDeleteTape( smp::Tape *deletedTape )
+{
 }
 
 

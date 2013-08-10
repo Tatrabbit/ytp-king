@@ -103,7 +103,9 @@ MainWindow::MainWindow( void ) :
 	gst::timelinePipeline.setRenderWindow( m_moviePanel );
 
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
+
 	movieSizer->Add( m_timelineWindow, 0, wxALL|wxEXPAND );
+	movieSizer->Hide( m_timelineWindow );
 
 	m_sampleAndMovieSizer->Add( m_samplePropertiesWindow );
 	m_sampleAndMovieSizer->Add( movieSizer, 1, wxALL|wxEXPAND );
@@ -207,14 +209,14 @@ const wxSize
 }
 
 
-BEGIN_EVENT_TABLE( MainWindow, wxFrame )
+wxBEGIN_EVENT_TABLE( MainWindow, wxFrame )
 
 	EVT_MENU( GlobalEventId::MainMenuQuit,  onQuit  )
 	EVT_MENU( GlobalEventId::MainMenuAbout, onAbout )
 
 	EVT_TREE_SEL_CHANGED( GlobalEventId::SamplesTreeCtrl, onSamplesTreeChange )
 
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 	}

@@ -23,11 +23,6 @@
 
 	namespace ytpking
 	{
-
-namespace smp {
-	class Tape;
-}
-
 	namespace lnb
 	{
 
@@ -49,6 +44,12 @@ public:
 	void
 		onDeleteTape( smp::Tape *deletedTape )
 		override;
+
+	void
+		onSelectItem( wxListEvent& event );
+
+
+	wxDECLARE_EVENT_TABLE();
 
 };
 

@@ -18,6 +18,7 @@
 #define __YTPKING_TimelineWindow_h
 
 #include <wx/window.h>
+#include <smp/TapeUser.h>
 #include <wx/dnd.h>
 #include "gst/gnl/PreviewUser.h"
 
@@ -26,7 +27,8 @@
 
 
 class TimelineWindow :
-	public wxWindow
+	public wxWindow,
+	public smp::TapeUser
 {
 public:
 
@@ -64,6 +66,18 @@ private:
 
 	void
 		onUpdate( wxUpdateUIEvent& event );
+
+	
+	void
+		onAddTape( smp::Tape *addedTape )
+		override;
+	void
+		onSelectTape( smp::Tape *selectedTape )
+		override;
+	void
+		onDeleteTape( smp::Tape *deletedTape )
+		override;
+
 
 	wxDECLARE_EVENT_TABLE();
 	

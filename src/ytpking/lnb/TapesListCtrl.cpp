@@ -37,6 +37,7 @@ void
 TapesListCtrl::onAddTape( smp::Tape *addedTape )
 {
 	InsertItem( 0, "Your Majesty" );
+	SetItemPtrData( 0, (wxUIntPtr)addedTape );
 }
 
 
@@ -52,6 +53,19 @@ TapesListCtrl::onDeleteTape( smp::Tape *deletedTape )
 	DeleteItem( 0 );
 }
 
+void
+TapesListCtrl::onSelectItem( wxListEvent& event )
+{
+	smp::Tape *tape = (smp::Tape *)GetItemData( event.GetIndex() );
+	smp::tapeManager.selectTape( tape );
+}
+
+
+wxBEGIN_EVENT_TABLE( TapesListCtrl, wxListCtrl )
+
+	EVT_LIST_ITEM_SELECTED( wxID_ANY, onSelectItem )
+
+wxEND_EVENT_TABLE()
 
 
 	} }
