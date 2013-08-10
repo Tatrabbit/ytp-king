@@ -34,10 +34,10 @@ TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 
 
 void
-TapesListCtrl::onAddTape( smp::Tape *addedTape )
+TapesListCtrl::onAddTape( smp::Tape &addedTape )
 {
 	InsertItem( 0, "Your Majesty" );
-	SetItemPtrData( 0, (wxUIntPtr)addedTape );
+	SetItemPtrData( 0, (wxUIntPtr)&addedTape );
 }
 
 
@@ -48,10 +48,11 @@ TapesListCtrl::onSelectTape( smp::Tape *selectedTape )
 
 
 void
-TapesListCtrl::onDeleteTape( smp::Tape *deletedTape )
+TapesListCtrl::onDeleteTape( smp::Tape &deletedTape )
 {
 	DeleteItem( 0 );
 }
+
 
 void
 TapesListCtrl::onSelectItem( wxListEvent& event )

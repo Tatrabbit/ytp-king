@@ -83,7 +83,7 @@ TimelineWindow::onUpdate( wxUpdateUIEvent& event )
 
 
 void
-TimelineWindow::onAddTape( smp::Tape *addedTape )
+TimelineWindow::onAddTape( smp::Tape &addedTape )
 {
 }
 
@@ -105,7 +105,7 @@ TimelineWindow::onSelectTape( smp::Tape *selectedTape )
 
 
 void
-TimelineWindow::onDeleteTape( smp::Tape *deletedTape )
+TimelineWindow::onDeleteTape( smp::Tape &deletedTape )
 {
 }
 

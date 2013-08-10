@@ -85,7 +85,7 @@ Tape
 	m_tapes.insert( tape );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
-		(*it)->onAddTape( tape );
+		(*it)->onAddTape( *tape );
 
 	return tape;
 }
@@ -97,7 +97,7 @@ TapeManager::deleteTape( Tape *tape )
 	TapeSet::const_iterator it = m_tapes.find( tape );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
-		(*it)->onDeleteTape( tape );
+		(*it)->onDeleteTape( *tape );
 
 	if ( it != m_tapes.end() )
 	{

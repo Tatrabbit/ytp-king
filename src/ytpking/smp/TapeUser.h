@@ -42,24 +42,22 @@ private:
 	void operator=( const TapeUser & );
 protected:
 
-	// TODO take Tape& instead of Tape*
 	/** A new Tape has been added to TapeManager object.
 	\param addedTape The newly added Tape. */
 	virtual void
-		onAddTape( Tape *addedTape ) = 0;
+		onAddTape( Tape &addedTape ) = 0;
 
 	/** Called when a Tape is selected.
 	\param selectedTape The newly selected Tape. If the Tape is deselected, NULL. */
 	virtual void
 		onSelectTape( Tape *selectedTape ) = 0;
 
-	// TODO take Tape& instead of Tape*
 	/** Called when a Tape is about to be deleted.
 	If a pointer matching deletedTape is held, it should be set to NULL or otherwise
 	set to no longer match the sample, as that data is soon to be destroyed.
 	\param deletedTape The Tape which will soon be destroyed by TapeManager */
 	virtual void
-		onDeleteTape( Tape *deletedTape ) = 0;
+		onDeleteTape( Tape &deletedTape ) = 0;
 
 private:
 
