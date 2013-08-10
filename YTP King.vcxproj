@@ -35,7 +35,7 @@
     <ClCompile Include="src\ytpking\Sample.cpp" />
     <ClCompile Include="src\ytpking\SampleComponent.cpp" />
     <ClCompile Include="src\ytpking\SampleDataObject.cpp" />
-    <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp" />
+    <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp" />
     <ClCompile Include="src\ytpking\SamplesDataFile.cpp" />
     <ClCompile Include="src\ytpking\TimelineSizer.cpp" />
     <ClCompile Include="src\ytpking\MainWindow.cpp" />
@@ -70,7 +70,7 @@
     <ClInclude Include="src\ytpking\Sample.h" />
     <ClInclude Include="src\ytpking\SampleComponent.h" />
     <ClInclude Include="src\ytpking\SampleDataObject.h" />
-    <ClInclude Include="src\ytpking\SamplePropertiesSizer.h" />
+    <ClInclude Include="src\ytpking\SamplePropertiesWindow.h" />
     <ClInclude Include="src\ytpking\SamplesDataFile.h" />
     <ClInclude Include="src\ytpking\TimelineSizer.h" />
     <ClInclude Include="src\ytpking\MainWindow.h" />

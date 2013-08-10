@@ -81,9 +81,6 @@
     <ClCompile Include="src\ytpking\lnb\TapesPage.cpp">
       <Filter>Source Files\lnb : Sources Notebook\Pages</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\SamplePropertiesSizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\SampleDataObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,6 +123,9 @@
     <ClCompile Include="src\ytpking\gst\gnl\SampleUser.cpp">
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -166,9 +166,6 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\lnb\SamplesPage.h">
       <Filter>Header Files\lnb : Sources Notebook\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\SamplePropertiesSizer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\SampleDataObject.h">
       <Filter>Header Files</Filter>
@@ -226,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\gnl\SampleUser.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\SamplePropertiesWindow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

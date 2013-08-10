@@ -38,7 +38,7 @@
 #include "lnb/SamplesTreeCtrl.h"
 
 #include "TimelineSizer.h"
-#include "SamplePropertiesSizer.h"
+#include "SamplePropertiesWindow.h"
 
 #include "Sample.h"
 
