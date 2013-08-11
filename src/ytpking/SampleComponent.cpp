@@ -33,7 +33,7 @@
 
 
 SampleComponent::SampleComponent( wxWindow *parent, const char *name,
-		smp::Tape *tape, const smp::Tape::SampleInstance *sampleInstance ) :
+		smp::Tape *tape, const smp::SampleInstance *sampleInstance ) :
 
 	wxWindow( parent, wxID_ANY ),
 	m_parent( parent ),

@@ -14,49 +14,44 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SampleComponent_h
-#define __YTPKING_SampleComponent_h
+#include "SampleInstance.h"
 
-#include <wx/window.h>
-#include <wx/dnd.h>
-
+#include "gst/gnl/TapeComposition.h"
+#include "smp/Sample.h"
 
 	namespace ytpking
 	{
+	namespace smp
+	{
 
 
-namespace smp
+unsigned int SampleInstance::m_nInstances( 0u );
+
+
+
+SampleInstance::SampleInstance( const Sample *sample ) :
+	m_sample( sample ),
+	m_id( m_nInstances++ )
 {
-	class Tape;
-	class SampleInstance;
 }
 
 
-// TODO rename to SampleWindow
-class SampleComponent :
-	public wxWindow
+SampleInstance::~SampleInstance( void )
 {
-public:
-
-	SampleComponent( wxWindow *parent, const char *name,
-			smp::Tape *tape, const smp::SampleInstance *sampleInstance );
-
-
-	wxWindow *m_parent;
-
-	smp::Tape                 *m_tape;
-	const smp::SampleInstance *m_sampleInstance;
-
-	void
-		onButtonDelete( wxCommandEvent& event );
+	for ( SourceSet::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
+		it->composition->deleteSource( it->fileSource );
+}
 
 
-	wxDECLARE_EVENT_TABLE();
+void
+SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
+{
+	Source source;
+	source.fileSource  = m_sample->addToComposition( composition );
+	source.composition = &composition;
 
-};
+	m_sources.insert( source );
+}
 
 
-	}
-
-
-#endif
+	} }

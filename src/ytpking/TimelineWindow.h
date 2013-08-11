@@ -23,11 +23,16 @@
 
 #include <list>
 
-#include "smp/Tape.h"
-
 
 	namespace ytpking
 	{
+
+
+namespace smp
+{
+	class Tape;
+	class SampleInstance;
+}
 
 
 class SampleComponent;
@@ -100,7 +105,7 @@ private:
 		useTape( smp::Tape &tape );
 
 	void
-		appendComponent( smp::Tape &tape, const smp::Tape::SampleInstance &sampleInstance );
+		appendComponent( smp::Tape &tape, const smp::SampleInstance &sampleInstance );
 
 
 	void

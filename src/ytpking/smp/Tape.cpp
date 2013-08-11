@@ -19,44 +19,13 @@
 #include "gst/gnl/TapeComposition.h"
 #include "gst/gnl/PreviewTapes.h"
 
-#include "smp/Sample.h"
+#include "SampleInstance.h"
 
 
 	namespace ytpking
 	{
 	namespace smp
 	{
-
-
-unsigned int Tape::SampleInstance::m_nInstances( 0u );
-
-
-Tape::
-SampleInstance::SampleInstance( const Sample *sample ) :
-	m_sample( sample ),
-	m_id( m_nInstances++ )
-{
-}
-
-
-Tape::
-SampleInstance::~SampleInstance( void )
-{
-	for ( SourceSet::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
-		it->composition->deleteSource( it->fileSource );
-}
-
-
-void
-Tape::
-SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
-{
-	Source source;
-	source.fileSource  = m_sample->addToComposition( composition );
-	source.composition = &composition;
-
-	m_sources.insert( source );
-}
 
 
 Tape::Tape( void )
@@ -78,7 +47,7 @@ const Tape::InstanceSet
 }
 
 
-Tape::SampleInstance
+SampleInstance
 *Tape::appendSample( const Sample &sample )
 {
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
@@ -91,6 +60,7 @@ Tape::SampleInstance
 
 	return sampleInstance;
 }
+
 
 
 void

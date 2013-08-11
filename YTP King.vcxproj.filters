@@ -144,6 +144,9 @@
     <ClCompile Include="src\ytpking\gst\gnl\PreviewTapes.cpp">
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\smp\SampleInstance.cpp">
+      <Filter>Source Files\smp : Samples and Mixers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ytpking\MainWindow.h">
@@ -253,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\PipelineContent.h">
       <Filter>Header Files\gst : GStreamer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\smp\SampleInstance.h">
+      <Filter>Header Files\smp : Samples and Mixers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

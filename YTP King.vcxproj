@@ -36,6 +36,7 @@
     <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp" />
     <ClCompile Include="src\ytpking\SamplesDataFile.cpp" />
     <ClCompile Include="src\ytpking\smp\Sample.cpp" />
+    <ClCompile Include="src\ytpking\smp\SampleInstance.cpp" />
     <ClCompile Include="src\ytpking\smp\SampleManager.cpp" />
     <ClCompile Include="src\ytpking\smp\SampleUser.cpp" />
     <ClCompile Include="src\ytpking\smp\Tape.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="src\ytpking\SampleDataObject.h" />
     <ClInclude Include="src\ytpking\SamplePropertiesWindow.h" />
     <ClInclude Include="src\ytpking\SamplesDataFile.h" />
+    <ClInclude Include="src\ytpking\smp\SampleInstance.h" />
     <ClInclude Include="src\ytpking\smp\Sample.h" />
     <ClInclude Include="src\ytpking\smp\SampleManager.h" />
     <ClInclude Include="src\ytpking\smp\SampleUser.h" />

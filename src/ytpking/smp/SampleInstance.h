@@ -14,10 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef YTPKING_SMP_Tape_h
-#define YTPKING_SMP_Tape_h
+#ifndef YTPKING_SMP_SampleInstance_h
+#define YTPKING_SMP_SampleInstance_h
 
-#include <list>
 #include <set>
 
 
@@ -27,48 +26,50 @@
 namespace gst {
 namespace gnl {
 	class TapeComposition;
+	class FileSource;
 } }
 
 	namespace smp
 	{
 
 
+class Tape;
 class Sample;
-class SampleInstance;
 
 
-class Tape
+class SampleInstance
 {
+	friend class Tape;
+
 public:
-	Tape( void );
-	~Tape( void );
-private:
-	explicit Tape( Tape & );
-	void operator=( Tape & );
-public:
-
-	typedef std::list<SampleInstance *>           InstanceSet;
-	typedef std::set<gst::gnl::TapeComposition *> CompositionSet;
-
-	const InstanceSet
-		&getInstances( void ) const;
-
-	SampleInstance
-		*appendSample( const Sample &sample );
-
-	void
-		deleteSample( const SampleInstance &sampleInstance );
-
-	void
-		connectToPreview( void );
-
-	void
-		disconnectFromComposition( void );
+	SampleInstance( const Sample *sample );
+	~SampleInstance( void );
 
 private:
+	SampleInstance( SampleInstance &);
+	void operator=( SampleInstance &);
 
-	InstanceSet m_samples;
+public:
 
+	inline bool operator==( const SampleInstance &other ) const { return m_id == other.m_id; }
+	inline bool operator< ( const SampleInstance &other ) const { return m_id <  other.m_id; }
+
+private:
+	struct Source
+	{
+		gst::gnl::FileSource      *fileSource;
+		gst::gnl::TapeComposition *composition;
+
+		inline bool operator< ( const Source &other ) const { return fileSource <  other.fileSource; }
+	};
+	typedef std::set<Source> SourceSet;
+
+	const Sample *m_sample;
+
+	static unsigned int m_nInstances;
+	const unsigned int  m_id;
+
+	SourceSet m_sources;
 
 	void
 		connectToComposition( gst::gnl::TapeComposition &composition );

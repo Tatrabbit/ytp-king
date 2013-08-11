@@ -52,20 +52,11 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 	if ( GetData() )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
-		smp::Tape::SampleInstance *sampleInstance;
+		smp::SampleInstance *sampleInstance;
 		sampleInstance = smp::tapeManager.getSelectedTape()->appendSample( *dataObject->m_sample );
 
 		m_parent->appendComponent( *smp::tapeManager.getSelectedTape(), *sampleInstance );
 		m_parent->GetSizer()->Layout();
-		/*
-		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), smp::tapeManager.getSelectedTape(), sampleInstance );
-
-		m_parent->m_components.push_back( component );
-
-		wxSizer *sizer = m_parent->GetSizer();
-		sizer->Add( component, 0 );
-		sizer->Layout();
-		*/
 
 		return defResult;
 	}
@@ -147,7 +138,7 @@ TimelineWindow::useTape( smp::Tape &tape )
 
 
 void
-TimelineWindow::appendComponent( smp::Tape &tape, const smp::Tape::SampleInstance &sampleInstance )
+TimelineWindow::appendComponent( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
 {
 	SampleComponent *component = new SampleComponent( this, "sample name", &tape, &sampleInstance );
 
