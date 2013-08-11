@@ -30,7 +30,7 @@
 class FileSource;
 
 class AudioComposition : 
-	public Composition
+	public TapeComposition
 {
 public:
 

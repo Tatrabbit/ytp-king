@@ -31,7 +31,7 @@
 class FileSource;
 
 class VideoComposition : 
-	public Composition
+	public TapeComposition
 {
 public:
 

@@ -35,7 +35,7 @@ Sample::Sample( const char *filename )  :
 
 
 const gst::gnl::FileSource
-*Sample::addToComposition( gst::gnl::Composition *composition ) const
+*Sample::addToComposition( gst::gnl::TapeComposition *composition ) const
 {
 	using gst::gnl::FileSource;
 	

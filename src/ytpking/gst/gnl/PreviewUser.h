@@ -29,7 +29,7 @@ class Pipeline;
 	{
 
 
-class Composition;
+class TapeComposition;
 
 // TODO refactor this to have both compositions as a global instead.
 class PreviewUser
@@ -42,8 +42,8 @@ protected:
 	static void
 		cleanup( void );
 
-	static Composition *m_audioPreviewComposition;
-	static Composition *m_videoPreviewComposition;
+	static TapeComposition *m_audioPreviewComposition;
+	static TapeComposition *m_videoPreviewComposition;
 
 
 };

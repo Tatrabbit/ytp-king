@@ -26,7 +26,7 @@
 
 namespace gst {
 namespace gnl {
-	class Composition;
+	class TapeComposition;
 	class FileSource;
 } }
 
@@ -45,7 +45,7 @@ public:
 	unsigned int m_duration;
 
 	const gst::gnl::FileSource
-		*addToComposition( gst::gnl::Composition *composition) const;
+		*addToComposition( gst::gnl::TapeComposition *composition) const;
 
 };
 

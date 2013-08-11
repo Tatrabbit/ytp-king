@@ -28,8 +28,8 @@
 	namespace gnl
 	{
 
-Composition *PreviewUser::m_audioPreviewComposition( NULL );
-Composition *PreviewUser::m_videoPreviewComposition( NULL );
+TapeComposition *PreviewUser::m_audioPreviewComposition( NULL );
+TapeComposition *PreviewUser::m_videoPreviewComposition( NULL );
 
 
 void

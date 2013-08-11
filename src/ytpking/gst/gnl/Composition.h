@@ -14,8 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_Composition_h
-#define __YTPKING_GST_GNL_Composition_h
+#ifndef __YTPKING_GST_GNL_TapeComposition_h
+#define __YTPKING_GST_GNL_TapeComposition_h
 
 
 #include <string>
@@ -39,14 +39,14 @@ class Pipeline;
 class FileSource;
 
 
-class Composition
+class TapeComposition
 {
 public:
-	Composition( void );
-	virtual ~Composition( void );
+	TapeComposition( void );
+	virtual ~TapeComposition( void );
 private:
-	explicit Composition( Composition & );
-	void operator=( Composition & );
+	explicit TapeComposition( TapeComposition & );
+	void operator=( TapeComposition & );
 
 public:
 

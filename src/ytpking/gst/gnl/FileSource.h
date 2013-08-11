@@ -34,7 +34,7 @@ class Composition;
 
 class FileSource
 {
-friend class Composition;
+friend class TapeComposition;
 
 	// Only a Composition class may construct me.
 	FileSource( void );

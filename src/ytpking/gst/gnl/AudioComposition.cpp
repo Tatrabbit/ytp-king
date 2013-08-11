@@ -18,7 +18,7 @@
 
 #include <gst/gst.h>
 
-#include "../Pipeline.h"
+#include "gst/Pipeline.h"
 
 
 	namespace ytpking
@@ -30,12 +30,8 @@
 
 
 AudioComposition::AudioComposition( void ) :
-	//m_queueElement( gst_element_factory_make( "queue",         NULL ) ),
 	m_sinkElement ( gst_element_factory_make( "autoaudiosink", NULL ) )
 {
-	//if ( !gst_element_link( m_queueElement, m_sinkElement ) )
-		//GST_ERROR( "Audio Queue/Sink could not be linked.\n" );
-
 	g_signal_connect( m_selfElement, "pad-added", G_CALLBACK( onPadAdded ), m_sinkElement );
 
 	g_object_set( m_selfElement, "caps", gst_caps_from_string( "audio/x-raw-int;audio/x-raw-float" ), NULL ); 

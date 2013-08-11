@@ -46,7 +46,7 @@ SampleInstance::~SampleInstance( void )
 
 void
 Tape::
-SampleInstance::connectToComposition( gst::gnl::Composition &composition )
+SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
 {
 	Source source;
 	source.fileSource  = composition.addSource();
@@ -92,7 +92,7 @@ Tape::deleteSample( SampleInstance &sampleInstance )
 
 
 void
-Tape::connectToComposition( gst::gnl::Composition &composition )
+Tape::connectToComposition( gst::gnl::TapeComposition &composition )
 {
 	// TODO disconnect exisitng tape, one tape per composition.
 

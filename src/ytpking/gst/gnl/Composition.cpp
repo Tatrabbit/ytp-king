@@ -20,7 +20,8 @@
 
 #include <gst/gst.h>
 
-#include "../Pipeline.h"
+#include "gst/Pipeline.h"
+
 #include "FileSource.h"
 
 
@@ -32,13 +33,13 @@
 	{
 
 
-Composition::Composition( void ) :
+TapeComposition::TapeComposition( void ) :
 	m_selfElement( gst_element_factory_make( "gnlcomposition", NULL ) )
 {
 }
 
 
-Composition::~Composition( void )
+TapeComposition::~TapeComposition( void )
 {
 	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
 		delete *it;
@@ -46,7 +47,7 @@ Composition::~Composition( void )
 
 
 void
-Composition::onPadAdded( GstElement *src, GstPad *new_pad, GstElement *sink )
+TapeComposition::onPadAdded( GstElement *src, GstPad *new_pad, GstElement *sink )
 {
 	GstPad *compatiblePad = gst_element_get_compatible_pad( sink, new_pad, gst_pad_get_caps( new_pad ) );
 
@@ -56,7 +57,7 @@ Composition::onPadAdded( GstElement *src, GstPad *new_pad, GstElement *sink )
 
 
 FileSource
-*Composition::addSource( void )
+*TapeComposition::addSource( void )
 {
 	FileSource *source = new FileSource;
 
@@ -74,7 +75,7 @@ FileSource
 
 
 void
-Composition::deleteSource( const FileSource *source )
+TapeComposition::deleteSource( const FileSource *source )
 {
 	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
 		if ( source == *it )
@@ -89,7 +90,7 @@ Composition::deleteSource( const FileSource *source )
 
 
 void
-Composition::update( void )
+TapeComposition::update( void )
 {
 	__int64 start = 0i64;
 

@@ -26,7 +26,7 @@
 
 namespace gst {
 namespace gnl {
-	class Composition;
+	class TapeComposition;
 	class FileSource;
 } }
 
@@ -69,8 +69,8 @@ public:
 	private:
 		struct Source
 		{
-			gst::gnl::FileSource  *fileSource;
-			gst::gnl::Composition *composition;
+			gst::gnl::FileSource      *fileSource;
+			gst::gnl::TapeComposition *composition;
 
 			inline bool operator< ( const Source &other ) const { return fileSource <  other.fileSource; }
 		};
@@ -82,13 +82,13 @@ public:
 		SourceSet m_sources;
 
 		void
-			connectToComposition( gst::gnl::Composition &composition );
+			connectToComposition( gst::gnl::TapeComposition &composition );
 
 	};
 
 
 	typedef std::list<SampleInstance *>       InstanceSet;
-	typedef std::set<gst::gnl::Composition *> CompositionSet;
+	typedef std::set<gst::gnl::TapeComposition *> CompositionSet;
 	
 
 	SampleInstance
@@ -98,7 +98,7 @@ public:
 		deleteSample( SampleInstance &sampleInstance );
 
 	void
-		connectToComposition( gst::gnl::Composition &composition );
+		connectToComposition( gst::gnl::TapeComposition &composition );
 
 private:
 
