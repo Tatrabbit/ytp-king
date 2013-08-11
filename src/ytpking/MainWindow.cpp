@@ -31,8 +31,8 @@
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
-#include "gst/gnl/AudioComposition.h"
-#include "gst/gnl/VideoComposition.h"
+#include "gst/gnl/AudioTapeComposition.h"
+#include "gst/gnl/VideoTapeComposition.h"
 #include "gst/gnl/FileSource.h"
 
 #include "lnb/LibrarySizer.h"

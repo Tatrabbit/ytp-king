@@ -22,7 +22,7 @@
 
 #include <wx/window.h>
 
-#include "gnl/Composition.h"
+#include "gnl/TapeComposition.h"
 
 
 	namespace ytpking

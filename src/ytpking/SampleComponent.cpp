@@ -20,7 +20,7 @@
 #include <wx/button.h>
 #include <wx/log.h>
 
-#include "gst/gnl/Composition.h"
+#include "gst/gnl/TapeComposition.h"
 
 	namespace ytpking
 	{

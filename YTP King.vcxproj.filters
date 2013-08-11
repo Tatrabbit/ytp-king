@@ -93,16 +93,7 @@
     <ClCompile Include="src\ytpking\gst\Pipeline.cpp">
       <Filter>Source Files\gst : GStreamer</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\gst\gnl\Composition.cpp">
-      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\gst\gnl\AudioComposition.cpp">
-      <Filter>Source Files\gst : GStreamer</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\gst\gnl\FileSource.cpp">
-      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ytpking\gst\gnl\VideoComposition.cpp">
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\SampleComponent.cpp">
@@ -140,6 +131,15 @@
     </ClCompile>
     <ClCompile Include="src\ytpking\TimelineWindow.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\TapeComposition.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\AudioTapeComposition.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\VideoTapeComposition.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,16 +185,7 @@
     <ClInclude Include="src\ytpking\gst\Pipeline.h">
       <Filter>Header Files\gst : GStreamer</Filter>
     </ClInclude>
-    <ClInclude Include="src\ytpking\gst\gnl\Composition.h">
-      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\gst\gnl\AudioComposition.h">
-      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
-    </ClInclude>
     <ClInclude Include="src\ytpking\gst\gnl\FileSource.h">
-      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\gst\gnl\VideoComposition.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\SampleComponent.h">
@@ -247,6 +238,15 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\TimelineWindow.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\TapeComposition.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\AudioTapeComposition.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\VideoTapeComposition.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

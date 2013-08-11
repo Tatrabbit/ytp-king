@@ -14,66 +14,42 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_TapeComposition_h
-#define __YTPKING_GST_GNL_TapeComposition_h
+#ifndef __YTPKING_GST_GNL_AudioTapeComposition_h
+#define __YTPKING_GST_GNL_AudioTapeComposition_h
 
-
-#include <string>
-#include <list>
-
-
-typedef struct  _GstElement   GstElement;
-typedef struct  _GstPad       GstPad;
+#include "TapeComposition.h"
 
 
 	namespace ytpking
 	{
 	namespace gst
 	{
-
-class Pipeline;
-
 	namespace gnl
 	{
 
 class FileSource;
 
-
-class TapeComposition
+class AudioTapeComposition : 
+	public TapeComposition
 {
 public:
-	TapeComposition( void );
-	virtual ~TapeComposition( void );
-private:
-	explicit TapeComposition( TapeComposition & );
-	void operator=( TapeComposition & );
+
+	AudioTapeComposition( void );
 
 public:
 
-	virtual void
-		addTo( Pipeline &pipeline ) = 0;
-
-	FileSource
-		*addSource( void );
-
 	void
-		deleteSource( const FileSource *source );
-
-	void
-		update( void );
-
-
-protected:
-
-	GstElement *m_selfElement;
-
-	static void
-		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
+		addTo( Pipeline &pipeline )
+		override;
 
 private:
 
-	typedef std::list<FileSource *> FileSourceList;
-	FileSourceList m_sources;
+	// TODO add some necessary basic processing like audioconvert and audioresample
+	//      so it doesn't sound like crud for no reason.
+	//GstElement *m_convertElement;
+	//GstElement *m_resampleElement;
+	//GstElement *m_queueElement;
+	GstElement *m_sinkElement;
 
 };
 

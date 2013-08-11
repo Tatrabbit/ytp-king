@@ -14,36 +14,66 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_VideoComposition_h
-#define __YTPKING_GST_GNL_VideoComposition_h
+#ifndef __YTPKING_GST_GNL_TapeComposition_h
+#define __YTPKING_GST_GNL_TapeComposition_h
 
 
-#include "Composition.h"
+#include <string>
+#include <list>
+
+
+typedef struct  _GstElement   GstElement;
+typedef struct  _GstPad       GstPad;
 
 
 	namespace ytpking
 	{
 	namespace gst
 	{
+
+class Pipeline;
+
 	namespace gnl
 	{
 
 class FileSource;
 
-class VideoTapeComposition : 
-	public TapeComposition
+
+class TapeComposition
 {
 public:
+	TapeComposition( void );
+	virtual ~TapeComposition( void );
+private:
+	explicit TapeComposition( TapeComposition & );
+	void operator=( TapeComposition & );
 
-	VideoTapeComposition( void );
+public:
+
+	virtual void
+		addTo( Pipeline &pipeline ) = 0;
+
+	FileSource
+		*addSource( void );
 
 	void
-		addTo( Pipeline &pipeline )
-		override;
+		deleteSource( const FileSource *source );
+
+	void
+		update( void );
+
+
+protected:
+
+	GstElement *m_selfElement;
+
+	static void
+		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
 
 private:
 
-	GstElement *m_sinkElement;
+	typedef std::list<FileSource *> FileSourceList;
+	FileSourceList m_sources;
 
 };
 

@@ -14,10 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_AudioComposition_h
-#define __YTPKING_GST_GNL_AudioComposition_h
+#include "AudioTapeComposition.h"
 
-#include "Composition.h"
+#include <gst/gst.h>
+
+#include "gst/Pipeline.h"
 
 
 	namespace ytpking
@@ -27,32 +28,21 @@
 	namespace gnl
 	{
 
-class FileSource;
 
-class AudioTapeComposition : 
-	public TapeComposition
+AudioTapeComposition::AudioTapeComposition( void ) :
+	m_sinkElement ( gst_element_factory_make( "autoaudiosink", NULL ) )
 {
-public:
+	g_signal_connect( m_selfElement, "pad-added", G_CALLBACK( onPadAdded ), m_sinkElement );
 
-	AudioTapeComposition( void );
+	g_object_set( m_selfElement, "caps", gst_caps_from_string( "audio/x-raw-int;audio/x-raw-float" ), NULL ); 
+}
 
-public:
 
-	void
-		addTo( Pipeline &pipeline )
-		override;
+void
+AudioTapeComposition::addTo( Pipeline &pipeline )
+{
+	gst_bin_add_many( GST_BIN( *pipeline ), m_selfElement, m_sinkElement, NULL );
+}
 
-private:
-
-	// TODO add some necessary basic processing like audioconvert and audioresample
-	//      so it doesn't sound like crud for no reason.
-	//GstElement *m_convertElement;
-	//GstElement *m_resampleElement;
-	//GstElement *m_queueElement;
-	GstElement *m_sinkElement;
-
-};
 
 	} } }
-
-#endif

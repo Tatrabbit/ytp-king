@@ -18,8 +18,8 @@
 
 #include "../Pipeline.h"
 
-#include "AudioComposition.h"
-#include "VideoComposition.h"
+#include "AudioTapeComposition.h"
+#include "VideoTapeComposition.h"
 
 	namespace ytpking
 	{

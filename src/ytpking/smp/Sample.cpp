@@ -16,7 +16,7 @@
 */
 #include "Sample.h"
 
-#include "gst/gnl/Composition.h"
+#include "gst/gnl/TapeComposition.h"
 #include "gst/gnl/FileSource.h"
 
 

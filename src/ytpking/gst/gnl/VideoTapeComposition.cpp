@@ -14,11 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "VideoComposition.h"
+#include "VideoTapeComposition.h"
 
 #include <gst/gst.h>
 
-#include "../Pipeline.h"
+#include "gst/Pipeline.h"
 
 
 	namespace ytpking

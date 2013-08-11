@@ -20,7 +20,7 @@
 #include <wx/spinctrl.h>
 #include <wx/textctrl.h>
 
-#include "gst/gnl/Composition.h"
+#include "gst/gnl/TapeComposition.h"
 #include "smp/SampleManager.h"
 
 #include "smp/Sample.h"

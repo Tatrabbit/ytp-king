@@ -22,7 +22,7 @@
 
 #include "rapidxml/rapidxml_print.hpp"
 
-#include "gst/gnl/Composition.h"
+#include "gst/gnl/TapeComposition.h"
 #include "gst/gnl/FileSource.h"
 
 #include "smp/SampleManager.h"
