@@ -19,7 +19,7 @@
 #include <wx/wx.h>
 
 #include "SampleDataObject.h"
-#include "SampleComponent.h"
+#include "SampleWindow.h"
 
 #include "smp/TapeManager.h"
 #include "smp/Tape.h"
@@ -140,7 +140,7 @@ TimelineWindow::useTape( smp::Tape &tape )
 void
 TimelineWindow::appendComponent( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
 {
-	SampleComponent *component = new SampleComponent( this, "sample name", &tape, &sampleInstance );
+	SampleWindow *component = new SampleWindow( this, "sample name", &tape, &sampleInstance );
 
 	m_components.push_back( component );
 

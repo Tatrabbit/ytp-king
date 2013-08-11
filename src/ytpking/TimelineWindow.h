@@ -35,7 +35,7 @@ namespace smp
 }
 
 
-class SampleComponent;
+class SampleWindow;
 
 
 class TimelineWindow :
@@ -56,7 +56,7 @@ public:
 
 private:
 
-	typedef std::list<SampleComponent *> ComponentList;
+	typedef std::list<SampleWindow *> ComponentList;
 
 	class TimelineDropTarget :
 		public wxDropTarget

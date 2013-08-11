@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "ytpking/SampleComponent.h"
+#include "ytpking/SampleWindow.h"
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -32,7 +32,7 @@
 	{
 
 
-SampleComponent::SampleComponent( wxWindow *parent, const char *name,
+SampleWindow::SampleWindow( wxWindow *parent, const char *name,
 		smp::Tape *tape, const smp::SampleInstance *sampleInstance ) :
 
 	wxWindow( parent, wxID_ANY ),
@@ -51,7 +51,7 @@ SampleComponent::SampleComponent( wxWindow *parent, const char *name,
 
 
 void
-SampleComponent::onButtonDelete( wxCommandEvent& event )
+SampleWindow::onButtonDelete( wxCommandEvent& event )
 {	
 	m_tape->deleteSample( *m_sampleInstance );
 
@@ -62,7 +62,7 @@ SampleComponent::onButtonDelete( wxCommandEvent& event )
 }
 
 
-BEGIN_EVENT_TABLE( SampleComponent, wxWindow )
+BEGIN_EVENT_TABLE( SampleWindow, wxWindow )
 	
 	EVT_BUTTON( TimelineWindow::ButtonDelete, onButtonDelete )
 

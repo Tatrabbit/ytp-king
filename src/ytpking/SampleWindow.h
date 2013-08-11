@@ -14,8 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SampleComponent_h
-#define __YTPKING_SampleComponent_h
+#ifndef __YTPKING_SampleWindow_h
+#define __YTPKING_SampleWindow_h
 
 #include <wx/window.h>
 #include <wx/dnd.h>
@@ -32,13 +32,12 @@ namespace smp
 }
 
 
-// TODO rename to SampleWindow
-class SampleComponent :
+class SampleWindow :
 	public wxWindow
 {
 public:
 
-	SampleComponent( wxWindow *parent, const char *name,
+	SampleWindow( wxWindow *parent, const char *name,
 			smp::Tape *tape, const smp::SampleInstance *sampleInstance );
 
 

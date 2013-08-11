@@ -31,7 +31,7 @@
     <ClCompile Include="src\ytpking\lnb\SourcesToolbar.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesListCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\TapesPage.cpp" />
-    <ClCompile Include="src\ytpking\SampleComponent.cpp" />
+    <ClCompile Include="src\ytpking\SampleWindow.cpp" />
     <ClCompile Include="src\ytpking\SampleDataObject.cpp" />
     <ClCompile Include="src\ytpking\SamplePropertiesWindow.cpp" />
     <ClCompile Include="src\ytpking\SamplesDataFile.cpp" />
@@ -70,7 +70,7 @@
     <ClInclude Include="src\ytpking\lnb\SourcesToolbar.h" />
     <ClInclude Include="src\ytpking\lnb\TapesListCtrl.h" />
     <ClInclude Include="src\ytpking\lnb\TapesPage.h" />
-    <ClInclude Include="src\ytpking\SampleComponent.h" />
+    <ClInclude Include="src\ytpking\SampleWindow.h" />
     <ClInclude Include="src\ytpking\SampleDataObject.h" />
     <ClInclude Include="src\ytpking\SamplePropertiesWindow.h" />
     <ClInclude Include="src\ytpking\SamplesDataFile.h" />

@@ -96,9 +96,6 @@
     <ClCompile Include="src\ytpking\gst\gnl\FileSource.cpp">
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\SampleComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\DataFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,6 +144,9 @@
     <ClCompile Include="src\ytpking\smp\SampleInstance.cpp">
       <Filter>Source Files\smp : Samples and Mixers</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\SampleWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ytpking\MainWindow.h">
@@ -193,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\gnl\FileSource.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\SampleComponent.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utf8.h">
       <Filter>Header Files\utf-8</Filter>
@@ -259,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\smp\SampleInstance.h">
       <Filter>Header Files\smp : Samples and Mixers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\SampleWindow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
