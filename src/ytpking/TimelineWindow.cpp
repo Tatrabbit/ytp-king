@@ -22,6 +22,7 @@
 #include "SampleComponent.h"
 
 #include "smp/TapeManager.h"
+#include "smp/Tape.h"
 #include "smp/Sample.h"
 
 #include "gst/gnl/PreviewTapes.h"
@@ -32,10 +33,9 @@
 
 
 TimelineWindow::
-TimelineDropTarget::TimelineDropTarget( wxWindow *parent, wxSizer *sizer ) :
+TimelineDropTarget::TimelineDropTarget( TimelineWindow *parent ) :
 	wxDropTarget( new SampleDataObject ),
-	m_parent( parent ),
-	m_sizer( sizer )
+	m_parent( parent )
 {
 }
 
@@ -44,19 +44,28 @@ wxDragResult
 TimelineWindow::
 TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 {
+	if ( smp::tapeManager.getSelectedTape() == NULL )
+		return wxDragNone;
+
 	using gst::gnl::FileSource;
 
-	if ( GetData() )
+	if ( GetDataObject() )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
+		smp::Tape::SampleInstance *sampleInstance;
+		sampleInstance = smp::tapeManager.getSelectedTape()->appendSample( *dataObject->m_sample );
 
-		FileSource *audioSource, *videoSource;
-		dataObject->m_sample->addToPreviewTapes( audioSource, videoSource );
+		m_parent->appendComponent( *smp::tapeManager.getSelectedTape(), *sampleInstance );
+		m_parent->GetSizer()->Layout();
+		/*
+		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), smp::tapeManager.getSelectedTape(), sampleInstance );
 
-		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), audioSource, videoSource );
+		m_parent->m_components.push_back( component );
 
-		m_sizer->Add( component, 0 );
-		m_sizer->Layout();
+		wxSizer *sizer = m_parent->GetSizer();
+		sizer->Add( component, 0 );
+		sizer->Layout();
+		*/
 
 		return defResult;
 	}
@@ -71,7 +80,7 @@ TimelineWindow::TimelineWindow( wxWindow *parent ) :
 	smp::TapeUser( smp::tapeManager )
 {
 	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, "Tape Mixer" );
-	SetDropTarget( new TimelineDropTarget( this, sizer ) );
+	SetDropTarget( new TimelineDropTarget( this ) );
 	SetSizer( sizer );
 }
 
@@ -97,7 +106,11 @@ TimelineWindow::onSelectTape( smp::Tape *selectedTape )
 	assert( sizer != NULL );
 
 	if ( selectedTape != NULL )
+	{
+		clearAllComponents();
+		useTape( *selectedTape );
 		sizer->Show( this );
+	}
 	else
 		sizer->Hide( this );
 
@@ -108,6 +121,39 @@ TimelineWindow::onSelectTape( smp::Tape *selectedTape )
 void
 TimelineWindow::onDeleteTape( smp::Tape &deletedTape )
 {
+}
+
+
+void
+TimelineWindow::clearAllComponents( void )
+{
+	for ( ComponentList::const_iterator it = m_components.begin(); it != m_components.end(); ++it )
+			(*it)->Destroy();
+
+	m_components.clear();
+}
+
+
+void
+TimelineWindow::useTape( smp::Tape &tape )
+{
+	const smp::Tape::InstanceSet *instances = &tape.getInstances();
+
+	for ( smp::Tape::InstanceSet::const_iterator it = instances->begin(); it != instances->end(); ++it )
+		appendComponent( tape, **it );
+
+	GetSizer()->Layout();
+}
+
+
+void
+TimelineWindow::appendComponent( smp::Tape &tape, const smp::Tape::SampleInstance &sampleInstance )
+{
+	SampleComponent *component = new SampleComponent( this, "sample name", &tape, &sampleInstance );
+
+	m_components.push_back( component );
+
+	GetSizer()->Add( component, 0 );
 }
 
 

@@ -21,27 +21,37 @@
 #include <smp/TapeUser.h>
 #include <wx/dnd.h>
 
+#include <list>
+
+#include "smp/Tape.h"
+
 
 	namespace ytpking
 	{
+
+
+class SampleComponent;
 
 
 class TimelineWindow :
 	public wxWindow,
 	public smp::TapeUser
 {
+friend class TimelinedropTarget;
 public:
 
 	TimelineWindow( wxWindow *parent );
 
 private:
 
+	typedef std::list<SampleComponent *> ComponentList;
+
 	class TimelineDropTarget :
 		public wxDropTarget
 	{
 	public:
 
-		TimelineDropTarget( wxWindow *parent, wxSizer *sizer );
+		TimelineDropTarget( TimelineWindow *parent );
 
 		/// TODO Only show drags will be accepted if they've originated from
 		//       certain controls fromthis program.
@@ -57,8 +67,7 @@ private:
 
 	private:
 
-		wxWindow *m_parent;
-		wxSizer  *m_sizer;
+		TimelineWindow *m_parent;
 
 	};
 
@@ -76,6 +85,18 @@ private:
 	void
 		onDeleteTape( smp::Tape &deletedTape )
 		override;
+
+	void
+		clearAllComponents( void );
+
+	void
+		useTape( smp::Tape &tape );
+
+	void
+		appendComponent( smp::Tape &tape, const smp::Tape::SampleInstance &sampleInstance );
+
+
+	ComponentList m_components;
 
 
 	wxDECLARE_EVENT_TABLE();

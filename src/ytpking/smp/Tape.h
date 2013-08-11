@@ -60,11 +60,8 @@ public:
 
 	public:
 
-		const Sample *m_sample;
-
 		inline bool operator==( const SampleInstance &other ) const { return m_id == other.m_id; }
 		inline bool operator< ( const SampleInstance &other ) const { return m_id <  other.m_id; }
-
 
 	private:
 		struct Source
@@ -75,6 +72,8 @@ public:
 			inline bool operator< ( const Source &other ) const { return fileSource <  other.fileSource; }
 		};
 		typedef std::set<Source> SourceSet;
+
+		const Sample *m_sample;
 
 		static unsigned int m_nInstances;
 		const unsigned int  m_id;
@@ -87,15 +86,17 @@ public:
 	};
 
 
-	typedef std::list<SampleInstance *>       InstanceSet;
+	typedef std::list<SampleInstance *>           InstanceSet;
 	typedef std::set<gst::gnl::TapeComposition *> CompositionSet;
-	
+
+	const InstanceSet
+		&getInstances( void ) const;
 
 	SampleInstance
-		&appendSample( const Sample &sample );
+		*appendSample( const Sample &sample );
 
 	void
-		deleteSample( SampleInstance &sampleInstance );
+		deleteSample( const SampleInstance &sampleInstance );
 
 	void
 		connectToComposition( gst::gnl::TapeComposition &composition );
@@ -103,7 +104,6 @@ public:
 private:
 
 	InstanceSet    m_samples;
-	CompositionSet m_compositions;
 
 };
 

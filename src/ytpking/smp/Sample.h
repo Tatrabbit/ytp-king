@@ -19,7 +19,6 @@
 
 #include <string>
 
-// TODO move into namespace gst::gnl
 
 	namespace ytpking
 	{
@@ -34,6 +33,7 @@ namespace gnl {
 	{
 
 
+// TODO store the name here
 class Sample
 {
 public:

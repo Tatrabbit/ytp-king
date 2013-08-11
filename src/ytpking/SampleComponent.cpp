@@ -20,6 +20,9 @@
 #include <wx/button.h>
 #include <wx/log.h>
 
+#include "smp/TapeManager.h"
+#include "smp/Tape.h"
+
 #include "gst/gnl/PreviewTapes.h"
 
 	namespace ytpking
@@ -27,13 +30,12 @@
 
 
 SampleComponent::SampleComponent( wxWindow *parent, const char *name,
-		const gst::gnl::FileSource *audio,
-		const gst::gnl::FileSource *video ) :
+		smp::Tape *tape, const smp::Tape::SampleInstance *sampleInstance ) :
 
 	wxWindow( parent, wxID_ANY ),
 	m_parent( parent ),
-	m_audioSource( audio ),
-	m_videoSource( video )
+	m_tape( tape ),
+	m_sampleInstance( sampleInstance )
 {
 	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, name );
 
@@ -47,13 +49,14 @@ SampleComponent::SampleComponent( wxWindow *parent, const char *name,
 
 void
 SampleComponent::onButtonDelete( wxCommandEvent& event )
-{
-	gst::gnl::previewTapes.deleteSources( m_audioSource, m_videoSource );
-	gst::gnl::previewTapes.update();
-	
+{	
+	m_tape->deleteSample( *m_sampleInstance );
+
+	if ( m_tape == smp::tapeManager.getSelectedTape() )
+		gst::gnl::previewTapes.update();
+
 	Destroy();
 }
-
 
 
 BEGIN_EVENT_TABLE( SampleComponent, wxWindow )

@@ -68,18 +68,25 @@ Tape::~Tape( void )
 }
 
 
+const Tape::InstanceSet
+&Tape::getInstances( void ) const
+{
+	return m_samples;
+}
+
+
 Tape::SampleInstance
-&Tape::appendSample( const Sample &sample )
+*Tape::appendSample( const Sample &sample )
 {
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
 
-	return *sampleInstance;
+	return sampleInstance;
 }
 
 
 void
-Tape::deleteSample( SampleInstance &sampleInstance )
+Tape::deleteSample( const SampleInstance &sampleInstance )
 {
 	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 		if ( **it == sampleInstance )
@@ -95,8 +102,6 @@ void
 Tape::connectToComposition( gst::gnl::TapeComposition &composition )
 {
 	// TODO disconnect exisitng tape, one tape per composition.
-
-	m_compositions.insert( &composition );
 
 	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 		(*it)->connectToComposition( composition );

@@ -20,14 +20,10 @@
 #include <wx/window.h>
 #include <wx/dnd.h>
 
+#include "smp/Tape.h"
 
 	namespace ytpking
 	{
-
-namespace gst {
-namespace gnl {
-	class FileSource;
-} }
 
 
 class SampleComponent :
@@ -36,10 +32,8 @@ class SampleComponent :
 public:
 
 	SampleComponent( wxWindow *parent, const char *name,
-			const gst::gnl::FileSource *audio,
-			const gst::gnl::FileSource *video );
+			smp::Tape *tape, const smp::Tape::SampleInstance *sampleInstance );
 
-private:
 
 	wxWindow *m_parent;
 
@@ -48,8 +42,8 @@ private:
 		ButtonDelete = 1
 	};
 
-	const gst::gnl::FileSource *m_audioSource;
-	const gst::gnl::FileSource *m_videoSource;
+	smp::Tape                 *m_tape;
+	const smp::Tape::SampleInstance *m_sampleInstance;
 
 	void
 		onButtonDelete( wxCommandEvent& event );

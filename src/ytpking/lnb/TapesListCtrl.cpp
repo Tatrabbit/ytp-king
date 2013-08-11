@@ -36,8 +36,10 @@ TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 void
 TapesListCtrl::onAddTape( smp::Tape &addedTape )
 {
-	InsertItem( 0, "Your Majesty" );
-	SetItemPtrData( 0, (wxUIntPtr)&addedTape );
+	int index = GetItemCount();
+
+	InsertItem( index, "Your Majesty" );
+	SetItemPtrData( index, (wxUIntPtr)&addedTape );
 }
 
 
@@ -50,7 +52,18 @@ TapesListCtrl::onSelectTape( smp::Tape *selectedTape )
 void
 TapesListCtrl::onDeleteTape( smp::Tape &deletedTape )
 {
-	DeleteItem( 0 );
+	using smp::Tape;
+
+	for ( int i = 0, count = GetItemCount(); i < count; ++i )
+	{
+		Tape *tape = (Tape *)GetItemData( i );
+
+		if ( tape == &deletedTape )
+		{
+			DeleteItem( i );
+			return;
+		}
+	}
 }
 
 
