@@ -84,6 +84,11 @@ Tape::SampleInstance
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
 
+	sampleInstance->connectToComposition( gst::gnl::previewTapes.getAudio() );
+	sampleInstance->connectToComposition( gst::gnl::previewTapes.getVideo() );
+
+	gst::gnl::previewTapes.update();
+
 	return sampleInstance;
 }
 
