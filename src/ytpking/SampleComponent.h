@@ -37,11 +37,6 @@ public:
 
 	wxWindow *m_parent;
 
-	enum EventId
-	{
-		ButtonDelete = 1
-	};
-
 	smp::Tape                 *m_tape;
 	const smp::Tape::SampleInstance *m_sampleInstance;
 

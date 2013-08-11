@@ -157,9 +157,26 @@ TimelineWindow::appendComponent( smp::Tape &tape, const smp::Tape::SampleInstanc
 }
 
 
+void
+TimelineWindow::onButtonDelete( wxCommandEvent& event )
+{
+	const wxWindow *component = (wxWindow *)event.GetEventObject();
+	component = component->GetParent();
+
+	for ( ComponentList::const_iterator it = m_components.begin(); it != m_components.end(); ++it )
+		if ( *it == component )
+		{
+			(*it)->Destroy();
+			m_components.erase( it );
+			break;
+		}
+}
+
+
 BEGIN_EVENT_TABLE( TimelineWindow, wxWindow )
 
 	EVT_UPDATE_UI( wxID_ANY, onUpdate )
+	EVT_BUTTON( EventId::ButtonDelete, onButtonDelete )
 
 END_EVENT_TABLE()
 

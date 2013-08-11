@@ -25,6 +25,9 @@
 
 #include "gst/gnl/PreviewTapes.h"
 
+#include "TimelineWindow.h"
+
+
 	namespace ytpking
 	{
 
@@ -39,7 +42,7 @@ SampleComponent::SampleComponent( wxWindow *parent, const char *name,
 {
 	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, name );
 
-	wxButton *button = new wxButton( this, EventId::ButtonDelete, "Delete" );
+	wxButton *button = new wxButton( this, TimelineWindow::ButtonDelete, "Delete" );
 
 	sizer->Add( button, 0 );
 
@@ -55,13 +58,13 @@ SampleComponent::onButtonDelete( wxCommandEvent& event )
 	if ( m_tape == smp::tapeManager.getSelectedTape() )
 		gst::gnl::previewTapes.update();
 
-	Destroy();
+	event.Skip();
 }
 
 
 BEGIN_EVENT_TABLE( SampleComponent, wxWindow )
 	
-	EVT_BUTTON( EventId::ButtonDelete, onButtonDelete )
+	EVT_BUTTON( TimelineWindow::ButtonDelete, onButtonDelete )
 
 END_EVENT_TABLE()
 

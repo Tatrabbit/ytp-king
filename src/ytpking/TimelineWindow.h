@@ -42,6 +42,13 @@ public:
 
 	TimelineWindow( wxWindow *parent );
 
+
+	enum EventId
+	{
+		ButtonDelete = 1
+	};
+
+
 private:
 
 	typedef std::list<SampleComponent *> ComponentList;
@@ -94,6 +101,10 @@ private:
 
 	void
 		appendComponent( smp::Tape &tape, const smp::Tape::SampleInstance &sampleInstance );
+
+
+	void
+		onButtonDelete( wxCommandEvent& event );
 
 
 	ComponentList m_components;
