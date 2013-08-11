@@ -19,7 +19,6 @@
 
 #include <wx/window.h>
 #include <wx/dnd.h>
-#include "gst/gnl/PreviewUser.h"
 
 
 	namespace ytpking
@@ -32,8 +31,7 @@ namespace gnl {
 
 
 class SampleComponent :
-	public wxWindow,
-	public gst::gnl::PreviewUser
+	public wxWindow
 {
 public:
 

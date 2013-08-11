@@ -18,7 +18,6 @@
 #define __YTPKING_SamplePropertiesSizer_h
 
 #include <wx/window.h>
-#include "gst/gnl/PreviewUser.h"
 
 
 class wxTextCtrl;
@@ -31,8 +30,7 @@ class wxTextCtrl;
 class SamplePropertiesWindow :
 	// TODO Once things are a bit more ready, change this to derive from wxGridBagSizer
 	//      and position everything nicely.
-	public wxWindow,
-	public gst::gnl::PreviewUser
+	public wxWindow
 {
 public:
 

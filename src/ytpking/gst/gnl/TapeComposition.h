@@ -53,11 +53,17 @@ public:
 	virtual void
 		addTo( Pipeline &pipeline ) = 0;
 
+	// TODO removeFrom( Pipeline )
+
+	/** Adds a new source to this TapeComposition.
+	\return The newly created source. */
 	FileSource
 		*addSource( void );
 
+	/** Deletes the Filesource from this composition.
+	\param source The source to delete. */
 	void
-		deleteSource( const FileSource *source );
+		deleteSource( const FileSource *source ); // TODO take a &FileSource
 
 	void
 		update( void );
@@ -76,6 +82,7 @@ private:
 	FileSourceList m_sources;
 
 };
+
 
 	} } }
 

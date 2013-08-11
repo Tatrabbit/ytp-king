@@ -24,6 +24,8 @@
 #include "smp/TapeManager.h"
 #include "smp/Sample.h"
 
+#include "gst/gnl/PreviewTapes.h"
+
 
 	namespace ytpking
 	{
@@ -48,9 +50,8 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
 
-		const FileSource *audioSource, *videoSource;
-		audioSource = dataObject->m_sample->addToComposition( m_audioPreviewComposition );
-		videoSource = dataObject->m_sample->addToComposition( m_videoPreviewComposition );
+		FileSource *audioSource, *videoSource;
+		dataObject->m_sample->addToPreviewTapes( audioSource, videoSource );
 
 		SampleComponent *component = new SampleComponent( m_parent, dataObject->GetSampleName(), audioSource, videoSource );
 

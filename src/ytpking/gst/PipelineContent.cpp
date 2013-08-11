@@ -14,43 +14,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "PreviewUser.h"
+#include "PipelineContent.h"
 
-#include "../Pipeline.h"
+#include <cstdlib>
 
-#include "AudioTapeComposition.h"
-#include "VideoTapeComposition.h"
 
 	namespace ytpking
 	{
 	namespace gst
 	{
-	namespace gnl
-	{
-
-TapeComposition *PreviewUser::m_audioPreviewComposition( NULL );
-TapeComposition *PreviewUser::m_videoPreviewComposition( NULL );
 
 
-void
-PreviewUser::initialize( Pipeline *pipeline )
+PipelineContent::PipelineContent( void ) :
+	m_connectedPipeline( NULL )
 {
-	m_audioPreviewComposition = new AudioTapeComposition;
-	m_videoPreviewComposition = new VideoTapeComposition;
-
-	m_audioPreviewComposition->addTo( *pipeline );
-	m_videoPreviewComposition->addTo( *pipeline );
 }
 
 
 void
-PreviewUser::cleanup( void )
+PipelineContent::connectToPipeline( Pipeline &pipeline )
 {
-	delete m_audioPreviewComposition;
-	delete m_videoPreviewComposition;
+	m_connectedPipeline = &pipeline;
 }
 
 
+void
+PipelineContent::disconnectFromPipeline( void )
+{
+	m_connectedPipeline = NULL;
+}
 
 
-	} } }
+	} }

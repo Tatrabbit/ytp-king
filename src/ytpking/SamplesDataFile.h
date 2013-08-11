@@ -18,7 +18,6 @@
 #define __YTPKING_SamplesDataFile_h
 
 #include "ytpking/DataFile.h"
-#include "gst/gnl/PreviewUser.h"
 
 #include "rapidxml/rapidxml.hpp"
 
@@ -34,8 +33,7 @@ namespace smp {
 
 
 class SamplesDataFile :
-	public DataFile,
-	public gst::gnl::PreviewUser
+	public DataFile
 {
 public:
 	explicit SamplesDataFile( smp::SampleManager *manager );

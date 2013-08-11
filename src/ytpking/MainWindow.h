@@ -18,7 +18,6 @@
 #define __YTPKING_MainWindow_h
 
 #include <wx/frame.h>
-#include "gst/gnl/PreviewUser.h"
 
 #include <string>
 #include <sstream>
@@ -51,8 +50,7 @@ namespace gst {
 
 
 class MainWindow :
-	public wxFrame,
-	public gst::gnl::PreviewUser
+	public wxFrame
 {
 public:
 

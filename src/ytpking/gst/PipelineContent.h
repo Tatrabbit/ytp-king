@@ -14,8 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_PreviewUser_h
-#define __YTPKING_GST_GNL_PreviewUser_h
+#ifndef __YTPKING_GST_PipelineContent_h
+#define __YTPKING_GST_PipelineContent_h
 
 
 	namespace ytpking
@@ -23,32 +23,35 @@
 	namespace gst
 	{
 
+
 class Pipeline;
 
-	namespace gnl
-	{
 
-
-class TapeComposition;
-
-// TODO refactor this to have both compositions as a global instead.
-class PreviewUser
+class PipelineContent
 {
+public:
+
+	PipelineContent( void );
+
+
+	virtual void
+		connectToPipeline( Pipeline &pipeline );
+
+	virtual void
+		disconnectFromPipeline( void );
+
 protected:
 
-	static void
-		initialize( Pipeline *pipeline );
+	Pipeline
+		*getConnectedPipeline( void ) const;
 
-	static void
-		cleanup( void );
+private:
 
-	static TapeComposition *m_audioPreviewComposition;
-	static TapeComposition *m_videoPreviewComposition;
-
+	Pipeline *m_connectedPipeline;
 
 };
 
-	} } }
+	} }
 
 
 #endif

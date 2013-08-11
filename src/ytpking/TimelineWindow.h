@@ -20,7 +20,6 @@
 #include <wx/window.h>
 #include <smp/TapeUser.h>
 #include <wx/dnd.h>
-#include "gst/gnl/PreviewUser.h"
 
 
 	namespace ytpking
@@ -38,8 +37,7 @@ public:
 private:
 
 	class TimelineDropTarget :
-		public wxDropTarget,
-		public gst::gnl::PreviewUser
+		public wxDropTarget
 	{
 	public:
 

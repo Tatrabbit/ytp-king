@@ -44,8 +44,8 @@ public:
 	unsigned int m_start;
 	unsigned int m_duration;
 
-	const gst::gnl::FileSource
-		*addToComposition( gst::gnl::TapeComposition *composition) const;
+	void
+		addToPreviewTapes( gst::gnl::FileSource *& audioSource, gst::gnl::FileSource *& videoSource ) const;
 
 };
 

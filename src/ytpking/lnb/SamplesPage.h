@@ -18,7 +18,6 @@
 #define __YTPKING_LNB_SamplesPage_h
 
 #include <wx/notebook.h>
-#include "gst/gnl/PreviewUser.h"
 
 
 	namespace ytpking
@@ -32,8 +31,7 @@ class SamplesTreeCtrl;
 
 
 class SamplesPage :
-	public wxNotebookPage,
-	public gst::gnl::PreviewUser
+	public wxNotebookPage
 {
 public:
 

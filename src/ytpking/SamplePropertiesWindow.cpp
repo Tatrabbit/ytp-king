@@ -20,9 +20,7 @@
 #include <wx/spinctrl.h>
 #include <wx/textctrl.h>
 
-#include "gst/gnl/TapeComposition.h"
 #include "smp/SampleManager.h"
-
 #include "smp/Sample.h"
 
 
@@ -120,10 +118,6 @@ SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 
 		sample->m_start    = start;
 		sample->m_duration = duration;
-
-		// TODO these aren't needed, I think
-		m_audioPreviewComposition->update();
-		m_videoPreviewComposition->update();
 	}
 }
 
@@ -133,13 +127,7 @@ SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 {
 	smp::Sample *sample = smp::sampleManager.getSelectedSample();
 	if ( sample != NULL )
-	{
 		sample->m_duration = event.GetInt() - sample->m_start;
-
-		// TODO these aren't needed, I think
-		m_audioPreviewComposition->update();
-		m_videoPreviewComposition->update();
-	}
 }
 
 

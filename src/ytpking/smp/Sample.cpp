@@ -16,7 +16,7 @@
 */
 #include "Sample.h"
 
-#include "gst/gnl/TapeComposition.h"
+#include "gst/gnl/PreviewTapes.h"
 #include "gst/gnl/FileSource.h"
 
 
@@ -34,20 +34,23 @@ Sample::Sample( const char *filename )  :
 }
 
 
-const gst::gnl::FileSource
-*Sample::addToComposition( gst::gnl::TapeComposition *composition ) const
+void
+Sample::addToPreviewTapes( gst::gnl::FileSource *& audioSource, gst::gnl::FileSource *& videoSource ) const
 {
-	using gst::gnl::FileSource;
+	using namespace gst::gnl;
 	
-	FileSource *source = composition->addSource();
+	previewTapes.addSource( audioSource, videoSource );
 
-	source->setFilename( m_filename.c_str() );
-	source->setStart( m_start );
-	source->setDuration( m_duration );
+	audioSource->setFilename( m_filename.c_str() );
+	audioSource->setStart( m_start );
+	audioSource->setDuration( m_duration );
 
-	composition->update();
+	videoSource->setFilename( m_filename.c_str() );
+	videoSource->setStart( m_start );
+	videoSource->setDuration( m_duration );
 
-	return source;
+
+	previewTapes.update();
 }
 
 

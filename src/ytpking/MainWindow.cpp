@@ -31,9 +31,10 @@
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
-#include "gst/gnl/AudioTapeComposition.h"
-#include "gst/gnl/VideoTapeComposition.h"
-#include "gst/gnl/FileSource.h"
+#include "gst/gnl/AudioTapeComposition.h" // TODO remove
+#include "gst/gnl/VideoTapeComposition.h" // TODO Remove
+#include "gst/gnl/PreviewTapes.h"
+#include "gst/gnl/FileSource.h" // TODO remove?
 
 #include "lnb/LibrarySizer.h"
 #include "lnb/SamplesTreeCtrl.h"
@@ -57,7 +58,8 @@ MainWindow::MainWindow( void ) :
 {
 	gst::timelinePipeline.initialize();
 
-	PreviewUser::initialize( &gst::timelinePipeline );
+	gst::gnl::previewTapes.initialize();
+	gst::gnl::previewTapes.connectToPipeline( gst::timelinePipeline );
 
 	// Get the folder save path
 	DataFile::initialize();
@@ -126,7 +128,6 @@ MainWindow::MainWindow( void ) :
 
 MainWindow::~MainWindow( void )
 {
-	PreviewUser::cleanup();
 	delete m_gstThread;
 }
 

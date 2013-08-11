@@ -20,7 +20,7 @@
 #include <wx/button.h>
 #include <wx/log.h>
 
-#include "gst/gnl/TapeComposition.h"
+#include "gst/gnl/PreviewTapes.h"
 
 	namespace ytpking
 	{
@@ -48,11 +48,8 @@ SampleComponent::SampleComponent( wxWindow *parent, const char *name,
 void
 SampleComponent::onButtonDelete( wxCommandEvent& event )
 {
-	m_audioPreviewComposition->deleteSource( m_audioSource );
-	m_videoPreviewComposition->deleteSource( m_videoSource );
-
-	m_audioPreviewComposition->update();
-	m_videoPreviewComposition->update();
+	gst::gnl::previewTapes.deleteSources( m_audioSource, m_videoSource );
+	gst::gnl::previewTapes.update();
 	
 	Destroy();
 }

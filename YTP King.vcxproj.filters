@@ -99,9 +99,6 @@
     <ClCompile Include="src\ytpking\SampleComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ytpking\gst\gnl\PreviewUser.cpp">
-      <Filter>Source Files\gst : GStreamer</Filter>
-    </ClCompile>
     <ClCompile Include="src\ytpking\DataFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -139,6 +136,12 @@
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
     <ClCompile Include="src\ytpking\gst\gnl\VideoTapeComposition.cpp">
+      <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\PipelineContent.cpp">
+      <Filter>Source Files\gst : GStreamer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ytpking\gst\gnl\PreviewTapes.cpp">
       <Filter>Source Files\gst : GStreamer\gnl : GNonLin</Filter>
     </ClCompile>
   </ItemGroup>
@@ -190,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\SampleComponent.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ytpking\gst\gnl\PreviewUser.h">
-      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
     </ClInclude>
     <ClInclude Include="src\utf8.h">
       <Filter>Header Files\utf-8</Filter>
@@ -247,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\gst\gnl\VideoTapeComposition.h">
       <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\gnl\PreviewTapes.h">
+      <Filter>Header Files\gst : GStreamer\gnl : GNonlin</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\PipelineContent.h">
+      <Filter>Header Files\gst : GStreamer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
