@@ -22,8 +22,10 @@
 
 #include "gst/Pipeline.h"
 
-#include "FileSource.h"
+#include "smp/TapeManager.h"
+#include "smp/Tape.h"
 
+#include "FileSource.h"
 
 	namespace ytpking
 	{
@@ -34,7 +36,8 @@
 
 
 TapeComposition::TapeComposition( void ) :
-	m_selfElement( gst_element_factory_make( "gnlcomposition", NULL ) )
+	m_selfElement( gst_element_factory_make( "gnlcomposition", NULL ) ),
+	m_connectedTape( NULL )
 {
 }
 
@@ -86,6 +89,24 @@ TapeComposition::deleteSource( const FileSource *source )
 			m_sources.erase( it );
 			break;
 		}
+}
+
+
+void
+TapeComposition::disconnectTape( smp::Tape *newTape )
+{
+	if ( m_connectedTape != NULL )
+		m_connectedTape->disconnectFromComposition();
+
+	m_connectedTape = newTape;
+
+	for ( FileSourceList::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
+	{
+		gst_bin_remove( GST_BIN( m_selfElement ), (*it)->m_element );
+		delete *it;
+	}
+
+	m_sources.clear();
 }
 
 

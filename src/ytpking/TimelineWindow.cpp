@@ -49,7 +49,7 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 
 	using gst::gnl::FileSource;
 
-	if ( GetDataObject() )
+	if ( GetData() )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
 		smp::Tape::SampleInstance *sampleInstance;

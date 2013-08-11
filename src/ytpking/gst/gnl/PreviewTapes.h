@@ -35,6 +35,7 @@ class FileSource;
 class TapeComposition;
 
 
+// TODO Rename to PreviewCompositions
 class PreviewTapes :
 	public PipelineContent
 {
@@ -67,6 +68,12 @@ public:
 
 	void
 		update( void );
+
+	inline TapeComposition
+		&getAudio( void ) const { return *m_audioComposition; }
+
+	inline TapeComposition
+		&getVideo( void ) const { return *m_videoComposition; }
 
 private:
 

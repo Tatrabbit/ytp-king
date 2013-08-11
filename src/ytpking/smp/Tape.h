@@ -99,11 +99,18 @@ public:
 		deleteSample( const SampleInstance &sampleInstance );
 
 	void
-		connectToComposition( gst::gnl::TapeComposition &composition );
+		connectToPreview( void );
+
+	void
+		disconnectFromComposition( void );
 
 private:
 
-	InstanceSet    m_samples;
+	InstanceSet m_samples;
+
+
+	void
+		connectToComposition( gst::gnl::TapeComposition &composition );
 
 };
 

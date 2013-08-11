@@ -75,6 +75,8 @@ TapeManager::selectTape( Tape *tape )
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 		(*it)->onSelectTape( tape );
+
+	m_selectedTape->connectToPreview();
 }
 
 

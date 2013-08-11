@@ -16,8 +16,8 @@
 */
 #include "Sample.h"
 
-#include "gst/gnl/PreviewTapes.h"
 #include "gst/gnl/FileSource.h"
+#include "gst/gnl/TapeComposition.h"
 
 
 	namespace ytpking
@@ -33,24 +33,18 @@ Sample::Sample( const char *filename )  :
 {
 }
 
-
-void
-Sample::addToPreviewTapes( gst::gnl::FileSource *& audioSource, gst::gnl::FileSource *& videoSource ) const
+gst::gnl::FileSource
+*Sample::addToComposition( gst::gnl::TapeComposition &composition ) const
 {
 	using namespace gst::gnl;
 	
-	previewTapes.addSource( audioSource, videoSource );
+	FileSource *fileSource = composition.addSource();
 
-	audioSource->setFilename( m_filename.c_str() );
-	audioSource->setStart( m_start );
-	audioSource->setDuration( m_duration );
+	fileSource->setFilename( m_filename.c_str() );
+	fileSource->setStart( m_start );
+	fileSource->setDuration( m_duration );
 
-	videoSource->setFilename( m_filename.c_str() );
-	videoSource->setStart( m_start );
-	videoSource->setDuration( m_duration );
-
-
-	previewTapes.update();
+	return fileSource;
 }
 
 

@@ -28,6 +28,11 @@ typedef struct  _GstPad       GstPad;
 
 	namespace ytpking
 	{
+
+namespace smp {
+	class Tape;
+}
+
 	namespace gst
 	{
 
@@ -50,6 +55,8 @@ private:
 
 public:
 
+	smp::Tape *m_connectedTape;
+
 	virtual void
 		addTo( Pipeline &pipeline ) = 0;
 
@@ -63,7 +70,10 @@ public:
 	/** Deletes the Filesource from this composition.
 	\param source The source to delete. */
 	void
-		deleteSource( const FileSource *source ); // TODO take a &FileSource
+		deleteSource( const FileSource *source );
+
+	void
+		disconnectTape( smp::Tape *newTape = NULL );
 
 	void
 		update( void );

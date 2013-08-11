@@ -17,6 +17,9 @@
 #include "Tape.h"
 
 #include "gst/gnl/TapeComposition.h"
+#include "gst/gnl/PreviewTapes.h"
+
+#include "smp/Sample.h"
 
 
 	namespace ytpking
@@ -49,7 +52,7 @@ Tape::
 SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
 {
 	Source source;
-	source.fileSource  = composition.addSource();
+	source.fileSource  = m_sample->addToComposition( composition );
 	source.composition = &composition;
 
 	m_sources.insert( source );
@@ -99,12 +102,30 @@ Tape::deleteSample( const SampleInstance &sampleInstance )
 
 
 void
+Tape::connectToPreview( void )
+{
+	connectToComposition( gst::gnl::previewTapes.getAudio() );
+	connectToComposition( gst::gnl::previewTapes.getVideo() );
+
+	gst::gnl::previewTapes.update();
+}
+
+
+void
 Tape::connectToComposition( gst::gnl::TapeComposition &composition )
 {
-	// TODO disconnect exisitng tape, one tape per composition.
+	composition.disconnectTape( this );
 
 	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 		(*it)->connectToComposition( composition );
+}
+
+
+void
+Tape::disconnectFromComposition( void )
+{
+	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+		(*it)->m_sources.clear();
 }
 
 
