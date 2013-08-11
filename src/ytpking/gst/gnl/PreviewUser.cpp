@@ -35,8 +35,8 @@ TapeComposition *PreviewUser::m_videoPreviewComposition( NULL );
 void
 PreviewUser::initialize( Pipeline *pipeline )
 {
-	m_audioPreviewComposition = new AudioComposition;
-	m_videoPreviewComposition = new VideoComposition;
+	m_audioPreviewComposition = new AudioTapeComposition;
+	m_videoPreviewComposition = new VideoTapeComposition;
 
 	m_audioPreviewComposition->addTo( *pipeline );
 	m_videoPreviewComposition->addTo( *pipeline );

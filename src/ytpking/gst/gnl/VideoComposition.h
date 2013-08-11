@@ -30,12 +30,12 @@
 
 class FileSource;
 
-class VideoComposition : 
+class VideoTapeComposition : 
 	public TapeComposition
 {
 public:
 
-	VideoComposition( void );
+	VideoTapeComposition( void );
 
 	void
 		addTo( Pipeline &pipeline )

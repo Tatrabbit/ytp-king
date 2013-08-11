@@ -29,7 +29,7 @@
 	{
 
 
-AudioComposition::AudioComposition( void ) :
+AudioTapeComposition::AudioTapeComposition( void ) :
 	m_sinkElement ( gst_element_factory_make( "autoaudiosink", NULL ) )
 {
 	g_signal_connect( m_selfElement, "pad-added", G_CALLBACK( onPadAdded ), m_sinkElement );
@@ -39,7 +39,7 @@ AudioComposition::AudioComposition( void ) :
 
 
 void
-AudioComposition::addTo( Pipeline &pipeline )
+AudioTapeComposition::addTo( Pipeline &pipeline )
 {
 	gst_bin_add_many( GST_BIN( *pipeline ), m_selfElement, m_sinkElement, NULL );
 }

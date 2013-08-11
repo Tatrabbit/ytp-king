@@ -29,7 +29,7 @@
 	{
 
 
-VideoComposition::VideoComposition( void ) :
+VideoTapeComposition::VideoTapeComposition( void ) :
 	m_sinkElement ( gst_element_factory_make( "autovideosink", NULL ) )
 {
 	g_signal_connect( m_selfElement, "pad-added", G_CALLBACK( onPadAdded ), m_sinkElement );
@@ -39,7 +39,7 @@ VideoComposition::VideoComposition( void ) :
 
 
 void
-VideoComposition::addTo( Pipeline &pipeline )
+VideoTapeComposition::addTo( Pipeline &pipeline )
 {
 	gst_bin_add_many( GST_BIN( *pipeline ), m_selfElement, m_sinkElement, NULL );
 }

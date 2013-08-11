@@ -29,12 +29,12 @@
 
 class FileSource;
 
-class AudioComposition : 
+class AudioTapeComposition : 
 	public TapeComposition
 {
 public:
 
-	AudioComposition( void );
+	AudioTapeComposition( void );
 
 public:
 
