@@ -33,19 +33,5 @@ Sample::Sample( const char *filename )  :
 {
 }
 
-gst::gnl::FileSource
-*Sample::addToComposition( gst::gnl::TapeComposition &composition ) const
-{
-	using namespace gst::gnl;
-	
-	FileSource *fileSource = composition.addSource();
-
-	fileSource->setFilename( m_filename.c_str() );
-	fileSource->setStart( m_start );
-	fileSource->setDuration( m_duration );
-
-	return fileSource;
-}
-
 
 	} }

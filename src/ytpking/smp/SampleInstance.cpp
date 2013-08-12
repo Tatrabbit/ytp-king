@@ -47,7 +47,7 @@ void
 SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
 {
 	Source source;
-	source.fileSource  = m_sample->addToComposition( composition );
+	source.fileSource = composition.addSource( *m_sample );
 	source.composition = &composition;
 
 	m_sources.insert( source );

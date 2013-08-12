@@ -44,9 +44,6 @@ public:
 	unsigned int m_start;
 	unsigned int m_duration;
 
-	gst::gnl::FileSource
-		*addToComposition( gst::gnl::TapeComposition &composition ) const;
-
 };
 
 

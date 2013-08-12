@@ -24,8 +24,10 @@
 
 #include "smp/TapeManager.h"
 #include "smp/Tape.h"
+#include "smp/Sample.h"
 
 #include "FileSource.h"
+
 
 	namespace ytpking
 	{
@@ -60,7 +62,7 @@ TapeComposition::onPadAdded( GstElement *src, GstPad *new_pad, GstElement *sink 
 
 
 FileSource
-*TapeComposition::addSource( void )
+*TapeComposition::addSource( const smp::Sample &sample )
 {
 	FileSource *source = new FileSource;
 
@@ -71,6 +73,10 @@ FileSource
 	}
 	else
 	{
+		source->setFilename( sample.m_filename.c_str() );
+		source->setStart( sample.m_start );
+		source->setDuration( sample.m_duration );
+
 		m_sources.push_back( source );
 		return source;
 	}

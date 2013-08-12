@@ -31,6 +31,7 @@ typedef struct  _GstPad       GstPad;
 
 namespace smp {
 	class Tape;
+	class Sample;
 }
 
 	namespace gst
@@ -65,7 +66,7 @@ public:
 	/** Adds a new source to this TapeComposition.
 	\return The newly created source. */
 	FileSource
-		*addSource( void );
+		*addSource( const smp::Sample &sample );
 
 	/** Deletes the Filesource from this composition.
 	\param source The source to delete. */
