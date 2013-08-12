@@ -45,11 +45,17 @@ public:
 
 	class NodeReference
 	{
-		friend class SamplesDataFile;
+	public:
+		NodeReference( void );
 
 	private:
+		friend class SamplesDataFile;
+
 		rapidxml::xml_node<> *m_speaker;
 		rapidxml::xml_node<> *m_speech;
+
+		char *m_startString;
+		char *m_endString;
 	};
 
 	NodeReference
@@ -60,16 +66,16 @@ public:
 	void
 		changeSampleSpeaker( const char *newSpeakerName, NodeReference &nodeReference );
 
-	// TODO I can optimize this by storing a hashmap of existing speaker nodes.
-	//      currently it's searched top to bottom each time.
-	rapidxml::xml_node<>
-		*getOrMakeSpeakerNode( const char *speakerName );
-
 	void
-		saveToFile( void ) const;
+		setSampleStart( int sampleStart, NodeReference &nodeReference );
+	void
+		setSampleEnd( int sampleStart, NodeReference &nodeReference );
 
 	void
 		loadAll( void );
+
+	void
+		saveToFile( void ) const;
 
 private:
 
@@ -79,6 +85,18 @@ private:
 	char *m_fileBuffer;
 	rapidxml::xml_document<> m_xmlDocument;
 	bool m_isLocked;
+
+	bool
+		setOrMakeNumberAttribute( int integerNumber, rapidxml::xml_node<> *node, char *&valueChar, const char *attributeName, size_t maxSize );
+
+
+	// TODO I can optimize this by storing a hashmap of existing speaker nodes.
+	//      currently it's searched top to bottom each time.
+	rapidxml::xml_node<>
+		*getOrMakeSpeakerNode( const char *speakerName );
+
+	int
+		getIntAttribute( const rapidxml::xml_node<> *node, const char *attributeName, int defaultValue ) const;
 
 };
 

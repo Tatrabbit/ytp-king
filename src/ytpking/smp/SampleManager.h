@@ -100,6 +100,10 @@ public:
 	void
 		changeSpeaker( Sample *sample, const char *speakerName );
 
+	void
+		saveSample( Sample *sample );
+
+
 
 private:
 

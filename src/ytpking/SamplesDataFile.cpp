@@ -17,6 +17,7 @@
 #include "ytpking/SamplesDataFile.h"
 
 #include <fstream>
+#include <sstream>
 
 #include <wx/log.h>
 
@@ -26,6 +27,11 @@
 #include "gst/gnl/FileSource.h"
 
 #include "smp/SampleManager.h"
+#include "smp/Sample.h"
+
+
+#define MAX_START_FRAME_SIZE 16u
+#define MAX_END_FRAME_SIZE   16u
 
 
 using namespace rapidxml;
@@ -35,6 +41,16 @@ using namespace rapidxml;
 	{
 
 		using smp::SampleManager;
+
+
+SamplesDataFile::
+NodeReference::NodeReference( void ) :
+	m_speaker( NULL ),
+	m_speech( NULL ),
+	m_startString( NULL ),
+	m_endString( NULL )
+{
+}
 
 
 SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
@@ -92,12 +108,8 @@ SamplesDataFile::addSample( const char *name, const char *speaker )
 	NodeReference nodeReference;
 
 	if ( m_isLocked )
-	{
-		nodeReference.m_speaker = NULL;
-		nodeReference.m_speech  = NULL;
-
 		return nodeReference;
-	}
+
 
 	nodeReference.m_speaker = getOrMakeSpeakerNode( speaker );
 	nodeReference.m_speech  = m_xmlDocument.allocate_node( node_element, "speech" );
@@ -137,10 +149,60 @@ SamplesDataFile::changeSampleSpeaker( const char *newSpeakerName, NodeReference 
 		rootNode->remove_node( nodeReference.m_speaker );
 	}
 
-	nodeReference.m_speaker = getOrMakeSpeakerNode( newSpeakerName );
-	nodeReference.m_speaker->append_node( nodeReference.m_speech );
+	xml_node<> *speakerNode = getOrMakeSpeakerNode( newSpeakerName );
+	if ( speakerNode )
+	{
+		nodeReference.m_speaker = speakerNode;
+		nodeReference.m_speaker->append_node( nodeReference.m_speech );
 
-	saveToFile();
+		saveToFile();
+	}
+}
+
+
+void
+SamplesDataFile::setSampleStart( int sampleStart, NodeReference &nodeReference )
+{
+	if ( !setOrMakeNumberAttribute( sampleStart, nodeReference.m_speech, nodeReference.m_startString, "start", MAX_START_FRAME_SIZE ) )
+		wxLogError( "Start time can't be more than %d digits long.", MAX_START_FRAME_SIZE - 1 );
+}
+
+
+void
+SamplesDataFile::setSampleEnd( int sampleEnd, NodeReference &nodeReference )
+{
+	if ( !setOrMakeNumberAttribute( sampleEnd, nodeReference.m_speech, nodeReference.m_endString,  "end", MAX_END_FRAME_SIZE ) )
+		wxLogError( "End time can't be more than %d digits long.", MAX_END_FRAME_SIZE - 1 );
+}
+
+
+
+bool
+SamplesDataFile::setOrMakeNumberAttribute( int integerNumber, xml_node<> *node, char *&valueChar, const char *attributeName, size_t maxSize )
+{
+	std::stringstream stream;
+	stream << integerNumber;
+
+	std::string value( stream.str() );
+
+	if ( value.length() >= MAX_START_FRAME_SIZE )
+		return false;
+
+	xml_attribute<> *attr = node->first_attribute( attributeName );
+	if ( valueChar == NULL )
+	{
+		valueChar = m_xmlDocument.allocate_string( value.c_str(), maxSize );
+
+		attr = m_xmlDocument.allocate_attribute( attributeName, valueChar );
+		node->append_attribute( attr );
+	}
+	else
+	{
+		strcpy( valueChar, value.c_str() );
+		attr->value( valueChar );
+	}
+
+	return true;
 }
 
 
@@ -226,7 +288,19 @@ SamplesDataFile::loadAll( void )
 			nodeReference.m_speaker = speakerNode;
 			nodeReference.m_speech  = speechNode;
 
-			m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, &nodeReference );
+			smp::Sample *sample = m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, &nodeReference );
+
+			int start, duration, end;
+			start = getIntAttribute( speechNode, "start", 0 );
+			end   = getIntAttribute( speechNode, "end", 5 );
+
+			duration = end - start;
+			if ( duration <= 0 ) // guard against invalid duration
+				duration = 5;
+
+			sample->m_start = start;
+			sample->m_duration = duration;
+
 			speechNode = speechNode->next_sibling( "speech" );
 		}
 
@@ -235,6 +309,23 @@ SamplesDataFile::loadAll( void )
 
 
 	m_isLocked = false;
+}
+
+
+int
+SamplesDataFile::getIntAttribute( const xml_node<> *node, const char *attributeName, int defaultValue ) const
+{
+	const xml_attribute<> *attr = node->first_attribute( attributeName );
+
+	if ( attr == NULL )
+		return defaultValue;
+
+	int i;
+
+	if ( sscanf( attr->value(), "%d", &i ) == 1 )
+		return i;
+	else
+		return defaultValue;
 }
 
 

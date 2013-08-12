@@ -61,7 +61,6 @@ SampleInstance
 }
 
 
-
 void
 Tape::deleteSample( const SampleInstance &sampleInstance )
 {

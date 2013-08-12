@@ -164,7 +164,7 @@ SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 {
 	// I don't know if I'm doing this the right way, perhaps not, but
 	// I couldn't find out how to assign to it->m_name, it was treated by MSVC as a const std::string.
-	SampleSet::iterator it = m_samples.find( sample );
+	SampleSet::const_iterator it = m_samples.find( sample );
 
 	if ( it != m_samples.end() )
 	{
@@ -178,6 +178,30 @@ SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
 		(*it)->onChangeSampleSpeaker( speakerName, sample );
+}
+
+
+void
+SampleManager::saveSample( Sample *sample )
+{
+	SampleSet::const_iterator it = m_samples.find( sample );
+
+	if ( it != m_samples.end() )
+	{
+		SamplePair newSamplePair( sample, it->m_nodeReference );
+
+		int start, duration, end;
+		start    = it->m_sample->m_start;
+		duration = it->m_sample->m_duration;
+		end      = start + duration;
+		
+		m_samplesDataFile->setSampleStart( start, newSamplePair.m_nodeReference );
+		m_samplesDataFile->setSampleEnd( end, newSamplePair.m_nodeReference );
+		m_samplesDataFile->saveToFile();
+
+		m_samples.erase( it );
+		m_samples.insert( newSamplePair );
+	}
 }
 
 
