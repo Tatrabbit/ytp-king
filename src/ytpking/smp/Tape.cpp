@@ -53,8 +53,7 @@ SampleInstance
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
 
-	sampleInstance->connectToComposition( gst::gnl::previewTapes.getAudio() );
-	sampleInstance->connectToComposition( gst::gnl::previewTapes.getVideo() );
+	sampleInstance->connectToPreview();
 
 	gst::gnl::previewTapes.update();
 
@@ -79,28 +78,12 @@ Tape::deleteSample( const SampleInstance &sampleInstance )
 void
 Tape::connectToPreview( void )
 {
-	connectToComposition( gst::gnl::previewTapes.getAudio() );
-	connectToComposition( gst::gnl::previewTapes.getVideo() );
+	gst::gnl::previewTapes.disconnectTape();
+
+	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+		(*it)->connectToPreview();
 
 	gst::gnl::previewTapes.update();
-}
-
-
-void
-Tape::connectToComposition( gst::gnl::TapeComposition &composition )
-{
-	composition.disconnectTape( this );
-
-	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
-		(*it)->connectToComposition( composition );
-}
-
-
-void
-Tape::disconnectFromComposition( void )
-{
-	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
-		(*it)->m_sources.clear();
 }
 
 

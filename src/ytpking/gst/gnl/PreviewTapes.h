@@ -22,6 +22,11 @@
 
 	namespace ytpking
 	{
+
+namespace smp {
+	class Tape;
+}
+
 	namespace gst
 	{
 
@@ -70,6 +75,10 @@ public:
 
 	inline TapeComposition
 		&getVideo( void ) const { return *m_videoComposition; }
+
+
+	void
+		disconnectTape( void ) const;
 
 private:
 

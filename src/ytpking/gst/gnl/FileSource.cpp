@@ -31,9 +31,6 @@ class Composition;
 
 
 FileSource::FileSource( void ) :
-	m_start( 0i64 ),
-	m_duration( 1i64 ),
-	m_speed( 1.0f ),
 	m_element( gst_element_factory_make( "gnlfilesource", NULL ) )
 {
 }
@@ -52,23 +49,16 @@ FileSource::setFilename( const char *filename )
 
 
 void
-FileSource::setStart( __int64 startTime )
+FileSource::setStart( gint64 startTime )
 {
-	g_object_set( m_element, "media-start", (m_start = startTime) * GST_SECOND, NULL );
+	g_object_set( m_element, "media-start", startTime * GST_SECOND, NULL );
 }
 
 
 void
-FileSource::setDuration( __int64 duration )
+FileSource::setDuration( gint64 duration )
 {
 	g_object_set( m_element, "duration", (m_duration = duration) * GST_SECOND, NULL );
-}
-
-
-void
-FileSource::setSpeed( float speed )
-{
-	m_speed = speed;
 }
 
 

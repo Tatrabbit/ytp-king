@@ -67,8 +67,8 @@ public:
 
 	/** Adds a new source to this TapeComposition.
 	\return The newly created source. */
-	FileSource
-		*addSampleInstance( const smp::SampleInstance &sampleInstance );
+	void
+		addSampleInstance( const smp::SampleInstance &sampleInstance );
 
 	// TODO rename to removeSample
 
@@ -78,7 +78,7 @@ public:
 		removeSampleInstance( const smp::SampleInstance &sampleInstance );
 
 	void
-		disconnectTape( smp::Tape *newTape = NULL );
+		disconnectTape( void );
 
 	void
 		update( void );

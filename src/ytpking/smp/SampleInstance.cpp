@@ -16,6 +16,7 @@
 */
 #include "SampleInstance.h"
 
+#include "gst/gnl/PreviewTapes.h"
 #include "gst/gnl/TapeComposition.h"
 #include "smp/Sample.h"
 
@@ -31,15 +32,16 @@ unsigned int SampleInstance::m_nInstances( 0u );
 
 SampleInstance::SampleInstance( const Sample *sample ) :
 	m_sample( sample ),
-	m_id( m_nInstances++ )
+	m_id( m_nInstances++ ),
+	m_isConnected( false )
 {
 }
 
 
 SampleInstance::~SampleInstance( void )
 {
-	for ( SourceSet::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
-		it->composition->removeSampleInstance( *this );
+	gst::gnl::previewTapes.getAudio().removeSampleInstance( *this );
+	gst::gnl::previewTapes.getVideo().removeSampleInstance( *this );
 }
 
 
@@ -51,13 +53,10 @@ const Sample
 
 
 void
-SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
+SampleInstance::connectToPreview( void  )
 {
-	Source source;
-	source.fileSource = composition.addSampleInstance( *this );
-	source.composition = &composition;
-
-	m_sources.insert( source );
+	gst::gnl::previewTapes.getAudio().addSampleInstance( *this );
+	gst::gnl::previewTapes.getVideo().addSampleInstance( *this );
 }
 
 

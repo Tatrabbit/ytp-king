@@ -94,4 +94,12 @@ PreviewTapes::update( void )
 }
 
 
+void
+PreviewTapes::disconnectTape( void ) const
+{
+	m_audioComposition->disconnectTape();
+	m_videoComposition->disconnectTape();
+}
+
+
 	} } }

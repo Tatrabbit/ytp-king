@@ -62,14 +62,14 @@ TapeComposition::onPadAdded( GstElement *src, GstPad *new_pad, GstElement *sink 
 }
 
 
-FileSource
-*TapeComposition::addSampleInstance( const smp::SampleInstance &sampleInstance )
+void
+TapeComposition::addSampleInstance( const smp::SampleInstance &sampleInstance )
 {
 	// don't create anther if it exists.
 	SampleMap::const_iterator existing = m_samples.find( &sampleInstance );
 
 	if ( existing != m_samples.end() )
-		return NULL;
+		return;
 
 	// Create a Filesource
 	FileSource *source = new FileSource;
@@ -78,7 +78,6 @@ FileSource
 	{
 		// If there was an error, clean up safely
 		delete source;
-		return NULL;
 	}
 	else
 	{
@@ -91,7 +90,6 @@ FileSource
 
 		// Keep a pointer
 		m_samples[&sampleInstance] = source;
-		return source;
 	}
 }
 
@@ -113,13 +111,8 @@ TapeComposition::removeSampleInstance( const smp::SampleInstance &sampleInstance
 
 
 void
-TapeComposition::disconnectTape( smp::Tape *newTape )
+TapeComposition::disconnectTape( void )
 {
-	if ( m_connectedTape != NULL )
-		m_connectedTape->disconnectFromComposition();
-
-	m_connectedTape = newTape;
-
 	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 	{
 		gst_bin_remove( GST_BIN( m_selfElement ), it->second->m_element );
@@ -138,10 +131,10 @@ TapeComposition::update( void )
 	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 	{
 		FileSource *source = it->second;
-		// TODO use functions in FileSource instead
+
 		g_object_set( source->m_element, "start", start * GST_SECOND, NULL );
 
-		// TODO account for (*it)->m_speed
+		// TODO account for speed
 		g_object_set( source->m_element, "media-duration", source->m_duration * GST_SECOND, NULL );
 
 		start += source->m_duration;

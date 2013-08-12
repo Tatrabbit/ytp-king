@@ -17,8 +17,7 @@
 #ifndef __YTPKING_GST_GNL_FileSource_h
 #define __YTPKING_GST_GNL_FileSource_h
 
-
-typedef struct _GstElement GstElement;
+#include <gst/gst.h>
 
 
 	namespace ytpking
@@ -43,25 +42,18 @@ friend class TapeComposition;
 	explicit FileSource( FileSource & );
 	void operator=( FileSource & );
 
-public:
-
 	void
 		setFilename( const char *filename );
 
 	void
-		setStart( __int64 startTime );
+		setStart( gint64 startTime );
 
 	void
-		setDuration( __int64 duration );
+		setDuration( gint64 duration );
 
-	void
-		setSpeed( float speed );
 
-private:
+	gint64 m_duration;
 
-	__int64 m_start;
-	__int64 m_duration;
-	float   m_speed;
 
 	GstElement *m_element;
 

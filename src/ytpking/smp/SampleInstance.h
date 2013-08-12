@@ -58,24 +58,15 @@ public:
 		&getSample( void ) const;
 
 private:
-	struct Source
-	{
-		gst::gnl::FileSource      *fileSource;
-		gst::gnl::TapeComposition *composition;
-
-		inline bool operator< ( const Source &other ) const { return fileSource <  other.fileSource; }
-	};
-	typedef std::set<Source> SourceSet;
-
 	const Sample *m_sample;
 
 	static unsigned int m_nInstances;
 	const unsigned int  m_id;
 
-	SourceSet m_sources;
+	bool m_isConnected;
 
 	void
-		connectToComposition( gst::gnl::TapeComposition &composition );
+		connectToPreview( void );
 
 };
 
