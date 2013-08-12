@@ -84,31 +84,6 @@ PreviewTapes::disconnectFromPipeline( void )
 
 
 void
-PreviewTapes::addSource( FileSource *&audioSource, FileSource *&videoSource )
-{
-	assert( m_audioComposition != NULL );
-	assert( m_videoComposition != NULL );
-
-	audioSource = m_audioComposition->addSource();
-	videoSource = m_videoComposition->addSource();
-}
-
-
-void
-PreviewTapes::deleteSources( const FileSource *audioSource, const FileSource *videoSource )
-{
-	assert( m_audioComposition != NULL );
-	assert( m_videoComposition != NULL );
-
-	if ( audioSource != NULL )
-		m_audioComposition->deleteSource( audioSource );
-
-	if ( videoSource != NULL )
-		m_videoComposition->deleteSource( videoSource );
-}
-
-
-void
 PreviewTapes::update( void )
 {
 	assert( m_audioComposition != NULL );

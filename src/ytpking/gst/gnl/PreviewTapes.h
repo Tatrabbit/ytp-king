@@ -61,14 +61,10 @@ public:
 
 
 	void
-		addSource( FileSource *&audioSource, FileSource *&videoSource );
-
-	void
-		deleteSources( const FileSource *audioSource, const FileSource *videoSource );
-
-	void
 		update( void );
 
+
+	// TODO don't use these, it defeats the purpose. Refactor.
 	inline TapeComposition
 		&getAudio( void ) const { return *m_audioComposition; }
 
