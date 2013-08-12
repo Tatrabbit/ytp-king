@@ -19,7 +19,7 @@
 
 
 #include <string>
-#include <map>
+#include <list>
 
 
 typedef struct  _GstElement   GstElement;
@@ -63,8 +63,6 @@ public:
 
 	// TODO removeFrom( Pipeline )
 
-	// TODO rename to addSample
-
 	/** Adds a new source to this TapeComposition.
 	\return The newly created source. */
 	void
@@ -92,9 +90,10 @@ protected:
 		onPadAdded (GstElement *src, GstPad *new_pad, GstElement *sink);
 
 private:
+	typedef std::pair<const smp::SampleInstance *, FileSource *> SampleInstancePair;
+	typedef std::list<SampleInstancePair> SampleInstanceList;
 
-	typedef std::map<const smp::SampleInstance *, FileSource *> SampleMap;
-	SampleMap m_samples;
+	SampleInstanceList m_samples;
 
 };
 

@@ -16,6 +16,7 @@
 */
 #include "TapeComposition.h"
 
+#include <cassert>
 #include <sstream>
 
 #include <gst/gst.h>
@@ -47,7 +48,7 @@ TapeComposition::TapeComposition( void ) :
 
 TapeComposition::~TapeComposition( void )
 {
-	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+	for ( SampleInstanceList::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 		delete it->second;
 }
 
@@ -66,10 +67,11 @@ void
 TapeComposition::addSampleInstance( const smp::SampleInstance &sampleInstance )
 {
 	// don't create anther if it exists.
-	SampleMap::const_iterator existing = m_samples.find( &sampleInstance );
+#ifndef NDEBUG
+	for ( SampleInstanceList::const_iterator it = m_samples.begin(); it != m_samples.end(); ++ it )
+		assert( &sampleInstance != it->first );
+#endif
 
-	if ( existing != m_samples.end() )
-		return;
 
 	// Create a Filesource
 	FileSource *source = new FileSource;
@@ -89,7 +91,7 @@ TapeComposition::addSampleInstance( const smp::SampleInstance &sampleInstance )
 		source->setDuration( sample->m_duration );
 
 		// Keep a pointer
-		m_samples[&sampleInstance] = source;
+		m_samples.push_back( SampleInstancePair( &sampleInstance, source ) );
 	}
 }
 
@@ -97,15 +99,18 @@ TapeComposition::addSampleInstance( const smp::SampleInstance &sampleInstance )
 void
 TapeComposition::removeSampleInstance( const smp::SampleInstance &sampleInstance )
 {
-	SampleMap::const_iterator it = m_samples.find( &sampleInstance );
-
-	if ( it != m_samples.end() )
+	for ( SampleInstanceList::const_iterator it = m_samples.begin(); it != m_samples.end(); ++ it )
 	{
-		// TODO remove in destructor
-		gst_bin_remove( GST_BIN( m_selfElement ), it->second->m_element );
+		if ( &sampleInstance == it->first )
+		{
+			// TODO remove in destructor
+			gst_bin_remove( GST_BIN( m_selfElement ), it->second->m_element );
 
-		delete it->second;
-		m_samples.erase( it );
+			delete it->second;
+			m_samples.erase( it );
+
+			break;
+		}
 	}
 }
 
@@ -113,7 +118,7 @@ TapeComposition::removeSampleInstance( const smp::SampleInstance &sampleInstance
 void
 TapeComposition::disconnectTape( void )
 {
-	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+	for ( SampleInstanceList::const_iterator it = m_samples.begin(); it != m_samples.end(); ++ it )
 	{
 		gst_bin_remove( GST_BIN( m_selfElement ), it->second->m_element );
 		delete it->second;
@@ -126,9 +131,9 @@ TapeComposition::disconnectTape( void )
 void
 TapeComposition::update( void )
 {
-	__int64 start = 0i64;
+	gint64 start = G_GINT64_CONSTANT( 0 );
 
-	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+	for ( SampleInstanceList::const_iterator it = m_samples.begin(); it != m_samples.end(); ++ it )
 	{
 		FileSource *source = it->second;
 

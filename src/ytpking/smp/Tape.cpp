@@ -53,6 +53,7 @@ SampleInstance
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
 
+	// TODO only if connected currently
 	sampleInstance->connectToPreview();
 
 	gst::gnl::previewTapes.update();
