@@ -19,7 +19,7 @@
 
 
 #include <string>
-#include <list>
+#include <map>
 
 
 typedef struct  _GstElement   GstElement;
@@ -31,7 +31,7 @@ typedef struct  _GstPad       GstPad;
 
 namespace smp {
 	class Tape;
-	class Sample;
+	class SampleInstance;
 }
 
 	namespace gst
@@ -63,15 +63,19 @@ public:
 
 	// TODO removeFrom( Pipeline )
 
+	// TODO rename to addSample
+
 	/** Adds a new source to this TapeComposition.
 	\return The newly created source. */
 	FileSource
-		*addSource( const smp::Sample &sample );
+		*addSampleInstance( const smp::SampleInstance &sampleInstance );
+
+	// TODO rename to removeSample
 
 	/** Deletes the Filesource from this composition.
 	\param source The source to delete. */
 	void
-		deleteSource( const FileSource *source );
+		removeSampleInstance( const smp::SampleInstance &sampleInstance );
 
 	void
 		disconnectTape( smp::Tape *newTape = NULL );
@@ -89,8 +93,8 @@ protected:
 
 private:
 
-	typedef std::list<FileSource *> FileSourceList;
-	FileSourceList m_sources;
+	typedef std::map<const smp::SampleInstance *, FileSource *> SampleMap;
+	SampleMap m_samples;
 
 };
 

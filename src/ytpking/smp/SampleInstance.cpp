@@ -39,7 +39,14 @@ SampleInstance::SampleInstance( const Sample *sample ) :
 SampleInstance::~SampleInstance( void )
 {
 	for ( SourceSet::const_iterator it = m_sources.begin(); it != m_sources.end(); ++it )
-		it->composition->deleteSource( it->fileSource );
+		it->composition->removeSampleInstance( *this );
+}
+
+
+const Sample
+&SampleInstance::getSample( void ) const
+{
+	return *m_sample;
 }
 
 
@@ -47,7 +54,7 @@ void
 SampleInstance::connectToComposition( gst::gnl::TapeComposition &composition )
 {
 	Source source;
-	source.fileSource = composition.addSource( *m_sample );
+	source.fileSource = composition.addSampleInstance( *this );
 	source.composition = &composition;
 
 	m_sources.insert( source );

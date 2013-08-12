@@ -54,6 +54,9 @@ public:
 	inline bool operator==( const SampleInstance &other ) const { return m_id == other.m_id; }
 	inline bool operator< ( const SampleInstance &other ) const { return m_id <  other.m_id; }
 
+	const Sample
+		&getSample( void ) const;
+
 private:
 	struct Source
 	{
