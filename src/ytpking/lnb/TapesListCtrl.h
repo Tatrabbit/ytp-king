@@ -36,7 +36,7 @@ public:
 	TapesListCtrl( wxWindow *parent );
 
 	void
-		onAddTape( smp::Tape &addedTape )
+		onAddTape( smp::Tape &addedTape, const char *name )
 		override;
 	void
 		onSelectTape( smp::Tape *selectedTape )
@@ -47,7 +47,8 @@ public:
 
 	void
 		onSelectItem( wxListEvent& event );
-
+	void
+		onEditLabel( wxListEvent& event );
 
 	wxDECLARE_EVENT_TABLE();
 

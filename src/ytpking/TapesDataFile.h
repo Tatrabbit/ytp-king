@@ -25,6 +25,7 @@
 
 namespace smp {
 	class TapeManager;
+	class Tape;
 }
 
 
@@ -57,6 +58,9 @@ public:
 
 	void
 		deleteElement( int elementIndex, NodeReference &nodeReference );
+
+	void
+		renameTape( const char *newName, NodeReference &nodeReference );
 
 	void
 		loadAll( void )

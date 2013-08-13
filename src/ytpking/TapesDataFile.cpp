@@ -92,6 +92,7 @@ TapesDataFile::deleteTape( NodeReference &nodeReference )
 }
 
 
+
 int
 TapesDataFile::addSample( const char *guid, NodeReference &nodeReference )
 {
@@ -126,6 +127,23 @@ TapesDataFile::deleteElement( int elementIndex, NodeReference &nodeReference )
 
 
 void
+TapesDataFile::renameTape( const char *newName, NodeReference &nodeReference )
+{
+	xml_attribute<> *nameAttribute = nodeReference.m_tape->first_attribute( "name" );
+
+	if ( nameAttribute == NULL )
+	{
+		nameAttribute = m_xmlDocument.allocate_attribute( "name" );
+		nodeReference.m_tape->append_attribute( nameAttribute );
+	}
+	newName = m_xmlDocument.allocate_string( newName );
+	nameAttribute->value( newName );
+
+	saveToFile();
+}
+
+
+void
 TapesDataFile::loadAll( void )
 {
 	xml_node<> *rootNode = m_xmlDocument.first_node();
@@ -138,7 +156,11 @@ TapesDataFile::loadAll( void )
 		NodeReference nodeReference;
 		nodeReference.m_tape = tapeNode;
 
-		smp::Tape *tape = m_manager->addTape( &nodeReference );
+		std::string name;
+		if ( !getStringAttribute( tapeNode, "name", name ) )
+			name = "(No Name)";
+
+		smp::Tape *tape = m_manager->addTape( name.c_str(), &nodeReference );
 
 		xml_node<> *contentNode = tapeNode->first_node();
 

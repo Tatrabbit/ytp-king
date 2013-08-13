@@ -73,11 +73,10 @@ public:
 	/** Adds a new Tape.
 	    TapeUser::onAdd will be called.
 	\param filename The filename of the sample.
-	\param name     The name of the sample, such as "What's for dinner"
-	\param speakerName The name of the speaker, e.g. The King
-	\param nodeReference If NULL, the speaker will be created in the save DataFile. */
+	\param name     The name of the tape, such as "What's for dinner"
+	\param nodeReference If NULL, the tape will be created in the save DataFile. */
 	Tape
-		*addTape( TapesDataFile::NodeReference *existingNodeReference = NULL );
+		*addTape( const char *name, TapesDataFile::NodeReference *existingNodeReference = NULL );
 
 	/** Deletes a Tape, freeing the memeory.
 	    Once freed, all remaining pointers will dangle, be sure that any

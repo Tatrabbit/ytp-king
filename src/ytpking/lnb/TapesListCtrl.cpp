@@ -15,7 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TapesListCtrl.h"
+
 #include "smp/TapeManager.h"
+#include "smp/Tape.h"
+
 
 	namespace ytpking
 	{
@@ -26,19 +29,20 @@
 TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 	// TODO make this be wxLC_VIRTUAL
 	wxListCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
-	            wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES ),
+		wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES|wxLC_EDIT_LABELS ),
 	smp::TapeUser( smp::tapeManager )
 {
 	AppendColumn( "What's Said" );
+	AppendColumn( "Speakers" );
 }
 
 
 void
-TapesListCtrl::onAddTape( smp::Tape &addedTape )
+TapesListCtrl::onAddTape( smp::Tape &addedTape, const char *name )
 {
 	int index = GetItemCount();
 
-	InsertItem( index, "Your Majesty" );
+	InsertItem( index, name );
 	SetItemPtrData( index, (wxUIntPtr)&addedTape );
 }
 
@@ -75,9 +79,20 @@ TapesListCtrl::onSelectItem( wxListEvent& event )
 }
 
 
+void
+TapesListCtrl::onEditLabel( wxListEvent& event )
+{
+	if ( event.IsEditCancelled() )
+		return;
+	smp::Tape *tape = (smp::Tape *)GetItemData( event.GetIndex() );
+	tape->rename( event.GetLabel() );
+}
+
+
 wxBEGIN_EVENT_TABLE( TapesListCtrl, wxListCtrl )
 
 	EVT_LIST_ITEM_SELECTED( wxID_ANY, onSelectItem )
+	EVT_LIST_END_LABEL_EDIT( wxID_ANY, onEditLabel )
 
 wxEND_EVENT_TABLE()
 

@@ -63,7 +63,7 @@ TapesPage::TapesPage( wxWindow *parent ) :
 void
 TapesPage::onButtonAdd( wxCommandEvent& event )
 {
-	smp::tapeManager.addTape();
+	smp::tapeManager.addTape( "New Tape" );
 }
 
 

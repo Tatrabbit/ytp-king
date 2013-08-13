@@ -84,7 +84,7 @@ TimelineWindow::onUpdate( wxUpdateUIEvent& event )
 
 
 void
-TimelineWindow::onAddTape( smp::Tape &addedTape )
+TimelineWindow::onAddTape( smp::Tape &addedTape, const char *name )
 {
 }
 

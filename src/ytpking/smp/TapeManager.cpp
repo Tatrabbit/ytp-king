@@ -86,19 +86,19 @@ TapeManager::selectTape( Tape *tape )
 
 
 Tape
-*TapeManager::addTape( TapesDataFile::NodeReference *existingNodeReference )
+*TapeManager::addTape( const char *name, TapesDataFile::NodeReference *existingNodeReference )
 {
 	TapesDataFile::NodeReference nodeReference;
 	
 	if ( existingNodeReference != NULL )
 		nodeReference = *existingNodeReference;
 	else
-		nodeReference = ytpking::tapesDataFile->addTape( "Your Omnipotence" );
+		nodeReference = ytpking::tapesDataFile->addTape( name );
 
 	Tape *tape = new Tape( nodeReference );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
-		(*it)->onAddTape( *tape );
+		(*it)->onAddTape( *tape, name );
 
 
 	return tape;

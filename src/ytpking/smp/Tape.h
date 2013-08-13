@@ -64,6 +64,9 @@ public:
 	void
 		connectToPreview( void );
 
+	void
+		rename( const char *newName );
+
 	inline TapesDataFile::NodeReference
 		&getNodeReference( void )
 	{ return m_nodeReference; }

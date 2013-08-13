@@ -102,4 +102,11 @@ Tape::connectToPreview( void )
 }
 
 
+void
+Tape::rename( const char *newName )
+{
+	ytpking::tapesDataFile->renameTape( newName, m_nodeReference );
+}
+
+
 	} }
