@@ -156,18 +156,18 @@ DataFile::setOrMakeNumberAttribute( int integerNumber, xml_node<> *node, char *&
 		return false;
 
 	xml_attribute<> *attr = node->first_attribute( attributeName );
-	if ( valueChar == NULL )
-	{
-		valueChar = m_xmlDocument.allocate_string( value.c_str(), maxSize );
 
+	if ( attr == NULL )
+	{
 		attr = m_xmlDocument.allocate_attribute( attributeName, valueChar );
 		node->append_attribute( attr );
 	}
-	else
-	{
-		strcpy( valueChar, value.c_str() );
-		attr->value( valueChar );
-	}
+
+	if ( valueChar == NULL )
+		valueChar = m_xmlDocument.allocate_string( value.c_str(), maxSize );
+
+	strcpy( valueChar, value.c_str() );
+	attr->value( valueChar );
 
 	return true;
 }
