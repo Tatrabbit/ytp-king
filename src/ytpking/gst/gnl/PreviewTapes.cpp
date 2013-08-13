@@ -19,6 +19,8 @@
 
 #include <cassert>
 
+#include "gst/Pipeline.h"
+
 #include "AudioTapeComposition.h"
 #include "VideoTapeComposition.h"
 
@@ -33,7 +35,8 @@
 
 PreviewTapes::PreviewTapes( void ) :
 	m_audioComposition( NULL ),
-	m_videoComposition( NULL )
+	m_videoComposition( NULL ),
+	m_pipeline( NULL )
 {
 }
 
@@ -43,6 +46,9 @@ PreviewTapes::~PreviewTapes( void )
 	if ( m_audioComposition != NULL )
 	{
 		assert( m_videoComposition != NULL );
+		
+		if ( m_pipeline != NULL )
+			m_pipeline->stop();
 
 		delete m_audioComposition;
 		delete m_videoComposition;
@@ -67,6 +73,9 @@ PreviewTapes::connectToPipeline( Pipeline &pipeline )
 	assert( m_audioComposition != NULL );
 	assert( m_videoComposition != NULL );
 
+	assert( m_pipeline == NULL );
+	m_pipeline = &pipeline;
+
 	m_audioComposition->addTo( pipeline );
 	m_videoComposition->addTo( pipeline );
 
@@ -77,7 +86,10 @@ PreviewTapes::connectToPipeline( Pipeline &pipeline )
 void
 PreviewTapes::disconnectFromPipeline( void )
 {
-	// TODO
+	assert( m_pipeline != NULL );
+
+	m_pipeline->stop();
+	m_pipeline = NULL;
 
 	PipelineContent::disconnectFromPipeline();
 }
@@ -97,6 +109,10 @@ PreviewTapes::update( void )
 void
 PreviewTapes::disconnectTape( void ) const
 {
+	assert( m_pipeline );
+
+	m_pipeline->stop();
+
 	m_audioComposition->disconnectTape();
 	m_videoComposition->disconnectTape();
 }

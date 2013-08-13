@@ -85,6 +85,8 @@ private:
 	TapeComposition *m_audioComposition;
 	TapeComposition *m_videoComposition;
 
+	gst::Pipeline *m_pipeline;
+
 };
 
 
