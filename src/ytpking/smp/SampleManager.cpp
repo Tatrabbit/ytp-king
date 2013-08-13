@@ -101,15 +101,16 @@ SampleManager::selectSample( smp::Sample *sample )
 
 smp::Sample
 *SampleManager::addSample( const char *filename, const char *name, const char *speakerName,
+                           const char *guid,
                            SamplesDataFile::NodeReference *nodeReferencePtr )
 {
-	smp::Sample *sample = new smp::Sample( filename );
+	smp::Sample *sample = new smp::Sample( filename, guid );
 
 	SamplesDataFile::NodeReference nodeReference;
 	if ( nodeReferencePtr != NULL )
 		nodeReference = *nodeReferencePtr;
 	else
-		nodeReference = m_samplesDataFile->addSample( name, speakerName, sample->m_guid.c_str() );
+		nodeReference = m_samplesDataFile->addSample( name, speakerName, sample->getGuid() );
 
 	SamplePair pair( sample, nodeReference );
 

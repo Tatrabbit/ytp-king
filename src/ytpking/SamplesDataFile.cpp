@@ -198,7 +198,22 @@ SamplesDataFile::loadAll( void )
 			nodeReference.m_speaker = speakerNode;
 			nodeReference.m_speech  = speechNode;
 
-			smp::Sample *sample = m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, &nodeReference );
+			// get guid
+			std::string guidString;
+			const char *guidCString;
+			if ( getStringAttribute( speechNode, "guid", guidString ) )
+				guidCString = guidString.c_str();
+			else
+				guidCString = NULL;
+
+			// Make the sample
+			smp::Sample *sample = m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, guidCString, &nodeReference );
+
+
+			// if there wasn't a guid, then append one
+			if ( guidCString == NULL )
+				appendStringAttribute( speechNode, "guid", sample->getGuid() );
+
 
 			// get duration start and end
 			int start, duration, end;
@@ -211,14 +226,6 @@ SamplesDataFile::loadAll( void )
 
 			sample->m_start = start;
 			sample->m_duration = duration;
-
-			// get guid
-			if ( !getStringAttribute( speechNode, "guid", sample->m_guid ) )
-			{
-				Guid guid;
-				sample->m_guid = guid;
-				appendStringAttribute( speechNode, "guid", guid );
-			}
 
 			speechNode = speechNode->next_sibling( "speech" );
 		}

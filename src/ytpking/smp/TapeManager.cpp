@@ -17,6 +17,8 @@
 #define YTPKING_SMP_TapeManager_cpp
 #include "TapeManager.h"
 
+#include "TapesDataFile.h"
+
 #include "Tape.h"
 #include "TapeUser.h"
 
@@ -29,7 +31,6 @@
 
 
 TapeManager::TapeManager( void ) :
-	m_tapesDataFile( NULL ),
 	m_selectedTape( NULL )
 {
 }
@@ -37,19 +38,19 @@ TapeManager::TapeManager( void ) :
 
 TapeManager::~TapeManager( void )
 {
-	for ( TapeMap::const_iterator it = m_tapes.begin(); it != m_tapes.end(); ++it )
-		delete it->first;
+	for ( TapeSet::const_iterator it = m_tapes.begin(); it != m_tapes.end(); ++it )
+		delete *it;
 
-	if ( m_tapesDataFile )
-		delete m_tapesDataFile;
+	if ( ytpking::tapesDataFile != NULL )
+		delete ytpking::tapesDataFile;
 }
 
 void
 TapeManager::initialize( void )
 {
-	assert( m_tapesDataFile == NULL );
-	m_tapesDataFile = new TapesDataFile( this );
-	m_tapesDataFile->loadAll();
+	assert( ytpking::tapesDataFile == NULL );
+	ytpking::tapesDataFile = new TapesDataFile( this );
+	ytpking::tapesDataFile->loadAll();
 }
 
 
@@ -89,9 +90,8 @@ TapeManager::selectTape( Tape *tape )
 Tape
 *TapeManager::addTape( void )
 {
-	Tape *tape = new Tape();
-	TapesDataFile::NodeReference nodeReference = m_tapesDataFile->addTape( "Your Omnipotence" );
-	m_tapes[tape ] = nodeReference;
+	TapesDataFile::NodeReference nodeReference = ytpking::tapesDataFile->addTape( "Your Omnipotence" );
+	Tape *tape = new Tape( nodeReference );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 		(*it)->onAddTape( *tape );
@@ -104,15 +104,16 @@ Tape
 void
 TapeManager::deleteTape( Tape *tape )
 {
-	TapeMap::const_iterator tapeIt = m_tapes.find( tape );
+	TapeSet::const_iterator tapeIt = m_tapes.find( tape );
 
 	if ( tapeIt != m_tapes.end() )
 	{
 		for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 			(*it)->onDeleteTape( *tape );
 
+		ytpking::tapesDataFile->deleteTape( tape->getNodeReference() );
 		delete tape;
-		m_tapes.erase( tapeIt->first );
+		m_tapes.erase( *tapeIt );
 	}
 }
 

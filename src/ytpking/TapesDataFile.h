@@ -43,10 +43,17 @@ public:
 		friend class TapesDataFile;
 
 		rapidxml::xml_node<> *m_tape;
+		unsigned int m_count;
 	};
 
 	NodeReference
 		addTape( const char *name );
+
+	void
+		deleteTape( NodeReference &nodeReference );
+
+	int
+		addSample( const char *guid, NodeReference &nodeReference );
 
 	void
 		loadAll( void )
@@ -57,6 +64,12 @@ private:
 	smp::TapeManager *m_manager;
 
 };
+
+#ifdef __YTPKING_TapesDataFile_cpp
+	TapesDataFile *tapesDataFile = NULL;
+#else
+	extern TapesDataFile *tapesDataFile;
+#endif
 
 
 	}

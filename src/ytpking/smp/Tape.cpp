@@ -19,6 +19,7 @@
 #include "gst/gnl/TapeComposition.h"
 #include "gst/gnl/PreviewTapes.h"
 
+#include "Sample.h"
 #include "SampleInstance.h"
 
 
@@ -28,7 +29,8 @@
 	{
 
 
-Tape::Tape( void )
+Tape::Tape( TapesDataFile::NodeReference &nodeReference ) :
+	m_nodeReference( nodeReference )
 {
 }
 
@@ -57,6 +59,8 @@ SampleInstance
 	sampleInstance->connectToPreview();
 
 	gst::gnl::previewTapes.update();
+
+	ytpking::tapesDataFile->addSample( sample.getGuid(), m_nodeReference );
 
 	return sampleInstance;
 }

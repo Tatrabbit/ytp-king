@@ -20,6 +20,8 @@
 #include <list>
 #include <set>
 
+#include "ytpking/TapesDataFile.h"
+
 
 	namespace ytpking
 	{
@@ -40,7 +42,7 @@ class SampleInstance;
 class Tape
 {
 public:
-	Tape( void );
+	explicit Tape( TapesDataFile::NodeReference &nodeReference );
 	~Tape( void );
 private:
 	explicit Tape( Tape & );
@@ -62,10 +64,15 @@ public:
 	void
 		connectToPreview( void );
 
+	inline TapesDataFile::NodeReference
+		&getNodeReference( void )
+	{ return m_nodeReference; }
+
 
 private:
 
 	InstanceSet m_samples;
+	TapesDataFile::NodeReference m_nodeReference;
 
 };
 

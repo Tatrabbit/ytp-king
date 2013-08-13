@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#define __YTPKING_TapesDataFile_cpp
 #include "ytpking/TapesDataFile.h"
 
 #include <wx/log.h>
@@ -27,7 +28,8 @@ using namespace rapidxml;
 
 TapesDataFile::
 NodeReference::NodeReference( void ) :
-	m_tape( NULL )
+	m_tape( NULL ),
+	m_count( 0 )
 {
 }
 
@@ -63,6 +65,40 @@ TapesDataFile::addTape( const char *name )
 	NodeReference nodeReference;
 	nodeReference.m_tape = tapeNode;
 	return nodeReference;
+}
+
+
+void
+TapesDataFile::deleteTape( NodeReference &nodeReference )
+{
+	xml_node<> *rootNode = m_xmlDocument.first_node();
+	xml_node<> *foundNode = rootNode->first_node( "sample" );
+
+	while ( foundNode != NULL )
+	{
+		if ( foundNode == nodeReference.m_tape)
+		{
+			rootNode->remove_node( nodeReference.m_tape );
+			nodeReference.m_tape = NULL;
+			return;
+		}
+
+		foundNode = foundNode->next_sibling( "sample" );
+	}
+}
+
+
+int
+TapesDataFile::addSample( const char *guid, NodeReference &nodeReference )
+{
+	const char *value = m_xmlDocument.allocate_string( guid );
+	xml_node<> *sampleNode = m_xmlDocument.allocate_node( node_element, "sample", value );
+
+	nodeReference.m_tape->append_node( sampleNode );
+
+	saveToFile();
+
+	return nodeReference.m_count++;
 }
 
 

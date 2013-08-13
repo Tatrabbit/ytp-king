@@ -182,7 +182,7 @@ DataFile::getStringAttribute( const rapidxml::xml_node<> *node, const char *attr
 	if ( attr == NULL )
 		return false;
 
-	string == attr->value();
+	string = attr->value();
 	return true;
 }
 
