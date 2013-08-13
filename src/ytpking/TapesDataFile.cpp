@@ -107,6 +107,25 @@ TapesDataFile::addSample( const char *guid, NodeReference &nodeReference )
 
 
 void
+TapesDataFile::deleteElement( int elementIndex, NodeReference &nodeReference )
+{
+	xml_node<> *sampleNode = nodeReference.m_tape->first_node();
+	int index = 0;
+	while( index++ < elementIndex )
+	{
+		if ( sampleNode == NULL )
+			return;
+
+		sampleNode = sampleNode->next_sibling();
+	}
+
+	nodeReference.m_tape->remove_node( sampleNode );
+
+	saveToFile();
+}
+
+
+void
 TapesDataFile::loadAll( void )
 {
 	xml_node<> *rootNode = m_xmlDocument.first_node();

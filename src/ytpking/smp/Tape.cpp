@@ -70,13 +70,18 @@ SampleInstance
 void
 Tape::deleteSample( const SampleInstance &sampleInstance )
 {
+	int i = 0;
 	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+	{
 		if ( **it == sampleInstance )
 		{
+			ytpking::tapesDataFile->deleteElement( i, m_nodeReference );
 			delete *it;
 			m_samples.erase( it );
 			return;
 		};
+		++i;
+	}
 }
 
 

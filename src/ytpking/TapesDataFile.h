@@ -56,6 +56,9 @@ public:
 		addSample( const char *guid, NodeReference &nodeReference );
 
 	void
+		deleteElement( int elementIndex, NodeReference &nodeReference );
+
+	void
 		loadAll( void )
 		override;
 
