@@ -74,6 +74,8 @@ private:
 	InstanceSet m_samples;
 	TapesDataFile::NodeReference m_nodeReference;
 
+	bool m_isConnected;
+
 };
 
 

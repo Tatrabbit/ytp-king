@@ -55,6 +55,9 @@ public:
 	void
 		initialize( void );
 
+
+	smp::Tape *m_connectedTape;
+
 	
 	void
 		connectToPipeline( Pipeline &pipeline )
@@ -78,7 +81,7 @@ public:
 
 
 	void
-		disconnectTape( void ) const;
+		disconnectTape( void );
 
 private:
 

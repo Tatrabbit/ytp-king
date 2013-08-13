@@ -34,6 +34,7 @@
 
 
 PreviewTapes::PreviewTapes( void ) :
+	m_connectedTape( NULL ),
 	m_audioComposition( NULL ),
 	m_videoComposition( NULL ),
 	m_pipeline( NULL )
@@ -103,11 +104,14 @@ PreviewTapes::update( void )
 
 	m_audioComposition->update();
 	m_videoComposition->update();
+
+	if ( !(m_audioComposition->isEmpty() && m_videoComposition->isEmpty()) )
+		m_pipeline->m_hasContent = true;
 }
 
 
 void
-PreviewTapes::disconnectTape( void ) const
+PreviewTapes::disconnectTape( void )
 {
 	assert( m_pipeline );
 
@@ -115,6 +119,8 @@ PreviewTapes::disconnectTape( void ) const
 
 	m_audioComposition->disconnectTape();
 	m_videoComposition->disconnectTape();
+
+	m_connectedTape = NULL;
 }
 
 

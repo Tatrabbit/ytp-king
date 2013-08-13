@@ -46,6 +46,8 @@ public:
 	Pipeline( void );
 	~Pipeline( void );
 
+	bool m_hasContent;
+
 private:
 	Pipeline( Pipeline & );
 

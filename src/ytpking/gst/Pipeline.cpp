@@ -33,7 +33,8 @@
 
 Pipeline::Pipeline( void ) :
 	m_pipeline( NULL ),
-	m_hasSetRenderWindow( false )
+	m_hasSetRenderWindow( false ),
+	m_hasContent( false )
 {
 }
 
@@ -77,7 +78,7 @@ Pipeline::setRenderWindow( wxWindow *renderWindow )
 void
 Pipeline::play( void )
 {
-	if ( m_hasSetRenderWindow )
+	if ( m_hasSetRenderWindow && m_hasContent )
 		gst_element_set_state( m_pipeline, GST_STATE_PLAYING );
 }
 

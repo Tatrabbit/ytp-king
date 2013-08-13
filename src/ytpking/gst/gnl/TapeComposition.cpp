@@ -40,8 +40,7 @@
 
 
 TapeComposition::TapeComposition( void ) :
-	m_selfElement( gst_element_factory_make( "gnlcomposition", NULL ) ),
-	m_connectedTape( NULL )
+	m_selfElement( gst_element_factory_make( "gnlcomposition", NULL ) )
 {
 }
 
@@ -144,6 +143,12 @@ TapeComposition::update( void )
 
 		start += source->m_duration;
 	}
+}
+
+bool
+TapeComposition::isEmpty( void ) const
+{
+	return m_samples.empty();
 }
 
 

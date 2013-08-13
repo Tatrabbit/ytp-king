@@ -56,8 +56,6 @@ private:
 
 public:
 
-	smp::Tape *m_connectedTape;
-
 	virtual void
 		addTo( Pipeline &pipeline ) = 0;
 
@@ -80,6 +78,9 @@ public:
 
 	void
 		update( void );
+
+	bool
+		isEmpty( void ) const;
 
 
 protected:

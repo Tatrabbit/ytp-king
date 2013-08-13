@@ -30,7 +30,8 @@
 
 
 Tape::Tape( TapesDataFile::NodeReference &nodeReference ) :
-	m_nodeReference( nodeReference )
+	m_nodeReference( nodeReference ),
+	m_isConnected( false )
 {
 }
 
@@ -55,10 +56,11 @@ SampleInstance
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
 
-	// TODO only if connected currently
-	sampleInstance->connectToPreview();
-
-	gst::gnl::previewTapes.update();
+	if ( m_isConnected )
+	{
+		sampleInstance->connectToPreview();
+		gst::gnl::previewTapes.update();
+	}
 
 	if ( !suppressSave )
 		ytpking::tapesDataFile->addSample( sample.getGuid(), m_nodeReference );
@@ -93,6 +95,9 @@ Tape::connectToPreview( void )
 	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 		(*it)->connectToPreview();
 
+	m_isConnected = true;
+	
+	gst::gnl::previewTapes.m_connectedTape = this;
 	gst::gnl::previewTapes.update();
 }
 
