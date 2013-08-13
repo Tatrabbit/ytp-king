@@ -89,10 +89,34 @@ SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
 	else
 		m_fileBuffer = NULL;
 
-	if ( m_xmlDocument.first_node() == NULL )
+	xml_node<> *rootNode = m_xmlDocument.first_node();
+	if ( rootNode == NULL )
 	{
-		xml_node<> *rootNode = m_xmlDocument.allocate_node( node_element, "samples" );
+		rootNode = m_xmlDocument.allocate_node( node_element, "ytpking" );
 		m_xmlDocument.append_node( rootNode );
+
+		xml_node<> *samplesNode = m_xmlDocument.allocate_node( node_element, "samples" );
+		rootNode->append_node( samplesNode );
+	}
+	else
+	{
+		bool shownMessage;
+		if ( strcmp( rootNode->name(), "ytpking" ) != 0 )
+		{
+			wxSafeShowMessage( "Error", "Samples file is corrupt. Please make a backup of it, then delete it." );
+			shownMessage = true;
+		}
+		else
+			shownMessage = false;
+
+		if ( rootNode->first_node( "samples" ) == NULL )
+		{
+			if ( !shownMessage )
+				wxSafeShowMessage( "Error", "Samples file is corrupt. Please make a backup of it, then delete it." );
+
+			xml_node<> *samplesNode = m_xmlDocument.allocate_node( node_element, "samples" );
+			rootNode->append_node( samplesNode );
+		}
 	}
 }
 
@@ -146,8 +170,8 @@ SamplesDataFile::changeSampleSpeaker( const char *newSpeakerName, NodeReference 
 
 	if ( nodeReference.m_speaker->first_node() == NULL )
 	{
-		xml_node<> *rootNode = m_xmlDocument.first_node();
-		rootNode->remove_node( nodeReference.m_speaker );
+		xml_node<> *samplesNode = m_xmlDocument.first_node()->first_node( "samples" );
+		samplesNode->remove_node( nodeReference.m_speaker );
 	}
 
 	xml_node<> *speakerNode = getOrMakeSpeakerNode( newSpeakerName );
@@ -259,9 +283,9 @@ SamplesDataFile::loadAll( void )
 
 	using gst::gnl::FileSource;
 
-	xml_node<> *rootNode = m_xmlDocument.first_node();
+	xml_node<> *samplesNode = m_xmlDocument.first_node()->first_node( "samples" );
 
-	xml_node<> *speakerNode = rootNode->first_node( "speaker" );
+	xml_node<> *speakerNode = samplesNode->first_node( "speaker" );
 
 	while ( speakerNode != NULL )
 	{
