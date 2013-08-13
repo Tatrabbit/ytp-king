@@ -29,7 +29,8 @@
 	{
 
 
-Tape::Tape( TapesDataFile::NodeReference &nodeReference ) :
+Tape::Tape( const char *name, TapesDataFile::NodeReference &nodeReference ) :
+	m_name( name ),
 	m_nodeReference( nodeReference ),
 	m_isConnected( false )
 {
@@ -102,10 +103,17 @@ Tape::connectToPreview( void )
 }
 
 
-void
-Tape::rename( const char *newName )
+const char
+*Tape::getName( void ) const
 {
-	ytpking::tapesDataFile->renameTape( newName, m_nodeReference );
+	return m_name.c_str();
+}
+
+
+void
+Tape::setName( const char *newName )
+{
+	ytpking::tapesDataFile->renameTape( (m_name = newName).c_str(), m_nodeReference );
 }
 
 

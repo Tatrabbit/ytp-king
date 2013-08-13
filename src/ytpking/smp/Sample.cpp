@@ -28,7 +28,8 @@
 	{
 
 
-Sample::Sample( const char *filename, const char *guid )  :
+Sample::Sample( const char *name, const char *filename, const char *guid )  :
+	m_name( name ),
 	m_filename( filename ),
 	m_guid( guid? guid : Guid() ),
 	m_start( 0u ),

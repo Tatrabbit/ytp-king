@@ -89,7 +89,7 @@ private:
 
 	
 	void
-		onAddTape( smp::Tape &addedTape, const char *name )
+		onAddTape( smp::Tape &addedTape )
 		override;
 	void
 		onSelectTape( smp::Tape *selectedTape )

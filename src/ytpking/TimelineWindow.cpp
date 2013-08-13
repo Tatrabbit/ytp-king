@@ -84,7 +84,7 @@ TimelineWindow::onUpdate( wxUpdateUIEvent& event )
 
 
 void
-TimelineWindow::onAddTape( smp::Tape &addedTape, const char *name )
+TimelineWindow::onAddTape( smp::Tape & )
 {
 }
 
@@ -110,7 +110,7 @@ TimelineWindow::onSelectTape( smp::Tape *selectedTape )
 
 
 void
-TimelineWindow::onDeleteTape( smp::Tape &deletedTape )
+TimelineWindow::onDeleteTape( smp::Tape & )
 {
 }
 
@@ -140,7 +140,7 @@ TimelineWindow::useTape( smp::Tape &tape )
 void
 TimelineWindow::appendComponent( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
 {
-	SampleWindow *component = new SampleWindow( this, "sample name", &tape, &sampleInstance );
+	SampleWindow *component = new SampleWindow( this, &tape, &sampleInstance );
 
 	m_components.push_back( component );
 

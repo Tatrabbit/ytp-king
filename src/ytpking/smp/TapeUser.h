@@ -44,7 +44,7 @@ protected:
 	/** A new Tape has been added to TapeManager object.
 	\param addedTape The newly added Tape. */
 	virtual void
-		onAddTape( Tape &addedTape, const char *name ) = 0;
+		onAddTape( Tape &addedTape ) = 0;
 
 	/** Called when a Tape is selected.
 	\param selectedTape The newly selected Tape. If the Tape is deselected, NULL. */

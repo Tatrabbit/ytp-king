@@ -38,11 +38,11 @@ TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 
 
 void
-TapesListCtrl::onAddTape( smp::Tape &addedTape, const char *name )
+TapesListCtrl::onAddTape( smp::Tape &addedTape )
 {
 	int index = GetItemCount();
 
-	InsertItem( index, name );
+	InsertItem( index, addedTape.getName() );
 	SetItemPtrData( index, (wxUIntPtr)&addedTape );
 }
 
@@ -85,7 +85,7 @@ TapesListCtrl::onEditLabel( wxListEvent& event )
 	if ( event.IsEditCancelled() )
 		return;
 	smp::Tape *tape = (smp::Tape *)GetItemData( event.GetIndex() );
-	tape->rename( event.GetLabel() );
+	tape->setName( event.GetLabel() );
 }
 
 

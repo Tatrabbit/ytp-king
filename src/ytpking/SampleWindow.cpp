@@ -22,6 +22,8 @@
 
 #include "smp/TapeManager.h"
 #include "smp/Tape.h"
+#include "smp/Sample.h"
+#include "smp/SampleInstance.h"
 
 #include "gst/gnl/PreviewTapes.h"
 
@@ -32,7 +34,7 @@
 	{
 
 
-SampleWindow::SampleWindow( wxWindow *parent, const char *name,
+SampleWindow::SampleWindow( wxWindow *parent,
 		smp::Tape *tape, const smp::SampleInstance *sampleInstance ) :
 
 	wxWindow( parent, wxID_ANY ),
@@ -40,7 +42,7 @@ SampleWindow::SampleWindow( wxWindow *parent, const char *name,
 	m_tape( tape ),
 	m_sampleInstance( sampleInstance )
 {
-	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, name );
+	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, sampleInstance->getSample().m_name.c_str() );
 
 	wxButton *button = new wxButton( this, TimelineWindow::ButtonDelete, "Delete" );
 

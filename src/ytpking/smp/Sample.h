@@ -37,8 +37,9 @@ namespace gnl {
 class Sample
 {
 public:
-	explicit Sample( const char *filename, const char *guid = NULL );
+	Sample( const char *name, const char *filename, const char *guid = NULL );
 
+	std::string m_name;
 	std::string m_filename;
 
 	unsigned int m_start;

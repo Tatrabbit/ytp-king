@@ -245,9 +245,9 @@ xml_node<>
 		return NULL;
 
 	// Get the XML name and compare
-	xml_node<> *rootNode = m_xmlDocument.first_node();
+	xml_node<> *samplesNode = m_xmlDocument.first_node()->first_node( "samples" );
 
-	xml_node<> *speakerNode = rootNode->first_node( "speaker" );
+	xml_node<> *speakerNode = samplesNode->first_node( "speaker" );
 
 	while ( speakerNode != NULL )
 	{
@@ -267,7 +267,7 @@ xml_node<>
 
 		speakerNode->append_attribute( nameAttr );
 
-		rootNode->append_node( speakerNode );
+		samplesNode->append_node( speakerNode );
 	}
 
 	return speakerNode;

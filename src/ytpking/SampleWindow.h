@@ -37,7 +37,7 @@ class SampleWindow :
 {
 public:
 
-	SampleWindow( wxWindow *parent, const char *name,
+	SampleWindow( wxWindow *parent,
 			smp::Tape *tape, const smp::SampleInstance *sampleInstance );
 
 

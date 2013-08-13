@@ -104,7 +104,7 @@ smp::Sample
                            const char *guid,
                            SamplesDataFile::NodeReference *nodeReferencePtr )
 {
-	smp::Sample *sample = new smp::Sample( filename, guid );
+	smp::Sample *sample = new smp::Sample( name, filename, guid );
 
 	m_guidMap[sample->getGuid()] = sample;
 

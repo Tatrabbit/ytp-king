@@ -95,10 +95,10 @@ Tape
 	else
 		nodeReference = ytpking::tapesDataFile->addTape( name );
 
-	Tape *tape = new Tape( nodeReference );
+	Tape *tape = new Tape( name, nodeReference );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
-		(*it)->onAddTape( *tape, name );
+		(*it)->onAddTape( *tape );
 
 
 	return tape;

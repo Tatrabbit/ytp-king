@@ -42,7 +42,7 @@ class SampleInstance;
 class Tape
 {
 public:
-	explicit Tape( TapesDataFile::NodeReference &nodeReference );
+	Tape( const char *name, TapesDataFile::NodeReference &nodeReference );
 	~Tape( void );
 private:
 	explicit Tape( Tape & );
@@ -64,8 +64,10 @@ public:
 	void
 		connectToPreview( void );
 
+	const char
+		*getName( void ) const;
 	void
-		rename( const char *newName );
+		setName( const char *newName );
 
 	inline TapesDataFile::NodeReference
 		&getNodeReference( void )
@@ -73,6 +75,7 @@ public:
 
 
 private:
+	std::string m_name;
 
 	InstanceSet m_samples;
 	TapesDataFile::NodeReference m_nodeReference;
