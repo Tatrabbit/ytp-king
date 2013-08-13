@@ -50,7 +50,7 @@ const Tape::InstanceSet
 
 
 SampleInstance
-*Tape::appendSample( const Sample &sample )
+*Tape::appendSample( const Sample &sample, bool suppressSave )
 {
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
@@ -60,7 +60,8 @@ SampleInstance
 
 	gst::gnl::previewTapes.update();
 
-	ytpking::tapesDataFile->addSample( sample.getGuid(), m_nodeReference );
+	if ( !suppressSave )
+		ytpking::tapesDataFile->addSample( sample.getGuid(), m_nodeReference );
 
 	return sampleInstance;
 }

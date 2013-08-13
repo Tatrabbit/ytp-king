@@ -18,6 +18,7 @@
 #define __YTPKING_SMP_SampleManager_h
 
 #include <set>
+#include <map>
 #include <string>
 
 #include "ytpking/SamplesDataFile.h"
@@ -104,11 +105,16 @@ public:
 	void
 		saveSample( Sample *sample );
 
+	Sample
+		*getSampleByGuid( const char *guid ) const;
+
 
 
 private:
 
+	// TODO should be global, it's too deep, other classes need to access it.
 	SamplesDataFile *m_samplesDataFile;
+
 	Sample          *m_selectedSample;
 
 	typedef std::set<SampleUser *> SampleUserSet;
@@ -128,7 +134,12 @@ private:
 
 	typedef std::set<SamplePair> SampleSet;
 
-	SampleSet     m_samples;
+	typedef std::map<std::string, Sample *> GuidMap;
+
+	// TODO refactor to use a map, it's more efficient. Must have been tired when I did this.
+	SampleSet m_samples;
+	GuidMap   m_guidMap;
+
 	SampleUserSet m_sampleUsers;
 
 };

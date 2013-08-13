@@ -17,8 +17,6 @@
 #define YTPKING_SMP_TapeManager_cpp
 #include "TapeManager.h"
 
-#include "TapesDataFile.h"
-
 #include "Tape.h"
 #include "TapeUser.h"
 
@@ -88,9 +86,15 @@ TapeManager::selectTape( Tape *tape )
 
 
 Tape
-*TapeManager::addTape( void )
+*TapeManager::addTape( TapesDataFile::NodeReference *existingNodeReference )
 {
-	TapesDataFile::NodeReference nodeReference = ytpking::tapesDataFile->addTape( "Your Omnipotence" );
+	TapesDataFile::NodeReference nodeReference;
+	
+	if ( existingNodeReference != NULL )
+		nodeReference = *existingNodeReference;
+	else
+		nodeReference = ytpking::tapesDataFile->addTape( "Your Omnipotence" );
+
 	Tape *tape = new Tape( nodeReference );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )

@@ -106,6 +106,8 @@ smp::Sample
 {
 	smp::Sample *sample = new smp::Sample( filename, guid );
 
+	m_guidMap[sample->getGuid()] = sample;
+
 	SamplesDataFile::NodeReference nodeReference;
 	if ( nodeReferencePtr != NULL )
 		nodeReference = *nodeReferencePtr;
@@ -126,14 +128,23 @@ smp::Sample
 void
 SampleManager::deleteSample( smp::Sample *sample )
 {
+	// Defaults to the selected sample
 	if ( sample == NULL )
 		sample = m_selectedSample;
 
+	// Erase from GUID Map
+	GuidMap::const_iterator it = m_guidMap.find( sample->getGuid() );
+	assert( it != m_guidMap.end() );
+	m_guidMap.erase( it );
+
+	// Erase from Samples map
 	m_samples.erase( sample );
 
+	// Callbacks before deletion.
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
 		(*it)->onDeleteSample( sample );
 
+	// Finally, delete.
 	delete sample;
 }
 
@@ -203,6 +214,14 @@ SampleManager::saveSample( Sample *sample )
 		m_samples.erase( it );
 		m_samples.insert( newSamplePair );
 	}
+}
+
+
+Sample
+*SampleManager::getSampleByGuid( const char *guid ) const
+{
+	GuidMap::const_iterator it = m_guidMap.find( guid );
+	return it != m_guidMap.end()? it->second : NULL;
 }
 
 

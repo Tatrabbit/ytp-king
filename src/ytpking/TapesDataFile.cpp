@@ -19,6 +19,10 @@
 
 #include <wx/log.h>
 
+#include "smp/SampleManager.h"
+#include "smp/TapeManager.h"
+#include "smp/Tape.h"
+
 
 using namespace rapidxml;
 
@@ -105,6 +109,44 @@ TapesDataFile::addSample( const char *guid, NodeReference &nodeReference )
 void
 TapesDataFile::loadAll( void )
 {
+	xml_node<> *rootNode = m_xmlDocument.first_node();
+
+	xml_node<> *tapeNode = rootNode->first_node( "tape" );
+	
+	bool hadError = false;
+	while ( tapeNode != NULL )
+	{
+		NodeReference nodeReference;
+		nodeReference.m_tape = tapeNode;
+
+		smp::Tape *tape = m_manager->addTape( &nodeReference );
+
+		xml_node<> *contentNode = tapeNode->first_node();
+
+		while( contentNode != NULL )
+		{
+			if ( strcmp( contentNode->name(), "sample" ) == 0 )
+			{
+				smp::Sample *sample = smp::sampleManager.getSampleByGuid( contentNode->value() );
+				if ( sample != NULL )
+					tape->appendSample( *sample, true );
+				else
+				{
+					if ( !hadError )
+					{// Only report once, it could be extremely annoying otherwise! Log the rest queitly.
+						wxLogError( "One or more elements in the tape file were not loaded correctly." );
+						hadError = true;
+					}
+					wxLogWarning( "Could not load sample %s for tape %s.", contentNode->value(), "{}" );
+				}
+			}
+			// TODO
+			// else if ( strcmp( contentNode->name(), "sample" ) == 0 )
+			contentNode = contentNode->next_sibling();
+		}
+
+		tapeNode = tapeNode->next_sibling( "tape" );
+	}
 }
 
 

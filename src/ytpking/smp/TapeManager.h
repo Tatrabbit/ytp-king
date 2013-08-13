@@ -17,14 +17,13 @@
 #ifndef YTPKING_SMP_TapeManager_h
 #define YTPKING_SMP_TapeManager_h
 
-
 #include <set>
+
+#include "TapesDataFile.h"
 
 
 	namespace ytpking
 	{
-
-class TapesDataFile;
 
 	namespace smp
 	{
@@ -78,7 +77,7 @@ public:
 	\param speakerName The name of the speaker, e.g. The King
 	\param nodeReference If NULL, the speaker will be created in the save DataFile. */
 	Tape
-		*addTape( void );
+		*addTape( TapesDataFile::NodeReference *existingNodeReference = NULL );
 
 	/** Deletes a Tape, freeing the memeory.
 	    Once freed, all remaining pointers will dangle, be sure that any

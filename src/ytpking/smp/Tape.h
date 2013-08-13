@@ -56,7 +56,7 @@ public:
 		&getInstances( void ) const;
 
 	SampleInstance
-		*appendSample( const Sample &sample );
+		*appendSample( const Sample &sample, bool suppressSave = false );
 
 	void
 		deleteSample( const SampleInstance &sampleInstance );
