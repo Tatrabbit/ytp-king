@@ -136,10 +136,10 @@ TapeComposition::update( void )
 	{
 		FileSource *source = it->second;
 
-		g_object_set( source->m_element, "start", start * GST_SECOND, NULL );
+		g_object_set( source->m_element, "start", start * GST_MSECOND, NULL );
 
 		// TODO account for speed
-		g_object_set( source->m_element, "media-duration", source->m_duration * GST_SECOND, NULL );
+		g_object_set( source->m_element, "media-duration", source->m_duration * GST_MSECOND, NULL );
 
 		start += source->m_duration;
 	}

@@ -51,14 +51,14 @@ FileSource::setFilename( const char *filename )
 void
 FileSource::setStart( gint64 startTime )
 {
-	g_object_set( m_element, "media-start", startTime * GST_SECOND, NULL );
+	g_object_set( m_element, "media-start", startTime * GST_MSECOND, NULL );
 }
 
 
 void
 FileSource::setDuration( gint64 duration )
 {
-	g_object_set( m_element, "duration", (m_duration = duration) * GST_SECOND, NULL );
+	g_object_set( m_element, "duration", (m_duration = duration) * GST_MSECOND, NULL );
 }
 
 

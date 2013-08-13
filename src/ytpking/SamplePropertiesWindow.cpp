@@ -34,7 +34,7 @@ SamplePropertiesWindow::SamplePropertiesWindow( wxWindow *parent ) :
 	wxSizer *sizer = new wxGridSizer( 2, 8, 8 );
 
 	m_startFrameSpinCtrl = new wxSpinCtrl( this, SpinStartFrame, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 0, 5  );
-	m_endFrameSpinCtrl   = new wxSpinCtrl( this, SpinEndFrame, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 1, 100  );
+	m_endFrameSpinCtrl   = new wxSpinCtrl( this, SpinEndFrame, wxEmptyString, wxDefaultPosition, wxSize( 80, -1 ), wxSP_ARROW_KEYS, 1, INT_MAX );
 
 	m_speakerName = new wxTextCtrl( this, TextSpeakerName );
 
