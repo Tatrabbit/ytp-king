@@ -57,39 +57,10 @@ NodeReference::NodeReference( void ) :
 
 SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
 	m_manager( manager ),
-	m_filename( getSaveDataPath() ),
 	m_isLocked( false )
 {
-	m_filename += "/samples.xml";
-
-	FILE * f = fopen( m_filename.c_str() , "rb" );
-	if ( f )
-	{
-		// TODO there has to be a way to stream this :/
-		fseek( f , 0, SEEK_END );
-		long fileSize = ftell( f );
-		rewind( f );
-
-		m_fileBuffer = new char [fileSize + 1];
-
-		// copy the file into the buffer:
-		size_t bytesRead = fread( m_fileBuffer, 1, fileSize, f );
-		if ( bytesRead != fileSize )
-		{
-			delete [] m_fileBuffer;
-			m_fileBuffer = NULL;
-
-			wxLogError( "Error reading saved samples.xml" );
-		}
-
-		m_fileBuffer[fileSize] = '\0';
-
-		m_xmlDocument.parse<0>( m_fileBuffer );
-	}
-	else
-		m_fileBuffer = NULL;
-
 	xml_node<> *rootNode = m_xmlDocument.first_node();
+
 	if ( rootNode == NULL )
 	{
 		rootNode = m_xmlDocument.allocate_node( node_element, "ytpking" );
@@ -118,13 +89,6 @@ SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
 			rootNode->append_node( samplesNode );
 		}
 	}
-}
-
-
-SamplesDataFile::~SamplesDataFile( void )
-{
-	if ( m_fileBuffer != NULL )
-		delete [] m_fileBuffer;
 }
 
 
@@ -198,72 +162,6 @@ SamplesDataFile::setSampleEnd( int sampleEnd, NodeReference &nodeReference )
 {
 	if ( !setOrMakeNumberAttribute( sampleEnd, nodeReference.m_speech, nodeReference.m_endString,  "end", MAX_END_FRAME_SIZE ) )
 		wxLogError( "End time can't be more than %d digits long.", MAX_END_FRAME_SIZE - 1 );
-}
-
-
-
-bool
-SamplesDataFile::setOrMakeNumberAttribute( int integerNumber, xml_node<> *node, char *&valueChar, const char *attributeName, size_t maxSize )
-{
-	std::stringstream stream;
-	stream << integerNumber;
-
-	std::string value( stream.str() );
-
-	if ( value.length() >= MAX_START_FRAME_SIZE )
-		return false;
-
-	xml_attribute<> *attr = node->first_attribute( attributeName );
-	if ( valueChar == NULL )
-	{
-		valueChar = m_xmlDocument.allocate_string( value.c_str(), maxSize );
-
-		attr = m_xmlDocument.allocate_attribute( attributeName, valueChar );
-		node->append_attribute( attr );
-	}
-	else
-	{
-		strcpy( valueChar, value.c_str() );
-		attr->value( valueChar );
-	}
-
-	return true;
-}
-
-
-xml_node<>
-*SamplesDataFile::getOrMakeSpeakerNode( const char *speakerName )
-{
-	if ( m_isLocked )
-		return NULL;
-
-	// Get the XML name and compare
-	xml_node<> *rootNode = m_xmlDocument.first_node();
-
-	xml_node<> *speakerNode = rootNode->first_node( "speaker" );
-
-	while ( speakerNode != NULL )
-	{
-		xml_attribute<> *nameAttr = speakerNode->first_attribute( "name" );
-
-		if ( nameAttr && (strcmp( nameAttr->value(), speakerName ) == 0) )
-			break;
-
-		speakerNode = speakerNode->next_sibling( "speaker" );
-	}
-
-	if ( speakerNode == NULL )
-	{
-		speakerNode = m_xmlDocument.allocate_node( node_element, "speaker" );
-		speakerName = m_xmlDocument.allocate_string( speakerName );
-		xml_attribute<> *nameAttr = m_xmlDocument.allocate_attribute( "name", speakerName );
-
-		speakerNode->append_attribute( nameAttr );
-
-		rootNode->append_node( speakerNode );
-	}
-
-	return speakerNode;
 }
 
 
@@ -345,44 +243,42 @@ SamplesDataFile::loadAll( void )
 	m_isLocked = false;
 }
 
-bool
-SamplesDataFile::getStringAttribute( const rapidxml::xml_node<> *node, const char *attributeName, std::string &string ) const
+
+xml_node<>
+*SamplesDataFile::getOrMakeSpeakerNode( const char *speakerName )
 {
-	
-	const xml_attribute<> *attr = node->first_attribute( attributeName );
+	if ( m_isLocked )
+		return NULL;
 
-	if ( attr == NULL )
-		return false;
+	// Get the XML name and compare
+	xml_node<> *rootNode = m_xmlDocument.first_node();
 
-	string == attr->value();
-	return true;
+	xml_node<> *speakerNode = rootNode->first_node( "speaker" );
+
+	while ( speakerNode != NULL )
+	{
+		xml_attribute<> *nameAttr = speakerNode->first_attribute( "name" );
+
+		if ( nameAttr && (strcmp( nameAttr->value(), speakerName ) == 0) )
+			break;
+
+		speakerNode = speakerNode->next_sibling( "speaker" );
+	}
+
+	if ( speakerNode == NULL )
+	{
+		speakerNode = m_xmlDocument.allocate_node( node_element, "speaker" );
+		speakerName = m_xmlDocument.allocate_string( speakerName );
+		xml_attribute<> *nameAttr = m_xmlDocument.allocate_attribute( "name", speakerName );
+
+		speakerNode->append_attribute( nameAttr );
+
+		rootNode->append_node( speakerNode );
+	}
+
+	return speakerNode;
 }
 
-
-int
-SamplesDataFile::getIntAttribute( const xml_node<> *node, const char *attributeName, int defaultValue ) const
-{
-	const xml_attribute<> *attr = node->first_attribute( attributeName );
-
-	if ( attr == NULL )
-		return defaultValue;
-
-	int i;
-
-	if ( sscanf( attr->value(), "%d", &i ) == 1 )
-		return i;
-	else
-		return defaultValue;
-}
-
-
-void
-SamplesDataFile::appendStringAttribute( rapidxml::xml_node<> *node, const char *allocatedAttributeName, const char *attributeValue )
-{
-	const char *val = m_xmlDocument.allocate_string( attributeValue );
-	xml_attribute<> *nameAttribute = m_xmlDocument.allocate_attribute( allocatedAttributeName, val );
-	node->append_attribute( nameAttribute );
-}
 
 
 	}

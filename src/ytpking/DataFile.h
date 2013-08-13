@@ -19,6 +19,8 @@
 
 #include <string>
 
+#include "rapidxml/rapidxml.hpp"
+
 
 	namespace ytpking
 	{
@@ -26,6 +28,12 @@
 
 class DataFile
 {
+public:
+	DataFile( void );
+	virtual ~DataFile( void );
+private:
+	explicit DataFile( DataFile & );
+	void operator=( DataFile & );
 public:
 
 	static bool initialize( void );
@@ -35,7 +43,46 @@ public:
 	static const char
 		*getSaveDataPath( void );
 
+
+	virtual void
+		loadAll( void ) = 0;
+
+	virtual void
+		saveToFile( void ) const = 0;
+
+
+protected:
+
+	std::string m_filename;
+	rapidxml::xml_document<> m_xmlDocument;
+
+	bool
+		setOrMakeNumberAttribute( int integerNumber, rapidxml::xml_node<> *node, char *&valueChar, const char *attributeName, size_t maxSize );
+
+	bool
+		getStringAttribute( const rapidxml::xml_node<> *node, const char *attributeName, std::string &string ) const;
+
+	/** Gets the integer value of an attribute according to sscanf. If the value is not convertable to an int,
+	    the defaultValue will be returned.
+	\param node The node to get the attribute of.
+	\param attributeName The name of the attribute to locate. If multiple attributes exist with this name,
+	                     only the first will be used.
+	\param defaultValue  If the attribute didn't exist, or couldn't be converted to an int, this value will be
+	                     returned. */
+	int
+		getIntAttribute( const rapidxml::xml_node<> *node, const char *attributeName, int defaultValue ) const;
+
+	/** Appends a string attribute. This will allocate the attribute value, but not the name, so should be used when the attribute name
+	    is not allocated, or doesn't have to be allocated, as with a string constant.
+	\param node The node to append the new attribute to.
+	\param allocatedAttributeName The name of the attribute. It will not be allocated, so it must already exist in memory.
+	\param attributeValue The value of the attribute. Space will be allocated for this string, so it is safe to pass a transient variable. */
+	void
+		appendStringAttribute( rapidxml::xml_node<> *node, const char *allocatedAttributeName, const char *attributeValue );
+
 private:
+
+	char *m_fileBuffer;
 	
 	static std::string m_savedataPath;
 	static bool        m_hasSavedataPath;

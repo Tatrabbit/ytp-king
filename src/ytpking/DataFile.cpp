@@ -16,6 +16,8 @@
 */
 #include "ytpking/DataFile.h"
 
+#include <sstream>
+
 #include <wx/log.h>
 
 #ifdef _MSC_VER
@@ -24,6 +26,8 @@
 
 #include "utf8.h"
 
+using namespace rapidxml;
+
 
 	namespace ytpking
 	{
@@ -31,6 +35,47 @@
 
 std::string  DataFile::m_savedataPath;
 bool         DataFile::m_hasSavedataPath( false );
+
+
+DataFile::DataFile( void ) :
+	m_filename( getSaveDataPath()? getSaveDataPath() : "" )
+{
+	m_filename += "/samples.xml";
+
+	FILE * f = fopen( m_filename.c_str() , "rb" );
+	if ( f )
+	{
+		// TODO there has to be a way to stream this :/
+		fseek( f , 0, SEEK_END );
+		long fileSize = ftell( f );
+		rewind( f );
+
+		m_fileBuffer = new char [fileSize + 1];
+
+		// copy the file into the buffer:
+		size_t bytesRead = fread( m_fileBuffer, 1, fileSize, f );
+		if ( bytesRead != fileSize )
+		{
+			delete [] m_fileBuffer;
+			m_fileBuffer = NULL;
+
+			wxLogError( "Error reading saved samples.xml" );
+		}
+
+		m_fileBuffer[fileSize] = '\0';
+
+		m_xmlDocument.parse<0>( m_fileBuffer );
+	}
+	else
+		m_fileBuffer = NULL;
+}
+
+
+DataFile::~DataFile( void )
+{
+	if ( m_fileBuffer != NULL )
+		delete [] m_fileBuffer;
+}
 
 
 bool
@@ -85,6 +130,75 @@ const char
 *DataFile::getSaveDataPath( void )
 {
 	return m_hasSavedataPath? m_savedataPath.c_str() : NULL;
+}
+
+
+bool
+DataFile::setOrMakeNumberAttribute( int integerNumber, xml_node<> *node, char *&valueChar, const char *attributeName, size_t maxSize )
+{
+	std::stringstream stream;
+	stream << integerNumber;
+
+	std::string value( stream.str() );
+
+	if ( value.length() >= maxSize )
+		return false;
+
+	xml_attribute<> *attr = node->first_attribute( attributeName );
+	if ( valueChar == NULL )
+	{
+		valueChar = m_xmlDocument.allocate_string( value.c_str(), maxSize );
+
+		attr = m_xmlDocument.allocate_attribute( attributeName, valueChar );
+		node->append_attribute( attr );
+	}
+	else
+	{
+		strcpy( valueChar, value.c_str() );
+		attr->value( valueChar );
+	}
+
+	return true;
+}
+
+
+bool
+DataFile::getStringAttribute( const rapidxml::xml_node<> *node, const char *attributeName, std::string &string ) const
+{
+	
+	const xml_attribute<> *attr = node->first_attribute( attributeName );
+
+	if ( attr == NULL )
+		return false;
+
+	string == attr->value();
+	return true;
+}
+
+
+int
+DataFile::getIntAttribute( const xml_node<> *node, const char *attributeName, int defaultValue ) const
+{
+	const xml_attribute<> *attr = node->first_attribute( attributeName );
+
+	if ( attr == NULL )
+		return defaultValue;
+
+	int i;
+
+	if ( sscanf( attr->value(), "%d", &i ) == 1 )
+		return i;
+	else
+		return defaultValue;
+}
+
+
+void
+DataFile::appendStringAttribute( rapidxml::xml_node<> *node, const char *allocatedAttributeName, const char *attributeValue )
+{
+	const char *val = m_xmlDocument.allocate_string( attributeValue );
+	xml_attribute<> *nameAttribute = m_xmlDocument.allocate_attribute( allocatedAttributeName, val );
+	node->append_attribute( nameAttribute );
 }
 
 
