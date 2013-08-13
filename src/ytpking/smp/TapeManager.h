@@ -19,10 +19,16 @@
 
 
 #include <set>
+#include <map>
+
+#include "TapesDataFile.h"
 
 
 	namespace ytpking
 	{
+
+class TapesDataFile;
+
 	namespace smp
 	{
 
@@ -86,11 +92,13 @@ public:
 
 private:
 
-	typedef std::set<Tape *>     TapeSet;
+	typedef std::map<Tape *, TapesDataFile::NodeReference> TapeMap;
 	typedef std::set<TapeUser *> TapeUserSet;
 
+	TapesDataFile *m_tapesDataFile;
+
 	Tape    *m_selectedTape;
-	TapeSet  m_tapes;
+	TapeMap  m_tapes;
 
 	TapeUserSet m_tapeUsers;
 

@@ -16,14 +16,9 @@
 */
 #include "ytpking/SamplesDataFile.h"
 
-#include <fstream>
-#include <sstream>
-
 #include <wx/log.h>
 
 #include "ytpking/Guid.h"
-
-#include "rapidxml/rapidxml_print.hpp"
 
 #include "gst/gnl/TapeComposition.h"
 #include "gst/gnl/FileSource.h"
@@ -56,6 +51,7 @@ NodeReference::NodeReference( void ) :
 
 
 SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
+	DataFile( "/samples.xml" ),
 	m_manager( manager ),
 	m_isLocked( false )
 {
@@ -162,15 +158,6 @@ SamplesDataFile::setSampleEnd( int sampleEnd, NodeReference &nodeReference )
 {
 	if ( !setOrMakeNumberAttribute( sampleEnd, nodeReference.m_speech, nodeReference.m_endString,  "end", MAX_END_FRAME_SIZE ) )
 		wxLogError( "End time can't be more than %d digits long.", MAX_END_FRAME_SIZE - 1 );
-}
-
-
-void
-SamplesDataFile::saveToFile( void ) const
-{
-	std::ofstream oFile( m_filename, std::ofstream::out|std::ofstream::trunc );
-
-	oFile << m_xmlDocument;
 }
 
 

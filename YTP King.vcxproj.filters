@@ -150,6 +150,9 @@
     <ClCompile Include="src\ytpking\Guid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\TapesDataFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ytpking\MainWindow.h">
@@ -264,6 +267,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\Guid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\TapesDataFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

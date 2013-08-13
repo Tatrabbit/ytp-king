@@ -14,27 +14,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SamplesDataFile_h
-#define __YTPKING_SamplesDataFile_h
+#ifndef __YTPKING_TapesDataFile_h
+#define __YTPKING_TapesDataFile_h
 
 #include "ytpking/DataFile.h"
-
-#include "rapidxml/rapidxml.hpp"
 
 
 	namespace ytpking
 	{
 
 namespace smp {
-	class SampleManager;
+	class TapeManager;
 }
 
 
-class SamplesDataFile :
+class TapesDataFile :
 	public DataFile
 {
 public:
-	explicit SamplesDataFile( smp::SampleManager *manager );
+	explicit TapesDataFile( smp::TapeManager *manager );
 
 	class NodeReference
 	{
@@ -42,27 +40,13 @@ public:
 		NodeReference( void );
 
 	private:
-		friend class SamplesDataFile;
+		friend class TapesDataFile;
 
-		rapidxml::xml_node<> *m_speaker;
-		rapidxml::xml_node<> *m_speech;
-
-		char *m_startString;
-		char *m_endString;
+		rapidxml::xml_node<> *m_tape;
 	};
 
 	NodeReference
-		addSample( const char *name, const char *speaker, const char *guid );
-	void
-		renameSample( const char *newName, NodeReference &nodeReference );
-
-	void
-		changeSampleSpeaker( const char *newSpeakerName, NodeReference &nodeReference );
-
-	void
-		setSampleStart( int sampleStart, NodeReference &nodeReference );
-	void
-		setSampleEnd( int sampleStart, NodeReference &nodeReference );
+		addTape( const char *name );
 
 	void
 		loadAll( void )
@@ -70,13 +54,7 @@ public:
 
 private:
 
-	smp::SampleManager *m_manager;
-	bool m_isLocked;
-
-	// TODO I can optimize this by storing a hashmap of existing speaker nodes.
-	//      currently it's searched top to bottom each time.
-	rapidxml::xml_node<>
-		*getOrMakeSpeakerNode( const char *speakerName );
+	smp::TapeManager *m_manager;
 
 };
 

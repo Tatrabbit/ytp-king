@@ -16,6 +16,7 @@
 */
 #include "ytpking/DataFile.h"
 
+#include <fstream>
 #include <sstream>
 
 #include <wx/log.h>
@@ -25,6 +26,8 @@
 #endif
 
 #include "utf8.h"
+#include "rapidxml/rapidxml_print.hpp"
+
 
 using namespace rapidxml;
 
@@ -37,10 +40,10 @@ std::string  DataFile::m_savedataPath;
 bool         DataFile::m_hasSavedataPath( false );
 
 
-DataFile::DataFile( void ) :
+DataFile::DataFile( const char *filename ) :
 	m_filename( getSaveDataPath()? getSaveDataPath() : "" )
 {
-	m_filename += "/samples.xml";
+	m_filename += filename;
 
 	FILE * f = fopen( m_filename.c_str() , "rb" );
 	if ( f )
@@ -123,6 +126,14 @@ DataFile::initialize( void )
 		return false;
 	}
 #endif
+}
+
+void
+DataFile::saveToFile( void ) const
+{
+	std::ofstream oFile( m_filename, std::ofstream::out|std::ofstream::trunc );
+
+	oFile << m_xmlDocument;
 }
 
 

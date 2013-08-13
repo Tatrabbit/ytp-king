@@ -29,7 +29,7 @@
 class DataFile
 {
 public:
-	DataFile( void );
+	DataFile( const char *filename );
 	virtual ~DataFile( void );
 private:
 	explicit DataFile( DataFile & );
@@ -48,7 +48,7 @@ public:
 		loadAll( void ) = 0;
 
 	virtual void
-		saveToFile( void ) const = 0;
+		saveToFile( void ) const;
 
 
 protected:

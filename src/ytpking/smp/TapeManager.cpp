@@ -29,6 +29,7 @@
 
 
 TapeManager::TapeManager( void ) :
+	m_tapesDataFile( NULL ),
 	m_selectedTape( NULL )
 {
 }
@@ -36,14 +37,19 @@ TapeManager::TapeManager( void ) :
 
 TapeManager::~TapeManager( void )
 {
-	for ( TapeSet::const_iterator it = m_tapes.begin(); it != m_tapes.end(); ++it )
-		delete *it;
+	for ( TapeMap::const_iterator it = m_tapes.begin(); it != m_tapes.end(); ++it )
+		delete it->first;
+
+	if ( m_tapesDataFile )
+		delete m_tapesDataFile;
 }
 
 void
 TapeManager::initialize( void )
 {
-	// TODO need a TapeDataFile or similar.
+	assert( m_tapesDataFile == NULL );
+	m_tapesDataFile = new TapesDataFile( this );
+	m_tapesDataFile->loadAll();
 }
 
 
@@ -84,10 +90,12 @@ Tape
 *TapeManager::addTape( void )
 {
 	Tape *tape = new Tape();
-	m_tapes.insert( tape );
+	TapesDataFile::NodeReference nodeReference = m_tapesDataFile->addTape( "Your Omnipotence" );
+	m_tapes[tape ] = nodeReference;
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 		(*it)->onAddTape( *tape );
+
 
 	return tape;
 }
@@ -96,15 +104,15 @@ Tape
 void
 TapeManager::deleteTape( Tape *tape )
 {
-	TapeSet::const_iterator it = m_tapes.find( tape );
+	TapeMap::const_iterator tapeIt = m_tapes.find( tape );
 
-	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
-		(*it)->onDeleteTape( *tape );
-
-	if ( it != m_tapes.end() )
+	if ( tapeIt != m_tapes.end() )
 	{
+		for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
+			(*it)->onDeleteTape( *tape );
+
 		delete tape;
-		m_tapes.erase( it );
+		m_tapes.erase( tapeIt->first );
 	}
 }
 
