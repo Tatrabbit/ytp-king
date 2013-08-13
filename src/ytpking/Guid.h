@@ -14,8 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SMP_Sample_h
-#define __YTPKING_SMP_Sample_h
+#ifndef __YTPKING_Guid_h
+#define __YTPKING_Guid_h
 
 #include <string>
 
@@ -23,32 +23,22 @@
 	namespace ytpking
 	{
 
-namespace gst {
-namespace gnl {
-	class TapeComposition;
-	class FileSource;
-} }
 
-	namespace smp
-	{
-
-
-// TODO store the name here
-class Sample
+class Guid
 {
 public:
-	Sample( const char *filename, const char *guid = NULL );
+	Guid( void );
 
-	std::string m_filename;
-	std::string m_guid;
+	inline operator const char *( void ) const
+	{ return m_string.c_str(); }
 
-	unsigned int m_start;
-	unsigned int m_duration;
+private:
+	std::string m_string;
 
 };
 
 
-	} }
+	}
 
 
 #endif

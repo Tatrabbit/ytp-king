@@ -16,6 +16,8 @@
 */
 #include "Sample.h"
 
+#include "ytpking/Guid.h"
+
 #include "gst/gnl/FileSource.h"
 #include "gst/gnl/TapeComposition.h"
 
@@ -26,8 +28,9 @@
 	{
 
 
-Sample::Sample( const char *filename )  :
+Sample::Sample( const char *filename, const char *guid )  :
 	m_filename( filename ),
+	m_guid( guid? guid : Guid() ),
 	m_start( 0u ),
 	m_duration( 5u )
 {

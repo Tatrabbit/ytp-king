@@ -21,6 +21,8 @@
 
 #include <wx/log.h>
 
+#include "ytpking/Guid.h"
+
 #include "rapidxml/rapidxml_print.hpp"
 
 #include "gst/gnl/TapeComposition.h"
@@ -103,7 +105,7 @@ SamplesDataFile::~SamplesDataFile( void )
 
 
 SamplesDataFile::NodeReference
-SamplesDataFile::addSample( const char *name, const char *speaker )
+SamplesDataFile::addSample( const char *name, const char *speaker, const char *guid )
 {
 	NodeReference nodeReference;
 
@@ -114,10 +116,9 @@ SamplesDataFile::addSample( const char *name, const char *speaker )
 	nodeReference.m_speaker = getOrMakeSpeakerNode( speaker );
 	nodeReference.m_speech  = m_xmlDocument.allocate_node( node_element, "speech" );
 
-	const char *val = m_xmlDocument.allocate_string( name );
-	xml_attribute<> *nameAttribute = m_xmlDocument.allocate_attribute( "name", val );
+	appendStringAttribute( nodeReference.m_speech, "name", name );
+	appendStringAttribute( nodeReference.m_speech, "guid", guid );
 
-	nodeReference.m_speech->append_attribute( nameAttribute );
 	nodeReference.m_speaker->append_node( nodeReference.m_speech );
 
 	saveToFile();
@@ -290,6 +291,7 @@ SamplesDataFile::loadAll( void )
 
 			smp::Sample *sample = m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, &nodeReference );
 
+			// get duration start and end
 			int start, duration, end;
 			start = getIntAttribute( speechNode, "start", 0 );
 			end   = getIntAttribute( speechNode, "end", 5 );
@@ -301,6 +303,14 @@ SamplesDataFile::loadAll( void )
 			sample->m_start = start;
 			sample->m_duration = duration;
 
+			// get guid
+			if ( !getStringAttribute( speechNode, "guid", sample->m_guid ) )
+			{
+				Guid guid;
+				sample->m_guid = guid;
+				appendStringAttribute( speechNode, "guid", guid );
+			}
+
 			speechNode = speechNode->next_sibling( "speech" );
 		}
 
@@ -309,6 +319,19 @@ SamplesDataFile::loadAll( void )
 
 
 	m_isLocked = false;
+}
+
+bool
+SamplesDataFile::getStringAttribute( const rapidxml::xml_node<> *node, const char *attributeName, std::string &string ) const
+{
+	
+	const xml_attribute<> *attr = node->first_attribute( attributeName );
+
+	if ( attr == NULL )
+		return false;
+
+	string == attr->value();
+	return true;
 }
 
 
@@ -326,6 +349,15 @@ SamplesDataFile::getIntAttribute( const xml_node<> *node, const char *attributeN
 		return i;
 	else
 		return defaultValue;
+}
+
+
+void
+SamplesDataFile::appendStringAttribute( rapidxml::xml_node<> *node, const char *allocatedAttributeName, const char *attributeValue )
+{
+	const char *val = m_xmlDocument.allocate_string( attributeValue );
+	xml_attribute<> *nameAttribute = m_xmlDocument.allocate_attribute( allocatedAttributeName, val );
+	node->append_attribute( nameAttribute );
 }
 
 

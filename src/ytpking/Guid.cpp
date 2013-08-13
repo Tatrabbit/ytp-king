@@ -14,41 +14,42 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_SMP_Sample_h
-#define __YTPKING_SMP_Sample_h
 
-#include <string>
+#include "Guid.h"
+
+#include <cassert>
+
+#ifdef _MSC_VER
+#include "Objbase.h"
+#endif
+
+#include "utf8.h"
 
 
 	namespace ytpking
 	{
 
-namespace gst {
-namespace gnl {
-	class TapeComposition;
-	class FileSource;
-} }
 
-	namespace smp
-	{
-
-
-// TODO store the name here
-class Sample
+Guid::Guid( void )
 {
-public:
-	Sample( const char *filename, const char *guid = NULL );
+#ifdef _MSC_VER
+	OLECHAR guidStringPtr[40];
+	GUID guid;
+	CoCreateGuid( &guid );
 
-	std::string m_filename;
-	std::string m_guid;
+#	ifndef NDEBUG
+	int charSize =
+#	endif
+		
+	StringFromGUID2( guid, guidStringPtr, 40 );
 
-	unsigned int m_start;
-	unsigned int m_duration;
+	assert( charSize > 0 );
 
-};
+	std::wstring wideString = guidStringPtr;
 
-
-	} }
-
-
+	utf8::utf16to8( wideString.begin(), wideString.end(), std::back_inserter( m_string ) );
 #endif
+}
+
+
+	}

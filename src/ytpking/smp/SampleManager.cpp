@@ -109,7 +109,7 @@ smp::Sample
 	if ( nodeReferencePtr != NULL )
 		nodeReference = *nodeReferencePtr;
 	else
-		nodeReference = m_samplesDataFile->addSample( name, speakerName );
+		nodeReference = m_samplesDataFile->addSample( name, speakerName, sample->m_guid.c_str() );
 
 	SamplePair pair( sample, nodeReference );
 

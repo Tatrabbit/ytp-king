@@ -147,6 +147,9 @@
     <ClCompile Include="src\ytpking\SampleWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\Guid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ytpking\MainWindow.h">
@@ -258,6 +261,9 @@
       <Filter>Header Files\smp : Samples and Mixers</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\SampleWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\Guid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

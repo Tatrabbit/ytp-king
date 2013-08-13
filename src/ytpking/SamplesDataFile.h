@@ -59,7 +59,7 @@ public:
 	};
 
 	NodeReference
-		addSample( const char *name, const char *speaker );
+		addSample( const char *name, const char *speaker, const char *guid );
 	void
 		renameSample( const char *newName, NodeReference &nodeReference );
 
@@ -95,9 +95,26 @@ private:
 	rapidxml::xml_node<>
 		*getOrMakeSpeakerNode( const char *speakerName );
 
+	bool
+		getStringAttribute( const rapidxml::xml_node<> *node, const char *attributeName, std::string &string ) const;
+
+	/** Gets the integer value of an attribute according to sscanf. If the value is not convertable to an int,
+	    the defaultValue will be returned.
+	\param node The node to get the attribute of.
+	\param attributeName The name of the attribute to locate. If multiple attributes exist with this name,
+	                     only the first will be used.
+	\param defaultValue  If the attribute didn't exist, or couldn't be converted to an int, this value will be
+	                     returned. */
 	int
 		getIntAttribute( const rapidxml::xml_node<> *node, const char *attributeName, int defaultValue ) const;
 
+	/** Appends a string attribute. This will allocate the attribute value, but not the name, so should be used when the attribute name
+	    is not allocated, or doesn't have to be allocated, as with a string constant.
+	\param node The node to append the new attribute to.
+	\param allocatedAttributeName The name of the attribute. It will not be allocated, so it must already exist in memory.
+	\param attributeValue The value of the attribute. Space will be allocated for this string, so it is safe to pass a transient variable. */
+	void
+		appendStringAttribute( rapidxml::xml_node<> *node, const char *allocatedAttributeName, const char *attributeValue );
 };
 
 
