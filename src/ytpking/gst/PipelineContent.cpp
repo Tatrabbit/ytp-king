@@ -37,14 +37,13 @@ void
 PipelineContent::connectToPipeline( Pipeline &pipeline )
 {
 	m_connectedPipeline = &pipeline;
-	pipeline.m_content = this;
 }
 
 
 void
 PipelineContent::disconnectFromPipeline( void )
 {
-	m_connectedPipeline->m_content = NULL;
+	m_connectedPipeline->m_hasContent = false;
 	m_connectedPipeline = NULL;
 }
 

@@ -104,6 +104,10 @@ PreviewTapes::update( void )
 
 	m_audioComposition->update();
 	m_videoComposition->update();
+
+	if ( !(m_audioComposition->isEmpty() && m_videoComposition->isEmpty()) )
+		m_pipeline->m_hasContent = true;
+
 }
 
 

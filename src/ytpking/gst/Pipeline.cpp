@@ -36,7 +36,7 @@
 Pipeline::Pipeline( void ) :
 	m_pipeline( NULL ),
 	m_hasSetRenderWindow( false ),
-	m_content( NULL )
+	m_hasContent( false )
 {
 }
 
@@ -103,7 +103,7 @@ Pipeline::seek( double position )
 {
 	assert( position >= 0.0 && position <= 1.0 );
 
-	if ( m_content == NULL )
+	if ( !m_hasContent )
 		return;
 
 	GstState currentState = GST_STATE( m_pipeline );
@@ -134,7 +134,7 @@ Pipeline::seek( double position )
 bool
 Pipeline::getCurrentPosition( double &position ) const
 {
-	if ( m_content == NULL )
+	if ( !m_hasContent )
 		return false;
 
 	GstState currentState = GST_STATE( m_pipeline );
@@ -214,7 +214,7 @@ Pipeline::unregisterPipelineUser( PipelineUser &pipelineUser )
 bool
 Pipeline::changePipelineState( GstState state )
 {
-	if ( m_hasSetRenderWindow && m_content != NULL )
+	if ( m_hasSetRenderWindow && m_hasContent )
 	{
 		PipelineUser::PipelineState oldState, newState;
 
