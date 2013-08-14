@@ -41,10 +41,6 @@ public:
 		addTo( Pipeline &pipeline )
 		override;
 
-	GstElement
-		*getSinkElement( void )
-		const override;
-
 private:
 
 	GstElement *m_sinkElement;

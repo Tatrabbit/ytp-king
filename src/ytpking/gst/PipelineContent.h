@@ -30,8 +30,6 @@ class Pipeline;
 
 class PipelineContent
 {
-	friend class Pipeline;
-
 public:
 
 	PipelineContent( void );
@@ -47,9 +45,6 @@ protected:
 
 	Pipeline
 		*getConnectedPipeline( void ) const;
-
-	virtual GstElement
-		*getMainSinkElement( void ) const = 0;
 
 private:
 

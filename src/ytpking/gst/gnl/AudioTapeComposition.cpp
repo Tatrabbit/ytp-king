@@ -44,11 +44,5 @@ AudioTapeComposition::addTo( Pipeline &pipeline )
 	gst_bin_add_many( GST_BIN( *pipeline ), m_selfElement, m_sinkElement, NULL );
 }
 
-GstElement
-*AudioTapeComposition::getSinkElement( void ) const
-{
-	return m_sinkElement;
-}
-
 
 	} } }

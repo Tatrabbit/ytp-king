@@ -121,11 +121,4 @@ PreviewTapes::disconnectTape( void )
 }
 
 
-GstElement
-*PreviewTapes::getMainSinkElement( void ) const
-{
-	return m_audioComposition->getSinkElement();
-}
-
-
 	} } }

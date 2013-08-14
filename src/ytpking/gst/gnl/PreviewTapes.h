@@ -90,10 +90,6 @@ private:
 
 	gst::Pipeline *m_pipeline;
 
-	GstElement
-		*getMainSinkElement( void )
-		const override;
-
 };
 
 

@@ -82,9 +82,6 @@ public:
 	bool
 		isEmpty( void ) const;
 
-	virtual GstElement
-		*getSinkElement( void ) const = 0;
-
 
 protected:
 
