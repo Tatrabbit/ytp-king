@@ -31,6 +31,7 @@ enum GlobalEventId
 	SamplesButtonDeleteSample,
 
 	MainMenuAbout,
+	MainMenuImport,
 	MainMenuQuit,
 
 	SamplesTreeCtrl

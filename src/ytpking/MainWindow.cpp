@@ -23,6 +23,7 @@
 #include <wx/menu.h>
 #include <wx/treectrl.h>
 #include <wx/spinctrl.h>
+#include <wx/filedlg.h>
 
 #include "ytpking/EventId.h"
 #include "ytpking/DataFile.h"
@@ -75,9 +76,10 @@ MainWindow::MainWindow( void ) :
 
 	wxMenu *menuFile = new wxMenu;
 
-	menuFile->Append( GlobalEventId::MainMenuAbout, _("&Play") );
+	menuFile->Append( GlobalEventId::MainMenuAbout, "&Play" );
+	menuFile->Append( GlobalEventId::MainMenuImport, "&Import" );
 	menuFile->AppendSeparator();
-	menuFile->Append( GlobalEventId::MainMenuQuit, _("&Quit") );
+	menuFile->Append( GlobalEventId::MainMenuQuit, "&Quit" );
 
 	wxMenuBar *menuBar = new wxMenuBar;
 	menuBar->Append( menuFile, _("&File") );
@@ -144,6 +146,13 @@ MainWindow::onAbout( wxCommandEvent &WXUNUSED(event) )
 
 	// Start playing
 	gst::timelinePipeline.play();
+}
+
+
+void
+MainWindow::onImport( wxCommandEvent &event )
+{
+	wxFileDialog fileDialog( this, "Import Source", 
 }
 
 
