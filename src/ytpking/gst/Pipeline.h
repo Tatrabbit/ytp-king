@@ -32,6 +32,7 @@ class wxWindow;
 	namespace gst
 	{
 
+class PipelineContent;
 
 namespace gnl {
 	class Composition;
@@ -46,7 +47,7 @@ public:
 	Pipeline( void );
 	~Pipeline( void );
 
-	bool m_hasContent;
+	PipelineContent *m_content;
 
 private:
 	Pipeline( Pipeline & );
@@ -75,12 +76,18 @@ public:
 	void
 		stop( void );
 
+	/** Seeks the pipeline.
+	\param position Absolute position between 0.0 and 1.0 to seek to. */
+	void
+		seek( double position );
+
 	/** Access to the Gst pipeline.
 	\todo remove this, it's silly. */
 	GstElement
 		*operator*( void );
 
 private:
+
 	GstElement *m_pipeline;
 	bool        m_hasSetRenderWindow;
 

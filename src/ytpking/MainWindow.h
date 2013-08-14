@@ -33,6 +33,8 @@ class wxTreeEvent;
 
 
 class SamplePropertiesWindow;
+class MovieControlsWindow;
+
 
 namespace lnb {
 	class LibrarySizer;
@@ -69,6 +71,7 @@ public:
 	lnb::LibrarySizer      *m_librarySizer;
 	wxWindow               *m_timelineWindow;
 	SamplePropertiesWindow *m_samplePropertiesWindow;
+	MovieControlsWindow     *m_movieControlsWindow;
 
 
 	void

@@ -45,4 +45,11 @@ VideoTapeComposition::addTo( Pipeline &pipeline )
 }
 
 
+GstElement
+*VideoTapeComposition::getSinkElement( void ) const
+{
+	return m_sinkElement;
+}
+
+
 	} } }

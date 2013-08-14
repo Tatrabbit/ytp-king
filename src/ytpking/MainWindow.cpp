@@ -28,6 +28,7 @@
 #include "ytpking/DataFile.h"
 #include "ytpking/TimelineWindow.h"
 #include "ytpking/SamplePropertiesWindow.h"
+#include "ytpking/MovieControlsWindow.h"
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
@@ -70,6 +71,7 @@ MainWindow::MainWindow( void ) :
 	m_librarySizer           = new lnb::LibrarySizer( this, GlobalEventId::SamplesTreeCtrl );
 	m_timelineWindow         = new TimelineWindow( this );
 	m_samplePropertiesWindow = new SamplePropertiesWindow( this );
+	m_movieControlsWindow    = new MovieControlsWindow( this );
 
 	wxMenu *menuFile = new wxMenu;
 
@@ -97,6 +99,7 @@ MainWindow::MainWindow( void ) :
 	gst::timelinePipeline.setRenderWindow( m_moviePanel );
 
 	movieSizer->Add( m_moviePanel, 1, wxALL|wxEXPAND );
+	movieSizer->Add( m_movieControlsWindow, 0, wxALL|wxEXPAND );
 
 	movieSizer->Add( m_timelineWindow, 0, wxALL|wxEXPAND );
 	movieSizer->Hide( m_timelineWindow );

@@ -42,6 +42,10 @@ public:
 		addTo( Pipeline &pipeline )
 		override;
 
+	GstElement
+		*getSinkElement( void )
+		const override;
+
 private:
 
 	// TODO add some necessary basic processing like audioconvert and audioresample

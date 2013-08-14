@@ -17,6 +17,7 @@
 #ifndef __YTPKING_GST_PipelineContent_h
 #define __YTPKING_GST_PipelineContent_h
 
+typedef struct _GstElement GstElement;
 
 	namespace ytpking
 	{
@@ -29,6 +30,8 @@ class Pipeline;
 
 class PipelineContent
 {
+	friend class Pipeline;
+
 public:
 
 	PipelineContent( void );
@@ -44,6 +47,9 @@ protected:
 
 	Pipeline
 		*getConnectedPipeline( void ) const;
+
+	virtual GstElement
+		*getMainSinkElement( void ) const = 0;
 
 private:
 

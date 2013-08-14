@@ -104,9 +104,6 @@ PreviewTapes::update( void )
 
 	m_audioComposition->update();
 	m_videoComposition->update();
-
-	if ( !(m_audioComposition->isEmpty() && m_videoComposition->isEmpty()) )
-		m_pipeline->m_hasContent = true;
 }
 
 
@@ -121,6 +118,13 @@ PreviewTapes::disconnectTape( void )
 	m_videoComposition->disconnectTape();
 
 	m_connectedTape = NULL;
+}
+
+
+GstElement
+*PreviewTapes::getMainSinkElement( void ) const
+{
+	return m_audioComposition->getSinkElement();
 }
 
 

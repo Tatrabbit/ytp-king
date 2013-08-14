@@ -14,44 +14,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_VideoTapeComposition_h
-#define __YTPKING_GST_GNL_VideoTapeComposition_h
+#include "MovieControlsWindow.h"
 
+#include <wx/slider.h>
+#include <wx/sizer.h>
 
-#include "TapeComposition.h"
-
+#include "gst/Pipeline.h"
 
 	namespace ytpking
 	{
-	namespace gst
-	{
-	namespace gnl
-	{
 
-class FileSource;
 
-class VideoTapeComposition : 
-	public TapeComposition
+MovieControlsWindow::MovieControlsWindow( wxWindow *parent ) :
+	wxWindow( parent, wxID_ANY )
 {
-public:
+	m_seekSlider = new wxSlider( this, wxID_ANY, 0, 0, INT_MAX, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_TOP|wxSL_AUTOTICKS );
 
-	VideoTapeComposition( void );
+	wxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
+	mainSizer->Add( m_seekSlider, 1, wxALL|wxEXPAND );
 
-	void
-		addTo( Pipeline &pipeline )
-		override;
-
-	GstElement
-		*getSinkElement( void )
-		const override;
-
-private:
-
-	GstElement *m_sinkElement;
-
-};
-
-	} } }
+	SetSizer( mainSizer );
+}
 
 
-#endif
+void
+MovieControlsWindow::onSeekSlider( wxScrollEvent &event )
+{
+	gst::timelinePipeline.seek( (double)event.GetInt() / (double)INT_MAX );
+}
+
+
+wxBEGIN_EVENT_TABLE( MovieControlsWindow, wxWindow )
+
+	EVT_COMMAND_SCROLL_THUMBRELEASE( wxID_ANY, onSeekSlider )
+
+wxEND_EVENT_TABLE()
+
+
+	}

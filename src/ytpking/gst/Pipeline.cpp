@@ -21,7 +21,9 @@
 #include <gst/interfaces/xoverlay.h>
 
 #include <wx/window.h>
+#include <wx/log.h>
 
+#include "gst/PipelineContent.h"
 #include "gnl/TapeComposition.h"
 
 
@@ -34,7 +36,7 @@
 Pipeline::Pipeline( void ) :
 	m_pipeline( NULL ),
 	m_hasSetRenderWindow( false ),
-	m_hasContent( false )
+	m_content( NULL )
 {
 }
 
@@ -78,7 +80,7 @@ Pipeline::setRenderWindow( wxWindow *renderWindow )
 void
 Pipeline::play( void )
 {
-	if ( m_hasSetRenderWindow && m_hasContent )
+	if ( m_hasSetRenderWindow && m_content != NULL )
 		gst_element_set_state( m_pipeline, GST_STATE_PLAYING );
 }
 
@@ -88,6 +90,53 @@ Pipeline::stop( void )
 {
 	if ( m_hasSetRenderWindow )
 		gst_element_set_state( m_pipeline, GST_STATE_NULL );
+}
+
+
+void
+Pipeline::seek( double position )
+{
+	if ( m_content == NULL )
+		return;
+
+	GstState currentState = GST_STATE( m_pipeline );
+
+	switch ( gst_element_set_state( m_pipeline, GST_STATE_PAUSED ) )
+	{
+	case GST_STATE_CHANGE_FAILURE:
+	case GST_STATE_CHANGE_NO_PREROLL:
+		wxLogError( "An unknown problem occurred while trying to ready the pipeline for seeking." );
+		return;
+	case GST_STATE_CHANGE_ASYNC:
+		if ( gst_element_get_state( m_pipeline, NULL,  NULL, G_GINT64_CONSTANT( 5 ) * GST_SECOND ) != GST_STATE_CHANGE_SUCCESS )
+		{
+			wxLogError( "A timeout occurred while trying to ready the pipeline for seeking." );
+			return;
+		}
+		//passthrough
+	case GST_STATE_CHANGE_SUCCESS:
+		break;
+	}
+
+	gint64 duration;
+	GstFormat format = GST_FORMAT_TIME;
+
+	if ( !gst_element_query_duration( m_pipeline, &format, &duration ) || format != GST_FORMAT_TIME )
+	{
+		wxLogError( "An unknown problem occurred while trying to query the pipeline duration." );
+		return;
+	}
+
+	gint64 timePosition = (long double)position * (long double)duration;
+   
+	GstEvent *seek_event = gst_event_new_seek( (gdouble)1.0, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
+	                                           GST_SEEK_TYPE_SET, timePosition, GST_SEEK_TYPE_NONE, 0);
+   
+	//gst_element_send_event ( m_content->getMainSinkElement(), seek_event);
+	gst_element_send_event ( m_pipeline, seek_event);
+
+	if ( currentState != GST_STATE_NULL )
+		gst_element_set_state( m_pipeline, currentState );
 }
 
 

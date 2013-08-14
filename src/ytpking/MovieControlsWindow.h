@@ -14,44 +14,39 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_GST_GNL_VideoTapeComposition_h
-#define __YTPKING_GST_GNL_VideoTapeComposition_h
+#ifndef __YTPKING_MovieControlsWindow_h
+#define __YTPKING_MovieControlsWindow_h
+
+#include <wx/window.h>
 
 
-#include "TapeComposition.h"
+class wxSlider;
 
 
 	namespace ytpking
 	{
-	namespace gst
-	{
-	namespace gnl
-	{
 
-class FileSource;
 
-class VideoTapeComposition : 
-	public TapeComposition
+class MovieControlsWindow :
+	public wxWindow
 {
 public:
 
-	VideoTapeComposition( void );
-
-	void
-		addTo( Pipeline &pipeline )
-		override;
-
-	GstElement
-		*getSinkElement( void )
-		const override;
+	MovieControlsWindow( wxWindow *parent );
 
 private:
 
-	GstElement *m_sinkElement;
+	wxSlider *m_seekSlider;
+
+	void
+		onSeekSlider( wxScrollEvent &event );
+
+
+	wxDECLARE_EVENT_TABLE();
 
 };
 
-	} } }
 
+	}
 
 #endif
