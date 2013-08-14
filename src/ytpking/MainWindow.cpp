@@ -90,14 +90,6 @@ MainWindow::MainWindow( void ) :
 
 	wxSizer *movieSizer = new wxBoxSizer( wxVERTICAL );
 
-	wxSizer *entrySizer = new wxBoxSizer( wxHORIZONTAL );
-
-	m_textControl = new wxTextCtrl( this, -1 );
-
-	entrySizer->Add( m_textControl, 1, wxALL|wxEXPAND );
-
-	movieSizer->Add( entrySizer, 0, wxALL|wxEXPAND );
-
 		// movie panel
 	m_moviePanel = new wxWindow( this, wxID_ANY );
 	m_moviePanel->SetOwnBackgroundColour( wxColour( "black" ) );
@@ -148,8 +140,6 @@ MainWindow::onAbout( wxCommandEvent &WXUNUSED(event) )
 				  wxOK | wxICON_INFORMATION, this );*/
 
 	// Start playing
-	m_filename = m_textControl->GetValue();
-
 	gst::timelinePipeline.play();
 }
 

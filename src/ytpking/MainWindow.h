@@ -89,8 +89,6 @@ private:
 
 	std::string m_filename;
 
-	wxTextCtrl *m_textControl;
-
 	gst::GstreamerThread       *m_gstThread;
 
 	const wxPoint
