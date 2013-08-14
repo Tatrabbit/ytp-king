@@ -89,6 +89,8 @@ MovieControlsWindow::onPipelineStateChange( PipelineState oldState, PipelineStat
 wxBEGIN_EVENT_TABLE( MovieControlsWindow, wxWindow )
 
 	EVT_COMMAND_SCROLL_THUMBRELEASE( wxID_ANY, onSeekSlider )
+	EVT_COMMAND_SCROLL_PAGEUP( wxID_ANY, onSeekSlider )
+	EVT_COMMAND_SCROLL_PAGEDOWN( wxID_ANY, onSeekSlider )
 	EVT_TIMER( wxID_ANY, onSeekTimer )
 
 wxEND_EVENT_TABLE()
