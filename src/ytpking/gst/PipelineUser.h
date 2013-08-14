@@ -14,53 +14,50 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_MovieControlsWindow_h
-#define __YTPKING_MovieControlsWindow_h
-
-#include <wx/window.h>
-#include <wx/timer.h>
-
-#include "gst/PipelineUser.h"
-
-
-class wxSlider;
-class wxTimer;
+#ifndef __YTPKING_GST_MainWindow_h
+#define __YTPKING_GST_MainWindow_h
 
 
 	namespace ytpking
 	{
+	namespace gst
+	{
 
 
-class MovieControlsWindow :
-	public wxWindow,
-	public gst::PipelineUser
+class Pipeline;
+
+
+class PipelineUser
 {
+	friend class Pipeline;
+
 public:
-
-	explicit MovieControlsWindow( wxWindow *parent );
-	~MovieControlsWindow( void );
+	explicit PipelineUser( Pipeline &pipeline );
+	~PipelineUser( void );
 private:
-	explicit MovieControlsWindow( MovieControlsWindow & );
-	void operator=( MovieControlsWindow & );
+	explicit PipelineUser( PipelineUser & );
+	void operator=( Pipeline & );
 
+protected:
 
-	wxSlider *m_seekSlider;
-	wxTimer  *m_timer;
+	enum PipelineState
+	{
+		Stopped,
+		Paused,
+		Playing
+	};
 
-	void
-		onSeekSlider( wxScrollEvent &event );
-	void
-		onSeekTimer( wxTimerEvent &event );
+	/** The pipeline state has changed. */
+	virtual void
+		onPipelineStateChange( PipelineState oldState, PipelineState newState ) = 0;
 
-	void
-		onPipelineStateChange( PipelineState oldState, PipelineState newState );
+private:
 
-
-	wxDECLARE_EVENT_TABLE();
+	Pipeline *m_pipeline;
 
 };
 
 
-	}
+	} }
 
 #endif

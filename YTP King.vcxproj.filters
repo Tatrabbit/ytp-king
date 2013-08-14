@@ -156,6 +156,9 @@
     <ClCompile Include="src\ytpking\MovieControlsWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\gst\PipelineUser.cpp">
+      <Filter>Source Files\gst : GStreamer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ytpking\MainWindow.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="src\ytpking\MovieControlsWindow.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\gst\PipelineUser.h">
+      <Filter>Header Files\gst : GStreamer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

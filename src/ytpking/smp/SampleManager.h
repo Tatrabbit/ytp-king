@@ -49,6 +49,8 @@ public:
 	void
 		initialize( void );
 
+	// TODO should be private, friend
+
 	/** Register a SampleUser with this class.
 	    Callbacks on this SampleUser will then be called.
 	\param  sampleUser the SampleUser instance to be registered. */

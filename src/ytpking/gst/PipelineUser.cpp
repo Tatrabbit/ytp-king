@@ -14,53 +14,28 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __YTPKING_MovieControlsWindow_h
-#define __YTPKING_MovieControlsWindow_h
+#include "PipelineUser.h"
 
-#include <wx/window.h>
-#include <wx/timer.h>
-
-#include "gst/PipelineUser.h"
-
-
-class wxSlider;
-class wxTimer;
+#include "gst/Pipeline.h"
 
 
 	namespace ytpking
 	{
+	namespace gst
+	{
 
 
-class MovieControlsWindow :
-	public wxWindow,
-	public gst::PipelineUser
+PipelineUser::PipelineUser( Pipeline &pipeline ) :
+	m_pipeline( &pipeline )
 {
-public:
-
-	explicit MovieControlsWindow( wxWindow *parent );
-	~MovieControlsWindow( void );
-private:
-	explicit MovieControlsWindow( MovieControlsWindow & );
-	void operator=( MovieControlsWindow & );
+	pipeline.registerPipelineUser( *this );
+}
 
 
-	wxSlider *m_seekSlider;
-	wxTimer  *m_timer;
-
-	void
-		onSeekSlider( wxScrollEvent &event );
-	void
-		onSeekTimer( wxTimerEvent &event );
-
-	void
-		onPipelineStateChange( PipelineState oldState, PipelineState newState );
+PipelineUser::~PipelineUser( void )
+{
+	m_pipeline->unregisterPipelineUser( *this );
+}
 
 
-	wxDECLARE_EVENT_TABLE();
-
-};
-
-
-	}
-
-#endif
+	} }

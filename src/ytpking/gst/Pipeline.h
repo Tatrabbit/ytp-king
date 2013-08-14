@@ -17,6 +17,12 @@
 #ifndef __YTPKING_GST_Pipeline_h
 #define __YTPKING_GST_Pipeline_h
 
+#include <set>
+
+#include <gst/gstelement.h>
+
+#include "gst/PipelineUser.h"
+
 
 typedef struct _GstElement GstElement;
 typedef struct _GstMessage GstMessage;
@@ -24,8 +30,8 @@ typedef struct _GstBus     GstBus;
 
 typedef void    *gpointer;
 
-
 class wxWindow;
+
 
 	namespace ytpking
 	{
@@ -33,6 +39,7 @@ class wxWindow;
 	{
 
 class PipelineContent;
+class PipelineUser;
 
 namespace gnl {
 	class Composition;
@@ -42,6 +49,8 @@ namespace gnl {
 /** A wrapper for a GStreamer pipeline. */
 class Pipeline
 {
+	friend class PipelineUser;
+
 public:
 
 	Pipeline( void );
@@ -76,10 +85,17 @@ public:
 	void
 		stop( void );
 
+	/** Pauses the pipeline, but doesn't unload the media. */
+	void
+		pause( void );
+
 	/** Seeks the pipeline.
 	\param position Absolute position between 0.0 and 1.0 to seek to. */
 	void
 		seek( double position );
+
+	bool
+		getCurrentPosition( double &position ) const;
 
 	/** Access to the Gst pipeline.
 	\todo remove this, it's silly. */
@@ -91,12 +107,30 @@ private:
 	GstElement *m_pipeline;
 	bool        m_hasSetRenderWindow;
 
+	typedef std::set<PipelineUser *> UserSet;
+
+	UserSet m_pipelineUsers;
+
 	static void
 		onMessage ( GstBus *bus, GstMessage *message, gpointer data );
 
 	static void
 		onSyncMessage ( GstBus *bus, GstMessage *message, gpointer data );
 
+	void
+		registerPipelineUser( PipelineUser &pipelineUser );
+
+	void
+		unregisterPipelineUser( PipelineUser &pipelineUser );
+
+	bool
+		changePipelineState( GstState state );
+
+	bool
+		getPipelelineUserState( PipelineUser::PipelineState &state ) const;
+
+	bool
+		setPipelineStateSync( GstState state );
 };
 
 #ifdef YTPKING_GST_Pipeline_cpp
