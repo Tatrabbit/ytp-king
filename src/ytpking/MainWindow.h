@@ -81,6 +81,9 @@ public:
 		onAbout( wxCommandEvent &event );
 
 	void
+		onImport( wxCommandEvent &event );
+
+	void
 		onSamplesTreeChange( wxTreeEvent& event );
 
 private:

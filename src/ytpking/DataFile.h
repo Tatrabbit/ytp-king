@@ -36,14 +36,6 @@ private:
 	void operator=( DataFile & );
 public:
 
-	static bool initialize( void );
-
-	/** Gets the path in the user's home directory to save data to.
-	/return the path usually, but NULL if something fatal happened during setup. */
-	static const char
-		*getSaveDataPath( void );
-
-
 	virtual void
 		loadAll( void ) = 0;
 
@@ -83,9 +75,6 @@ protected:
 private:
 
 	char *m_fileBuffer;
-	
-	static std::string m_savedataPath;
-	static bool        m_hasSavedataPath;
 
 };
 

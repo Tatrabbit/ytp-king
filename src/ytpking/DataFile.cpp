@@ -21,12 +21,9 @@
 
 #include <wx/log.h>
 
-#ifdef _MSC_VER
-#	include <ShlObj.h>
-#endif
-
-#include "utf8.h"
 #include "rapidxml/rapidxml_print.hpp"
+
+#include "ytpking/DataDirectory.h"
 
 
 using namespace rapidxml;
@@ -36,12 +33,8 @@ using namespace rapidxml;
 	{
 
 
-std::string  DataFile::m_savedataPath;
-bool         DataFile::m_hasSavedataPath( false );
-
-
 DataFile::DataFile( const char *filename ) :
-	m_filename( getSaveDataPath()? getSaveDataPath() : "" )
+	m_filename( ytpking::dataDirectory.getSaveDataPath() )
 {
 	m_filename += filename;
 
@@ -81,66 +74,12 @@ DataFile::~DataFile( void )
 }
 
 
-bool
-DataFile::initialize( void )
-{
-// TODO for other platforms/compilers
-#ifdef _MSC_VER
-	TCHAR charPath[MAX_PATH];
-
-	if ( SUCCEEDED( SHGetFolderPath( NULL, CSIDL_COMMON_APPDATA, NULL, 0, charPath ) ) )
-	{
-		m_hasSavedataPath = true;
-
-		std::wstring wPath;
-		wPath = charPath;
-
-		wPath += L"\\rainChu";
-
-		if ( !CreateDirectory( wPath.c_str(), NULL ) )
-		{
-			if ( GetLastError() != ERROR_ALREADY_EXISTS )
-			{
-				wxLogError( "Coulnd't create the save directory. Please file a bug report." );
-				return m_hasSavedataPath = false;
-			}
-		}
-
-		wPath += L"\\YTP King";
-		
-		if ( !CreateDirectory( wPath.c_str(), NULL ) )
-		{
-			if ( GetLastError() != ERROR_ALREADY_EXISTS )
-			{
-				wxLogError( "Coulnd't create the save directory. Please file a bug report." );
-				return m_hasSavedataPath = false;
-			}
-		}
-
-		utf8::utf32to8( wPath.begin(), wPath.end(), std::back_inserter( m_savedataPath ) );
-		return true;
-	}
-	else
-	{
-		wxLogError( "Coulnd't locate your appdata folder. Please file a bug report." );
-		return false;
-	}
-#endif
-}
-
 void
 DataFile::saveToFile( void ) const
 {
 	std::ofstream oFile( m_filename, std::ofstream::out|std::ofstream::trunc );
 
 	oFile << m_xmlDocument;
-}
-
-
-const char
-*DataFile::getSaveDataPath( void )
-{
-	return m_hasSavedataPath? m_savedataPath.c_str() : NULL;
 }
 
 

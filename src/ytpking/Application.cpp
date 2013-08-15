@@ -25,6 +25,7 @@
 #include <gst/gst.h>
 
 #include "ytpking/MainWindow.h"
+#include "ytpking/DataDirectory.h"
 
 
 	namespace ytpking
@@ -55,6 +56,9 @@ Application::Application( void )
 bool
 Application::OnInit( void )
 {
+	if ( ytpking::dataDirectory.getHasError() )
+		return false;
+
 	// Initialize GStreamer
 	gst_debug_set_default_threshold( GST_LEVEL_WARNING );
 	gst_init( NULL, NULL );

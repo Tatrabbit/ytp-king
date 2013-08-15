@@ -63,9 +63,6 @@ MainWindow::MainWindow( void ) :
 	gst::gnl::previewTapes.initialize();
 	gst::gnl::previewTapes.connectToPipeline( gst::timelinePipeline );
 
-	// Get the folder save path
-	DataFile::initialize();
-
 	// Remove the ugly grey tinge on Windows
 	SetBackgroundColour( wxNullColour );
 
@@ -152,7 +149,7 @@ MainWindow::onAbout( wxCommandEvent &WXUNUSED(event) )
 void
 MainWindow::onImport( wxCommandEvent &event )
 {
-	wxFileDialog fileDialog( this, "Import Source", 
+	//wxFileDialog fileDialog( this, "Import Source", 
 }
 
 
