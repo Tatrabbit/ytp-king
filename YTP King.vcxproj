@@ -25,6 +25,7 @@
     <ClCompile Include="src\ytpking\gst\PipelineContent.cpp" />
     <ClCompile Include="src\ytpking\gst\PipelineUser.cpp" />
     <ClCompile Include="src\ytpking\Guid.cpp" />
+    <ClCompile Include="src\ytpking\ImportFileProgressDialog.cpp" />
     <ClCompile Include="src\ytpking\lnb\SamplesPage.cpp" />
     <ClCompile Include="src\ytpking\lnb\SamplesTreeCtrl.cpp" />
     <ClCompile Include="src\ytpking\lnb\SourcesListCtrl.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="src\utf8\checked.h" />
     <ClInclude Include="src\utf8\core.h" />
     <ClInclude Include="src\utf8\unchecked.h" />
+    <ClInclude Include="src\ytpking\ImportFileProgressDialog.h" />
     <ClInclude Include="src\ytpking\DataDirectory.h" />
     <ClInclude Include="src\ytpking\DataFile.h" />
     <ClInclude Include="src\ytpking\EventId.h" />

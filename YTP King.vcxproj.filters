@@ -162,6 +162,9 @@
     <ClCompile Include="src\ytpking\DataDirectory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ytpking\ImportFileProgressDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ytpking\MainWindow.h">
@@ -288,6 +291,9 @@
       <Filter>Header Files\gst : GStreamer</Filter>
     </ClInclude>
     <ClInclude Include="src\ytpking\DataDirectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ytpking\ImportFileProgressDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

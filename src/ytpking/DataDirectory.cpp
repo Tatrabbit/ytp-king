@@ -59,7 +59,17 @@ DataDirectory::DataDirectory( void )
 			if ( GetLastError() != ERROR_ALREADY_EXISTS )
 			{
 				wxSafeShowMessage( "Error", "Coulnd't create the save directory. Please file a bug report." );
-				abort();
+				return;
+			}
+		}
+
+		
+		if ( !CreateDirectory( (wPath + L"\\sources").c_str(), NULL ) )
+		{
+			if ( GetLastError() != ERROR_ALREADY_EXISTS )
+			{
+				wxSafeShowMessage( "Error", "Coulnd't create the save directory. Please file a bug report." );
+				return;
 			}
 		}
 

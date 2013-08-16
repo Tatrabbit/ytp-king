@@ -25,12 +25,12 @@
 #include <wx/spinctrl.h>
 #include <wx/filedlg.h>
 
-#include "ytpking/DataDirectory.h"
 #include "ytpking/EventId.h"
 #include "ytpking/DataFile.h"
 #include "ytpking/TimelineWindow.h"
 #include "ytpking/SamplePropertiesWindow.h"
 #include "ytpking/MovieControlsWindow.h"
+#include "ytpking/ImportFileProgressDialog.h"
 
 #include "gst/GstreamerThread.h"
 #include "gst/Pipeline.h"
@@ -156,10 +156,8 @@ MainWindow::onImport( wxCommandEvent &event )
 
 	if ( fileDialog.ShowModal() == wxID_OK )
 	{
-		std::string sourcePath = ytpking::dataDirectory.getSaveDataPath();
-		sourcePath += "/sources";
-
-		wxLogMessage( "Importing '%s%s'", sourcePath.c_str(), fileDialog.GetPath() );
+		ImportFileProgressDialog importDialog( this, fileDialog.GetPath(), fileDialog.GetFilename() );
+		importDialog.ShowModal();
 	}
 }
 
