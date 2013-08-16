@@ -76,7 +76,7 @@ public:
 	\param name     The name of the tape, such as "What's for dinner"
 	\param nodeReference If NULL, the tape will be created in the save DataFile. */
 	Tape
-		*addTape( const char *name, TapesDataFile::NodeReference *existingNodeReference = NULL );
+		*addTape( const char *name, TapesDataFile::TapeNodeReference *existingNodeReference = NULL );
 
 	/** Deletes a Tape, freeing the memeory.
 	    Once freed, all remaining pointers will dangle, be sure that any
@@ -91,10 +91,10 @@ public:
 
 
 	SampleInstance
-		*appendInstance( Tape *tape, const Sample &sample );
+		*appendInstance( Tape *tape, const Sample &sample, TapesDataFile::InstanceNodeReference *existingNodeReference = NULL );
 
 	void
-		deleteInstance( Tape *tape, const SampleInstance &sampleInstance );
+		deleteInstance( Tape *tape, SampleInstance &sampleInstance );
 
 private:
 

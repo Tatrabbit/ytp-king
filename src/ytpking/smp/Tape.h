@@ -44,7 +44,7 @@ class Tape
 	friend class TapeManager;
 
 public:
-	Tape( const char *name, TapesDataFile::NodeReference &nodeReference );
+	Tape( const char *name, TapesDataFile::TapeNodeReference &nodeReference );
 	~Tape( void );
 private:
 	explicit Tape( Tape & );
@@ -60,7 +60,7 @@ public:
 	const char
 		*getName( void ) const;
 
-	inline TapesDataFile::NodeReference
+	inline TapesDataFile::TapeNodeReference
 		&getNodeReference( void )
 	{ return m_nodeReference; }
 
@@ -69,12 +69,12 @@ private:
 	std::string m_name;
 
 	InstanceSet m_samples;
-	TapesDataFile::NodeReference m_nodeReference;
+	TapesDataFile::TapeNodeReference m_nodeReference;
 
 	bool m_isConnected;
 
 	SampleInstance
-		*appendInstance( const Sample &sample );
+		*appendInstance( const Sample &sample, TapesDataFile::InstanceNodeReference &existingNodeReference );
 
 	void
 		deleteInstance( const SampleInstance &sampleInstance );

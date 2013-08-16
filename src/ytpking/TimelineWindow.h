@@ -98,7 +98,7 @@ private:
 		useTape( smp::Tape &tape );
 
 	void
-		appendComponent( smp::Tape &tape, const smp::SampleInstance &sampleInstance );
+		appendComponent( smp::Tape &tape, smp::SampleInstance &sampleInstance );
 
 
 	void

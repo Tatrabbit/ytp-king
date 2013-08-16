@@ -29,7 +29,7 @@
 	{
 
 
-Tape::Tape( const char *name, TapesDataFile::NodeReference &nodeReference ) :
+Tape::Tape( const char *name, TapesDataFile::TapeNodeReference &nodeReference ) :
 	m_name( name ),
 	m_nodeReference( nodeReference ),
 	m_isConnected( false )
@@ -59,9 +59,9 @@ const char
 
 
 SampleInstance
-*Tape::appendInstance( const Sample &sample )
+*Tape::appendInstance( const Sample &sample, TapesDataFile::InstanceNodeReference &existingNodeReference )
 {
-	SampleInstance *sampleInstance = new SampleInstance( &sample );
+	SampleInstance *sampleInstance = new SampleInstance( &sample, existingNodeReference );
 	m_samples.push_back( sampleInstance );
 
 	if ( m_isConnected )

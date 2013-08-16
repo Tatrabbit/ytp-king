@@ -82,9 +82,9 @@ TapeManager::selectTape( Tape *tape )
 
 
 Tape
-*TapeManager::addTape( const char *name, TapesDataFile::NodeReference *existingNodeReference )
+*TapeManager::addTape( const char *name, TapesDataFile::TapeNodeReference *existingNodeReference )
 {
-	TapesDataFile::NodeReference nodeReference;
+	TapesDataFile::TapeNodeReference nodeReference;
 	
 	if ( existingNodeReference != NULL )
 		nodeReference = *existingNodeReference;
@@ -125,9 +125,13 @@ TapeManager::renameTape( Tape *tape, const char *name )
 
 
 SampleInstance
-*TapeManager::appendInstance( Tape *tape, const Sample &sample )
+*TapeManager::appendInstance( Tape *tape, const Sample &sample, TapesDataFile::InstanceNodeReference *existingNodeReference )
 {
-	SampleInstance *sampleInstance = tape->appendInstance( sample );
+	TapesDataFile::InstanceNodeReference nodeReference;
+	if ( existingNodeReference != NULL )
+		nodeReference = *existingNodeReference;
+
+	SampleInstance *sampleInstance = tape->appendInstance( sample, nodeReference );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 		(*it)->onTapeAddInstance( *tape, *sampleInstance );
@@ -137,7 +141,7 @@ SampleInstance
 
 
 void
-TapeManager::deleteInstance( Tape *tape, const SampleInstance &sampleInstance )
+TapeManager::deleteInstance( Tape *tape, SampleInstance &sampleInstance )
 {
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 		(*it)->onTapeDeleteInstance( *tape, sampleInstance );

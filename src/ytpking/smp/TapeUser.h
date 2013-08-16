@@ -71,10 +71,10 @@ protected:
 
 
 	virtual void
-		onTapeAddInstance( Tape &tape, const SampleInstance &sampleInstance );
+		onTapeAddInstance( Tape &tape, SampleInstance &sampleInstance );
 
 	virtual void
-		onTapeDeleteInstance( Tape &tape, const SampleInstance &sampleInstance );
+		onTapeDeleteInstance( Tape &tape, SampleInstance &sampleInstance );
 
 
 private:

@@ -19,6 +19,8 @@
 
 #include <set>
 
+#include "ytpking/TapesDataFile.h"
+
 
 	namespace ytpking
 	{
@@ -42,7 +44,7 @@ class SampleInstance
 	friend class Tape;
 
 public:
-	SampleInstance( const Sample *sample );
+	SampleInstance( const Sample *sample, TapesDataFile::InstanceNodeReference &nodeReference );
 	~SampleInstance( void );
 
 private:
@@ -57,8 +59,15 @@ public:
 	const Sample
 		&getSample( void ) const;
 
+	inline TapesDataFile::InstanceNodeReference
+		&getNodeReference( void )
+	{ return m_nodeReference; }
+
+
 private:
 	const Sample *m_sample;
+
+	TapesDataFile::InstanceNodeReference m_nodeReference;
 
 	static unsigned int m_nInstances;
 	const unsigned int  m_id;

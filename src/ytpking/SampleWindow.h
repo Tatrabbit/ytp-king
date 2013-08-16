@@ -38,13 +38,13 @@ class SampleWindow :
 public:
 
 	SampleWindow( wxWindow *parent,
-			smp::Tape *tape, const smp::SampleInstance *sampleInstance );
+			smp::Tape *tape, smp::SampleInstance *sampleInstance );
 
 
 	wxWindow *m_parent;
 
 	smp::Tape                 *m_tape;
-	const smp::SampleInstance *m_sampleInstance;
+	smp::SampleInstance *m_sampleInstance;
 
 	void
 		onButtonDelete( wxCommandEvent& event );

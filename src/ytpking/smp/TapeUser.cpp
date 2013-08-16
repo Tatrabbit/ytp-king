@@ -69,13 +69,13 @@ TapeUser::onLoadAllTapes( void )
 
 
 void
-TapeUser::onTapeAddInstance( Tape &tape, const SampleInstance &sampleInstance )
+TapeUser::onTapeAddInstance( Tape &tape, SampleInstance &sampleInstance )
 {
 }
 
 
 void
-TapeUser::onTapeDeleteInstance( Tape &tape, const SampleInstance &sampleInstance )
+TapeUser::onTapeDeleteInstance( Tape &tape, SampleInstance &sampleInstance )
 {
 }
 

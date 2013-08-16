@@ -126,7 +126,7 @@ TimelineWindow::useTape( smp::Tape &tape )
 
 
 void
-TimelineWindow::appendComponent( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
+TimelineWindow::appendComponent( smp::Tape &tape, smp::SampleInstance &sampleInstance )
 {
 	SampleWindow *component = new SampleWindow( this, &tape, &sampleInstance );
 

@@ -35,7 +35,7 @@
 
 
 SampleWindow::SampleWindow( wxWindow *parent,
-		smp::Tape *tape, const smp::SampleInstance *sampleInstance ) :
+		smp::Tape *tape, smp::SampleInstance *sampleInstance ) :
 
 	wxWindow( parent, wxID_ANY ),
 	m_parent( parent ),

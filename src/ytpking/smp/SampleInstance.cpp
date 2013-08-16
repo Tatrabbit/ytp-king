@@ -30,8 +30,9 @@ unsigned int SampleInstance::m_nInstances( 0u );
 
 
 
-SampleInstance::SampleInstance( const Sample *sample ) :
+SampleInstance::SampleInstance( const Sample *sample, TapesDataFile::InstanceNodeReference &nodeReference ) :
 	m_sample( sample ),
+	m_nodeReference( nodeReference ),
 	m_id( m_nInstances++ ),
 	m_isConnected( false )
 {

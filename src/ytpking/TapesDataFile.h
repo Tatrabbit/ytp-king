@@ -37,16 +37,28 @@ class TapesDataFile :
 public:
 	TapesDataFile( void );
 
-	class NodeReference
+	class TapeNodeReference
 	{
 	public:
-		NodeReference( void );
+		TapeNodeReference( void );
 
 	private:
 		friend class TapesDataFile;
 
 		rapidxml::xml_node<> *m_tape;
 	};
+
+	class InstanceNodeReference
+	{
+	public:
+		InstanceNodeReference( void );
+
+	private:
+		friend class TapesDataFile;
+
+		rapidxml::xml_node<> *m_instance;
+	};
+
 
 	void
 		onAddTape( smp::Tape &addedTape )
@@ -61,10 +73,10 @@ public:
 		onLoadAllTapes( void )
 		override;
 	void
-		onTapeAddInstance( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
+		onTapeAddInstance( smp::Tape &tape, smp::SampleInstance &sampleInstance )
 		override;
 	void
-		onTapeDeleteInstance( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
+		onTapeDeleteInstance( smp::Tape &tape, smp::SampleInstance &sampleInstance )
 		override;
 
 
