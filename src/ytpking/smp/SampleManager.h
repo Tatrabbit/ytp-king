@@ -47,7 +47,7 @@ private:
 public:
 
 	void
-		initialize( void );
+		loadAll( void );
 
 	// TODO should be private, friend
 

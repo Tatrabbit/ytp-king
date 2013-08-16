@@ -21,6 +21,9 @@
 	{
 
 
+class SamplesDataFile;
+
+
 /** The YTP King app itself.
 
 This is instantiated by wxWidgets, in the automatically generated main()
@@ -43,7 +46,9 @@ private:
 	If there was an error initializing it, this is a 0 length c string. */
 	char m_currentDirectory[MAX_PATH];
 
+	SamplesDataFile *m_samplesDataFile;
 	wxLog *m_logger;
+
 };
 
 

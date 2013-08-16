@@ -45,31 +45,35 @@ protected:
 	\param speakerName The name of the speaker
 	\param addedSample The newly added Sample. */
 	virtual void
-		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample ) = 0;
+		onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample );
 
 	/** Called when a Sample is selected.
 	\param selectedSample The newly selected Sample */
 	virtual void
-		onSelectSample( Sample *selectedSample ) = 0;
+		onSelectSample( Sample *selectedSample );
 
 	/** Called when a Sample is about to be deleted.
 	If a pointer matching deletedSample is held, it should be set to NULL or otherwise
 	set to no longer match the sample, as that data is soon to be destroyed.
 	\param deletedSample The sample which will soon be destroyed by SampleManager */
 	virtual void
-		onDeleteSample( Sample *deletedSample ) = 0;
+		onDeleteSample( Sample *deletedSample );
 
 	/** Called when a Sample has been renamed.
 	\param newSampleName The new name of the sample
 	\param sample        A pointer to the sample being renamed. */
 	virtual void
-		onRenameSample( char const *newSampleName, Sample *sample ) = 0;
+		onRenameSample( char const *newSampleName, Sample *sample );
 
 	/** Called when a Sample's speaker has been changed.
 	\param newSampleName The new name of the sample
 	\param sample        A pointer to the sample being renamed. */
 	virtual void
-		onChangeSampleSpeaker( char const *speakerName, Sample *sample ) = 0;
+		onChangeSampleSpeaker( char const *speakerName, Sample *sample );
+
+	/** Called when all the samples should be (re)loaded from the beginning. */
+	virtual void
+		onLoadAllSamples( void );
 
 private:
 

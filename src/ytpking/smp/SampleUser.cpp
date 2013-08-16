@@ -38,4 +38,39 @@ SampleUser::~SampleUser( void )
 }
 
 
+void
+SampleUser::onAddSample( char const *sampleName, char const *speakerName, Sample *addedSample )
+{
+}
+
+
+void
+SampleUser::onSelectSample( Sample *selectedSample )
+{
+}
+
+
+void
+SampleUser::onDeleteSample( Sample *deletedSample )
+{
+}
+
+
+void
+SampleUser::onRenameSample( char const *newSampleName, Sample *sample )
+{
+}
+
+void
+SampleUser::onChangeSampleSpeaker( char const *speakerName, Sample *sample )
+{
+}
+
+
+void
+SampleUser::onLoadAllSamples( void )
+{
+}
+
+
 	} }

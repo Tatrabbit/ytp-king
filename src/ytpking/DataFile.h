@@ -37,9 +37,6 @@ private:
 public:
 
 	virtual void
-		loadAll( void ) = 0;
-
-	virtual void
 		saveToFile( void ) const;
 
 

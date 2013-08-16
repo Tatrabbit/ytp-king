@@ -57,7 +57,7 @@ Application::Application( void )
 		//wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
 
 	smp::sampleManager = new smp::SampleManager;
-	ytpking::samplesDataFile = new ytpking::SamplesDataFile;
+	m_samplesDataFile = new ytpking::SamplesDataFile;
 }
 
 
@@ -82,8 +82,8 @@ Application::OnInit( void )
 
 Application::~Application( void )
 {
-	//delete ytpking::samplesDataFile;
-	//delete smp::sampleManager;
+	delete m_samplesDataFile;
+	delete smp::sampleManager;
 }
 
 

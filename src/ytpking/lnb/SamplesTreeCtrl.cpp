@@ -45,8 +45,7 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	wxTreeCtrl( parent, samplesId, wxDefaultPosition, wxDefaultSize,
 		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
 			wxTR_ROW_LINES|wxTR_HIDE_ROOT|wxTR_EDIT_LABELS),
-	smp::SampleUser( *smp::sampleManager ),
-	m_selectedSample( NULL )
+	smp::SampleUser( *smp::sampleManager )
 {
 	// TODO Documentation says there must be an image list for item dragging in MSW.
 	//      Does this still apply?
@@ -209,19 +208,6 @@ SamplesTreeCtrl::onAddSample( char const *sampleName, char const *speakerName, s
 	}
 
 	Expand( speakerItem );
-}
-
-
-void
-SamplesTreeCtrl::onSelectSample( smp::Sample *selectedSample )
-{
-	m_selectedSample = selectedSample;
-}
-
-
-void
-SamplesTreeCtrl::onDeleteSample( smp::Sample *deletedSample )
-{
 }
 
 

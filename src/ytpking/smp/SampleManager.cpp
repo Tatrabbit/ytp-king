@@ -35,18 +35,16 @@ SampleManager::SampleManager( void ) :
 
 SampleManager::~SampleManager( void )
 {
-	//if ( m_samplesDataFile )
-		//delete m_samplesDataFile;
-
 	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
 		delete it->second;
 }
 
 
 void
-SampleManager::initialize( void )
+SampleManager::loadAll( void )
 {
-	ytpking::samplesDataFile->loadAll();
+	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
+		(*it)->onLoadAllSamples();
 }
 
 

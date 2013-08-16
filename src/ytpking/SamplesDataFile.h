@@ -54,9 +54,6 @@ public:
 	void
 		setSampleEnd( int sampleStart, NodeReference &nodeReference );
 
-	void
-		loadAll( void )
-		override;
 
 private:
 
@@ -72,9 +69,6 @@ private:
 		onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample )
 		override;
 	void
-		onSelectSample( smp::Sample *selectedSample )
-		override;
-	void
 		onDeleteSample( smp::Sample *deletedSample )
 		override;
 	void
@@ -83,15 +77,11 @@ private:
 	void
 		onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample )
 		override;
+	void
+		onLoadAllSamples( void )
+		override;
 
 };
-
-
-#ifdef __YTPKING_SamplesDataFile_cpp
-	SamplesDataFile *samplesDataFile = NULL;
-#else
-	extern SamplesDataFile *samplesDataFile;
-#endif
 
 
 	}

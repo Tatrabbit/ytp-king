@@ -62,9 +62,9 @@ public:
 	void
 		renameTape( const char *newName, NodeReference &nodeReference );
 
+	// TODO delete this, should be a TapeUser
 	void
-		loadAll( void )
-		override;
+		loadAll( void );
 
 private:
 

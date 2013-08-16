@@ -81,18 +81,8 @@ public:
 
 private:
 
-	const smp::Sample *m_selectedSample;
-
 	void
 		onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample )
-		override;
-
-	void
-		onSelectSample( smp::Sample *selectedSample )
-		override;
-
-	void
-		onDeleteSample( smp::Sample *deletedSample )
 		override;
 
 	void
