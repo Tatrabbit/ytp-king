@@ -114,33 +114,12 @@ public:
 
 private:
 
-	// TODO should be global, it's too deep, other classes need to access it.
-	SamplesDataFile *m_samplesDataFile;
-
 	Sample          *m_selectedSample;
 
 	typedef std::set<SampleUser *> SampleUserSet;
+	typedef std::map<std::string, Sample *> SampleMap;
 
-
-	struct SamplePair
-	{
-		SamplePair( Sample *sample );
-		SamplePair( Sample *sample, const SamplesDataFile::NodeReference &nodeReference );
-
-		inline bool operator<( const SamplePair &other ) const { return m_sample < other.m_sample; }
-
-		Sample            *m_sample;
-		SamplesDataFile::
-			NodeReference  m_nodeReference;
-	};
-
-	typedef std::set<SamplePair> SampleSet;
-
-	typedef std::map<std::string, Sample *> GuidMap;
-
-	// TODO refactor to use a map, it's more efficient. Must have been tired when I did this.
-	SampleSet m_samples;
-	GuidMap   m_guidMap;
+	SampleMap m_samples;
 
 	SampleUserSet m_sampleUsers;
 
@@ -148,9 +127,9 @@ private:
 
 
 #ifdef YTPKING_GST_GNL_SampleManager_cpp
-	SampleManager sampleManager;
+	SampleManager *sampleManager = NULL;
 #else
-	extern SampleManager sampleManager;
+	extern SampleManager *sampleManager;
 #endif
 
 

@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#define __YTPKING_SamplesDataFile_cpp
 #include "ytpking/SamplesDataFile.h"
 
 #include <wx/log.h>
@@ -50,9 +51,9 @@ NodeReference::NodeReference( void ) :
 }
 
 
-SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
+SamplesDataFile::SamplesDataFile( void ) :
+	SampleUser( *smp::sampleManager ),
 	DataFile( "/samples.xml" ),
-	m_manager( manager ),
 	m_isLocked( false )
 {
 	xml_node<> *rootNode = m_xmlDocument.first_node();
@@ -84,63 +85,6 @@ SamplesDataFile::SamplesDataFile( SampleManager *manager ) :
 			xml_node<> *samplesNode = m_xmlDocument.allocate_node( node_element, "samples" );
 			rootNode->append_node( samplesNode );
 		}
-	}
-}
-
-
-SamplesDataFile::NodeReference
-SamplesDataFile::addSample( const char *name, const char *speaker, const char *guid )
-{
-	NodeReference nodeReference;
-
-	if ( m_isLocked )
-		return nodeReference;
-
-
-	nodeReference.m_speaker = getOrMakeSpeakerNode( speaker );
-	nodeReference.m_speech  = m_xmlDocument.allocate_node( node_element, "speech" );
-
-	appendStringAttribute( nodeReference.m_speech, "name", name );
-	appendStringAttribute( nodeReference.m_speech, "guid", guid );
-
-	nodeReference.m_speaker->append_node( nodeReference.m_speech );
-
-	saveToFile();
-
-	return nodeReference;
-}
-
-
-void
-SamplesDataFile::renameSample( const char *newName, NodeReference &nodeReference )
-{
-	xml_attribute<> *nameAttr = nodeReference.m_speech->first_attribute( "name" );
-
-	newName = m_xmlDocument.allocate_string( newName );
-	nameAttr->value( newName );
-
-	saveToFile();
-}
-
-
-void
-SamplesDataFile::changeSampleSpeaker( const char *newSpeakerName, NodeReference &nodeReference )
-{
-	nodeReference.m_speaker->remove_node( nodeReference.m_speech );
-
-	if ( nodeReference.m_speaker->first_node() == NULL )
-	{
-		xml_node<> *samplesNode = m_xmlDocument.first_node()->first_node( "samples" );
-		samplesNode->remove_node( nodeReference.m_speaker );
-	}
-
-	xml_node<> *speakerNode = getOrMakeSpeakerNode( newSpeakerName );
-	if ( speakerNode )
-	{
-		nodeReference.m_speaker = speakerNode;
-		nodeReference.m_speaker->append_node( nodeReference.m_speech );
-
-		saveToFile();
 	}
 }
 
@@ -207,7 +151,7 @@ SamplesDataFile::loadAll( void )
 				guidCString = NULL;
 
 			// Make the sample
-			smp::Sample *sample = m_manager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, guidCString, &nodeReference );
+			smp::Sample *sample = smp::sampleManager->addSample( "file:///C:/zelda.mp4", speechName, speakerName, guidCString, &nodeReference );
 
 
 			// if there wasn't a guid, then append one
@@ -273,6 +217,75 @@ xml_node<>
 	return speakerNode;
 }
 
+
+void
+SamplesDataFile::onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample )
+{
+	if ( m_isLocked )
+		return;
+
+	NodeReference *nodeReference = &addedSample->m_nodeReference;
+
+	nodeReference->m_speaker = getOrMakeSpeakerNode( speakerName );
+	nodeReference->m_speech  = m_xmlDocument.allocate_node( node_element, "speech" );
+
+	appendStringAttribute( nodeReference->m_speech, "name", sampleName );
+	appendStringAttribute( nodeReference->m_speech, "guid", addedSample->getGuid() );
+
+	nodeReference->m_speaker->append_node( nodeReference->m_speech );
+
+	saveToFile();
+}
+
+
+void
+SamplesDataFile::onSelectSample( smp::Sample *selectedSample )
+{
+	// Nothing to do! :3
+}
+
+
+void
+SamplesDataFile::onDeleteSample( smp::Sample *deletedSample )
+{
+	// TODO
+}
+
+
+void
+SamplesDataFile::onRenameSample( char const *newSampleName, smp::Sample *sample )
+{
+	xml_attribute<> *nameAttr = sample->m_nodeReference.m_speech->first_attribute( "name" );
+
+	newSampleName = m_xmlDocument.allocate_string( newSampleName );
+	nameAttr->value( newSampleName );
+
+	saveToFile();
+}
+
+
+void
+SamplesDataFile::onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample )
+{
+	NodeReference *nodeReference = &sample->m_nodeReference;
+
+	nodeReference->m_speaker->remove_node( nodeReference->m_speech );
+
+	if ( nodeReference->m_speaker->first_node() == NULL )
+	{
+		xml_node<> *samplesNode = m_xmlDocument.first_node()->first_node( "samples" );
+		samplesNode->remove_node( nodeReference->m_speaker );
+	}
+
+	xml_node<> *speakerNode = getOrMakeSpeakerNode( speakerName );
+	if ( speakerNode )
+	{
+		nodeReference->m_speaker = speakerNode;
+		nodeReference->m_speaker->append_node( nodeReference->m_speech );
+
+		saveToFile();
+	}
+}
 
 
 	}

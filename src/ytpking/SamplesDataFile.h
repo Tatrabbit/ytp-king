@@ -18,6 +18,7 @@
 #define __YTPKING_SamplesDataFile_h
 
 #include "ytpking/DataFile.h"
+#include "smp/SampleUser.h"
 
 #include "rapidxml/rapidxml.hpp"
 
@@ -25,16 +26,13 @@
 	namespace ytpking
 	{
 
-namespace smp {
-	class SampleManager;
-}
-
 
 class SamplesDataFile :
-	public DataFile
+	public DataFile,
+	public smp::SampleUser
 {
 public:
-	explicit SamplesDataFile( smp::SampleManager *manager );
+	SamplesDataFile( void );
 
 	class NodeReference
 	{
@@ -51,14 +49,6 @@ public:
 		char *m_endString;
 	};
 
-	NodeReference
-		addSample( const char *name, const char *speaker, const char *guid );
-	void
-		renameSample( const char *newName, NodeReference &nodeReference );
-
-	void
-		changeSampleSpeaker( const char *newSpeakerName, NodeReference &nodeReference );
-
 	void
 		setSampleStart( int sampleStart, NodeReference &nodeReference );
 	void
@@ -70,7 +60,6 @@ public:
 
 private:
 
-	smp::SampleManager *m_manager;
 	bool m_isLocked;
 
 	// TODO I can optimize this by storing a hashmap of existing speaker nodes.
@@ -78,7 +67,31 @@ private:
 	rapidxml::xml_node<>
 		*getOrMakeSpeakerNode( const char *speakerName );
 
+
+	void
+		onAddSample( char const *sampleName, char const *speakerName, smp::Sample *addedSample )
+		override;
+	void
+		onSelectSample( smp::Sample *selectedSample )
+		override;
+	void
+		onDeleteSample( smp::Sample *deletedSample )
+		override;
+	void
+		onRenameSample( char const *newSampleName, smp::Sample *sample )
+		override;
+	void
+		onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample )
+		override;
+
 };
+
+
+#ifdef __YTPKING_SamplesDataFile_cpp
+	SamplesDataFile *samplesDataFile = NULL;
+#else
+	extern SamplesDataFile *samplesDataFile;
+#endif
 
 
 	}

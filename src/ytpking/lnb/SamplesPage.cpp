@@ -52,7 +52,7 @@ SamplesPage::SamplesPage( wxWindow *parent, int firstId ) :
 void
 SamplesPage::onButtonAdd( wxCommandEvent& )
 {
-	smp::sampleManager.addSample( "file:///C:/zelda.mp4", "Speech", "Dick Johnson" );
+	smp::sampleManager->addSample( "file:///C:/zelda.mp4", "Speech", "Dick Johnson" );
 }
 
 

@@ -45,7 +45,7 @@ SamplesTreeCtrl::SamplesTreeCtrl( wxWindow *parent, int samplesId ) :
 	wxTreeCtrl( parent, samplesId, wxDefaultPosition, wxDefaultSize,
 		wxTR_HAS_BUTTONS|wxTR_SINGLE|wxTR_TWIST_BUTTONS|
 			wxTR_ROW_LINES|wxTR_HIDE_ROOT|wxTR_EDIT_LABELS),
-	smp::SampleUser( smp::sampleManager ),
+	smp::SampleUser( *smp::sampleManager ),
 	m_selectedSample( NULL )
 {
 	// TODO Documentation says there must be an image list for item dragging in MSW.
@@ -111,7 +111,7 @@ SamplesTreeCtrl::onEndEditLabel( wxTreeEvent &event )
 	if ( data == NULL )
 		return;
 
-	smp::sampleManager.renameSample( data->m_sample, event.GetLabel() );
+	smp::sampleManager->renameSample( data->m_sample, event.GetLabel() );
 }
 
 
@@ -135,7 +135,7 @@ SamplesTreeCtrl::onSelectionChanging( wxTreeEvent &event )
 	SamplesTreeData *data = (SamplesTreeData *)GetItemData(event.GetItem() );
 
 	if ( data != NULL )
-		smp::sampleManager.selectSample( data->m_sample );
+		smp::sampleManager->selectSample( data->m_sample );
 	else
 	{
 		wxTreeItemIdValue cookie;
@@ -146,7 +146,7 @@ SamplesTreeCtrl::onSelectionChanging( wxTreeEvent &event )
 			event.Veto();
 
 			data = (SamplesTreeData *)GetItemData( firstSpeech );
-			smp::sampleManager.selectSample( data->m_sample );
+			smp::sampleManager->selectSample( data->m_sample );
 		}
 	}
 }

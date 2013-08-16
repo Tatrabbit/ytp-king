@@ -168,7 +168,7 @@ TapesDataFile::loadAll( void )
 		{
 			if ( strcmp( contentNode->name(), "sample" ) == 0 )
 			{
-				smp::Sample *sample = smp::sampleManager.getSampleByGuid( contentNode->value() );
+				smp::Sample *sample = smp::sampleManager->getSampleByGuid( contentNode->value() );
 				if ( sample != NULL )
 					tape->appendSample( *sample, true );
 				else

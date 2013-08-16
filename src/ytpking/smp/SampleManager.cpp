@@ -27,23 +27,7 @@
 	{
 
 
-SampleManager::
-SamplePair::SamplePair( smp::Sample *sample ) :
-	m_sample( sample )
-{
-}
-
-
-SampleManager::
-SamplePair::SamplePair( smp::Sample *sample, const SamplesDataFile::NodeReference &nodeReference ) :
-	m_sample( sample ),
-	m_nodeReference( nodeReference )
-{
-}
-
-
 SampleManager::SampleManager( void ) :
-	m_samplesDataFile( NULL ),
 	m_selectedSample( NULL )
 {
 }
@@ -51,18 +35,18 @@ SampleManager::SampleManager( void ) :
 
 SampleManager::~SampleManager( void )
 {
-	if ( m_samplesDataFile )
-		delete m_samplesDataFile;
+	//if ( m_samplesDataFile )
+		//delete m_samplesDataFile;
+
+	for ( SampleMap::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
+		delete it->second;
 }
 
 
 void
 SampleManager::initialize( void )
 {
-	assert( m_samplesDataFile == NULL );
-	m_samplesDataFile = new SamplesDataFile( this );
-
-	m_samplesDataFile->loadAll();
+	ytpking::samplesDataFile->loadAll();
 }
 
 
@@ -106,17 +90,10 @@ smp::Sample
 {
 	smp::Sample *sample = new smp::Sample( name, filename, guid );
 
-	m_guidMap[sample->getGuid()] = sample;
-
-	SamplesDataFile::NodeReference nodeReference;
 	if ( nodeReferencePtr != NULL )
-		nodeReference = *nodeReferencePtr;
-	else
-		nodeReference = m_samplesDataFile->addSample( name, speakerName, sample->getGuid() );
+		sample->m_nodeReference = *nodeReferencePtr;
 
-	SamplePair pair( sample, nodeReference );
-
-	m_samples.insert( pair );
+	m_samples[sample->getGuid()] = sample;
 
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
 		(*it)->onAddSample( name, speakerName, sample );
@@ -132,17 +109,14 @@ SampleManager::deleteSample( smp::Sample *sample )
 	if ( sample == NULL )
 		sample = m_selectedSample;
 
-	// Erase from GUID Map
-	GuidMap::const_iterator it = m_guidMap.find( sample->getGuid() );
-	assert( it != m_guidMap.end() );
-	m_guidMap.erase( it );
-
-	// Erase from Samples map
-	m_samples.erase( sample );
-
 	// Callbacks before deletion.
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
 		(*it)->onDeleteSample( sample );
+
+	// Erase from Map
+	SampleMap::const_iterator it = m_samples.find( sample->getGuid() );
+	assert( it != m_samples.end() );
+	m_samples.erase( it );
 
 	// Finally, delete.
 	delete sample;
@@ -152,19 +126,11 @@ SampleManager::deleteSample( smp::Sample *sample )
 void
 SampleManager::renameSample( smp::Sample *sample, const char *name )
 {
-	// I don't know if I'm doing this the right way, perhaps not, but
-	// I couldn't find out how to assign to it->m_name, it was treated by MSVC as a const std::string.
-	SampleSet::iterator it = m_samples.find( sample );
+	SampleMap::iterator it = m_samples.find( sample->getGuid() );
 
-	if ( it != m_samples.end() )
-	{
-		SamplePair newSamplePair( sample, it->m_nodeReference );
+	assert ( it != m_samples.end() );
 
-		m_samplesDataFile->renameSample( name, newSamplePair.m_nodeReference );
-
-		m_samples.erase( it );
-		m_samples.insert( newSamplePair );
-	}
+	it->second->m_name = name;
 
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
 		(*it)->onRenameSample( name, sample );
@@ -174,19 +140,10 @@ SampleManager::renameSample( smp::Sample *sample, const char *name )
 void
 SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 {
-	// I don't know if I'm doing this the right way, perhaps not, but
-	// I couldn't find out how to assign to it->m_name, it was treated by MSVC as a const std::string.
-	SampleSet::const_iterator it = m_samples.find( sample );
-
-	if ( it != m_samples.end() )
-	{
-		SamplePair newSamplePair( sample, it->m_nodeReference );
-
-		m_samplesDataFile->changeSampleSpeaker( speakerName, newSamplePair.m_nodeReference );
-
-		m_samples.erase( it );
-		m_samples.insert( newSamplePair );
-	}
+#ifndef NDEBUG
+	SampleMap::const_iterator it = m_samples.find( sample->getGuid() );
+	assert( it != m_samples.end() );
+#endif
 
 	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
 		(*it)->onChangeSampleSpeaker( speakerName, sample );
@@ -196,23 +153,20 @@ SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 void
 SampleManager::saveSample( Sample *sample )
 {
-	SampleSet::const_iterator it = m_samples.find( sample );
+	SampleMap::const_iterator it = m_samples.find( sample->getGuid() );
 
 	if ( it != m_samples.end() )
 	{
-		SamplePair newSamplePair( sample, it->m_nodeReference );
+		//SamplePair newSamplePair( sample, it->m_nodeReference );
 
 		int start, duration, end;
-		start    = it->m_sample->m_start;
-		duration = it->m_sample->m_duration;
+		start    = it->second->m_start;
+		duration = it->second->m_duration;
 		end      = start + duration;
 		
-		m_samplesDataFile->setSampleStart( start, newSamplePair.m_nodeReference );
-		m_samplesDataFile->setSampleEnd( end, newSamplePair.m_nodeReference );
-		m_samplesDataFile->saveToFile();
-
-		m_samples.erase( it );
-		m_samples.insert( newSamplePair );
+		//m_samplesDataFile->setSampleStart( start, newSamplePair.m_nodeReference );
+		//m_samplesDataFile->setSampleEnd( end, newSamplePair.m_nodeReference );
+		//m_samplesDataFile->saveToFile();
 	}
 }
 
@@ -220,8 +174,8 @@ SampleManager::saveSample( Sample *sample )
 Sample
 *SampleManager::getSampleByGuid( const char *guid ) const
 {
-	GuidMap::const_iterator it = m_guidMap.find( guid );
-	return it != m_guidMap.end()? it->second : NULL;
+	SampleMap::const_iterator it = m_samples.find( guid );
+	return it != m_samples.end()? it->second : NULL;
 }
 
 

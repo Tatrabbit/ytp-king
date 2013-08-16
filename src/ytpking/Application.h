@@ -31,6 +31,7 @@ class Application :
 public:
 
 	Application( void );
+	~Application( void );
 
 private:
 

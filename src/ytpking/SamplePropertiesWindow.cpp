@@ -109,7 +109,7 @@ SamplePropertiesWindow::updateConstraints( int start, int end )
 void
 SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 {
-	smp::Sample *sample = smp::sampleManager.getSelectedSample();
+	smp::Sample *sample = smp::sampleManager->getSelectedSample();
 	if ( sample != NULL )
 	{
 		int start    = event.GetInt();
@@ -119,7 +119,7 @@ SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 		sample->m_start    = start;
 		sample->m_duration = duration;
 
-		smp::sampleManager.saveSample( sample );
+		smp::sampleManager->saveSample( sample );
 	}
 
 	m_endFrameSpinCtrl->SetMin( event.GetInt() + 1 );
@@ -129,11 +129,11 @@ SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 void
 SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 {
-	smp::Sample *sample = smp::sampleManager.getSelectedSample();
+	smp::Sample *sample = smp::sampleManager->getSelectedSample();
 	if ( sample != NULL )
 	{
 		sample->m_duration = event.GetInt() - sample->m_start;
-		smp::sampleManager.saveSample( sample );
+		smp::sampleManager->saveSample( sample );
 	}
 
 	m_startFrameSpinCtrl->SetMax( event.GetInt() - 1 );
@@ -143,10 +143,10 @@ SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 void
 SamplePropertiesWindow::onTextSpeakerNameChange( wxCommandEvent& event )
 {
-	smp::Sample *selectedSample = smp::sampleManager.getSelectedSample();
+	smp::Sample *selectedSample = smp::sampleManager->getSelectedSample();
 	if ( selectedSample != NULL )
 	{
-		smp::sampleManager.changeSpeaker( selectedSample, event.GetString().c_str() );
+		smp::sampleManager->changeSpeaker( selectedSample, event.GetString().c_str() );
 
 		// refocus me
 		wxWindow *window = (wxWindow *)event.GetEventObject();

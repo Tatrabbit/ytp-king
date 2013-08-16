@@ -19,6 +19,8 @@
 
 #include <string>
 
+#include "SamplesDataFile.h"
+
 
 	namespace ytpking
 	{
@@ -37,10 +39,15 @@ namespace gnl {
 class Sample
 {
 public:
+
 	Sample( const char *name, const char *filename, const char *guid = NULL );
 
 	std::string m_name;
 	std::string m_filename;
+
+	/** Holds the NodeReference used to save this sample to XML.
+	    This is undefined during onAddSample, SamplesDataFile sets it during that time. */
+	SamplesDataFile::NodeReference m_nodeReference;
 
 	unsigned int m_start;
 	unsigned int m_duration;
@@ -50,6 +57,7 @@ public:
 	{ return m_guid.c_str(); }
 
 private:
+
 	std::string m_guid;
 
 };

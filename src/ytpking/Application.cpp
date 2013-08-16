@@ -27,6 +27,9 @@
 #include "ytpking/MainWindow.h"
 #include "ytpking/DataDirectory.h"
 
+#include "smp/SampleManager.h"
+#include "ytpking/SamplesDataFile.h"
+
 
 	namespace ytpking
 	{
@@ -34,6 +37,7 @@
 
 Application::Application( void )
 {
+	/*
 	if ( !getcwd( m_currentDirectory, sizeof( m_currentDirectory ) ) )
 		m_currentDirectory[0] = '\0';
 
@@ -47,9 +51,13 @@ Application::Application( void )
 
 		wxLogMessage( "Program Started." );
 	}
+	*/
 	// TODO the log message won't store in Program Files, use appdata folder.
 	//else
 		//wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
+
+	smp::sampleManager = new smp::SampleManager;
+	ytpking::samplesDataFile = new ytpking::SamplesDataFile;
 }
 
 
@@ -69,6 +77,13 @@ Application::OnInit( void )
 	SetTopWindow( frame );
 
 	return true;
+}
+
+
+Application::~Application( void )
+{
+	//delete ytpking::samplesDataFile;
+	//delete smp::sampleManager;
 }
 
 
