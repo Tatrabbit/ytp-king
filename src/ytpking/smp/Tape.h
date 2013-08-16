@@ -41,6 +41,8 @@ class SampleInstance;
 
 class Tape
 {
+	friend class TapeManager;
+
 public:
 	Tape( const char *name, TapesDataFile::NodeReference &nodeReference );
 	~Tape( void );
@@ -66,8 +68,6 @@ public:
 
 	const char
 		*getName( void ) const;
-	void
-		setName( const char *newName );
 
 	inline TapesDataFile::NodeReference
 		&getNodeReference( void )

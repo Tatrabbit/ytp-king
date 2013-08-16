@@ -114,4 +114,14 @@ TapeManager::deleteTape( Tape *tape )
 }
 
 
+void
+TapeManager::renameTape( Tape *tape, const char *name )
+{
+	tape->m_name = name;
+
+	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
+		(*it)->onRenameTape( *tape );
+}
+
+
 	} }

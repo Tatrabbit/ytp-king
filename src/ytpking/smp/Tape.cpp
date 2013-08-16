@@ -110,11 +110,4 @@ const char
 }
 
 
-void
-Tape::setName( const char *newName )
-{
-	//ytpking::tapesDataFile->renameTape( (m_name = newName).c_str(), m_nodeReference );
-}
-
-
 	} }

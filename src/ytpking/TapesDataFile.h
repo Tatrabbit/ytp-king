@@ -64,6 +64,9 @@ public:
 		onDeleteTape( smp::Tape &deletedTape )
 		override;
 	void
+		onRenameTape( smp::Tape &tape )
+		override;
+	void
 		onLoadAllTapes( void )
 		override;
 

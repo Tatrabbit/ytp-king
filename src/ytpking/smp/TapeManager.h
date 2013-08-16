@@ -85,6 +85,10 @@ public:
 	void
 		deleteTape( Tape *tape );
 
+	/** Renames the tape. */
+	void
+		renameTape( Tape *tape, const char *name );
+
 private:
 
 	typedef std::set<Tape *> TapeSet;

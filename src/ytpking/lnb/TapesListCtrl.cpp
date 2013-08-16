@@ -85,7 +85,8 @@ TapesListCtrl::onEditLabel( wxListEvent& event )
 	if ( event.IsEditCancelled() )
 		return;
 	smp::Tape *tape = (smp::Tape *)GetItemData( event.GetIndex() );
-	tape->setName( event.GetLabel() );
+
+	smp::tapeManager->renameTape( tape, event.GetLabel() );
 }
 
 

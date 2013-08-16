@@ -49,8 +49,15 @@ TapeUser::onSelectTape( Tape *selectedTape )
 {
 }
 
+
 void
 TapeUser::onDeleteTape( Tape &deletedTape )
+{
+}
+
+
+void
+TapeUser::onRenameTape( Tape &tape )
 {
 }
 

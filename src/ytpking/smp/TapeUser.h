@@ -58,9 +58,16 @@ protected:
 	virtual void
 		onDeleteTape( Tape &deletedTape );
 
+	/** Called when a Tape has been renamed.
+	\param newTapeName The new name of the Tape
+	\param tape        A pointer to the Tape being renamed. */
+	virtual void
+		onRenameTape( Tape &tape );
+
 	/** Called when all the tapes should be (re)loaded from the beginning. */
 	virtual void
 		onLoadAllTapes( void );
+
 
 private:
 

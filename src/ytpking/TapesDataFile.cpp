@@ -92,23 +92,6 @@ TapesDataFile::deleteElement( int elementIndex, NodeReference &nodeReference )
 
 
 void
-TapesDataFile::renameTape( const char *newName, NodeReference &nodeReference )
-{
-	xml_attribute<> *nameAttribute = nodeReference.m_tape->first_attribute( "name" );
-
-	if ( nameAttribute == NULL )
-	{
-		nameAttribute = m_xmlDocument.allocate_attribute( "name" );
-		nodeReference.m_tape->append_attribute( nameAttribute );
-	}
-	newName = m_xmlDocument.allocate_string( newName );
-	nameAttribute->value( newName );
-
-	saveToFile();
-}
-
-
-void
 TapesDataFile::onAddTape( smp::Tape &addedTape )
 {
 	if ( m_isLocked )
@@ -145,6 +128,24 @@ TapesDataFile::onDeleteTape( smp::Tape &deletedTape )
 
 		foundNode = foundNode->next_sibling( "sample" );
 	}
+}
+
+
+void
+TapesDataFile::onRenameTape( smp::Tape &tape )
+{
+	NodeReference *nodeReference = &tape.getNodeReference();
+	xml_attribute<> *nameAttribute = nodeReference->m_tape->first_attribute( "name" );
+
+	if ( nameAttribute == NULL )
+	{
+		nameAttribute = m_xmlDocument.allocate_attribute( "name" );
+		nodeReference->m_tape->append_attribute( nameAttribute );
+	}
+	const char *name = m_xmlDocument.allocate_string( tape.getName() );
+	nameAttribute->value( name );
+
+	saveToFile();
 }
 
 
