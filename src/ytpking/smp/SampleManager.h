@@ -106,7 +106,11 @@ public:
 		changeSpeaker( Sample *sample, const char *speakerName );
 
 	void
-		saveSample( Sample *sample );
+		setSampleRange( Sample *sample, unsigned int start, unsigned int end );
+	void
+		setSampleStart( Sample *sample, unsigned int start );
+	void
+		setSampleEnd( Sample *sample, unsigned int end );
 
 	Sample
 		*getSampleByGuid( const char *guid ) const;

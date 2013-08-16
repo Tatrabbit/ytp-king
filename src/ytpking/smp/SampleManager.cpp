@@ -149,23 +149,55 @@ SampleManager::changeSpeaker( smp::Sample *sample, const char *speakerName )
 
 
 void
-SampleManager::saveSample( Sample *sample )
+SampleManager::setSampleRange( Sample *sample, unsigned int start, unsigned int end )
 {
+#ifndef NDEBUG
 	SampleMap::const_iterator it = m_samples.find( sample->getGuid() );
+	assert( it != m_samples.end() );
+#endif
 
-	if ( it != m_samples.end() )
-	{
-		//SamplePair newSamplePair( sample, it->m_nodeReference );
+	assert( end > start );
 
-		int start, duration, end;
-		start    = it->second->m_start;
-		duration = it->second->m_duration;
-		end      = start + duration;
-		
-		//m_samplesDataFile->setSampleStart( start, newSamplePair.m_nodeReference );
-		//m_samplesDataFile->setSampleEnd( end, newSamplePair.m_nodeReference );
-		//m_samplesDataFile->saveToFile();
-	}
+	sample->m_start = start;
+	sample->m_duration = end - start;
+
+	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
+		(*it)->onChangeSampleRange( sample );
+}
+
+
+void
+SampleManager::setSampleStart( Sample *sample, unsigned int start )
+{
+#ifndef NDEBUG
+	SampleMap::const_iterator it = m_samples.find( sample->getGuid() );
+	assert( it != m_samples.end() );
+#endif
+
+	int oldEnd = sample->getEnd();
+
+	sample->m_start = start;
+	sample->m_duration = oldEnd - start; // stretch, don't move.
+
+	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
+		(*it)->onChangeSampleRange( sample );
+}
+
+
+void
+SampleManager::setSampleEnd( Sample *sample, unsigned int end )
+{
+#ifndef NDEBUG
+	SampleMap::const_iterator it = m_samples.find( sample->getGuid() );
+	assert( it != m_samples.end() );
+#endif
+
+	assert( end > sample->m_start );
+
+	sample->m_duration = end - sample->m_start;
+
+	for ( SampleUserSet::const_iterator it = m_sampleUsers.begin(); it != m_sampleUsers.end(); ++it )
+		(*it)->onChangeSampleRange( sample );
 }
 
 

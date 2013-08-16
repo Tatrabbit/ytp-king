@@ -38,4 +38,53 @@ Sample::Sample( const char *name, const char *filename, const Guid &guid )  :
 }
 
 
+const char
+*Sample::getGuid( void ) const
+{
+	return m_guid;
+}
+
+
+const char
+*Sample::getName( void ) const
+{
+	return m_name.c_str();
+}
+
+
+const char
+*Sample::getFilename( void ) const
+{
+	return m_filename.c_str();
+}
+
+
+int
+Sample::getStart( void ) const
+{
+	return m_start;
+}
+
+
+int
+Sample::getEnd( void ) const
+{
+	return m_start + m_duration;
+}
+
+
+int
+Sample::getDuration( void ) const
+{
+	return m_duration;
+}
+
+
+SamplesDataFile::NodeReference
+&Sample::getNodeReference( void )
+{
+	return m_nodeReference;
+}
+
+
 	} }

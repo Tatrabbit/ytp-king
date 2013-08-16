@@ -35,28 +35,45 @@ namespace gnl {
 	{
 
 
+class SampleManager;
+
+
 // TODO store the name here
 class Sample
 {
+	friend class SampleManager;
+
 public:
 
 	Sample( const char *name, const char *filename, const Guid &guid );
 
+	const char
+		*getGuid( void ) const;
+
+	const char
+		*getName( void ) const;
+	const char
+		*getFilename( void ) const;
+	int
+		getStart( void ) const;
+	int
+		getEnd( void ) const;
+	int
+		getDuration( void ) const;
+
+	SamplesDataFile::NodeReference
+		&getNodeReference( void );
+
+private:
+
 	std::string m_name;
 	std::string m_filename;
 
-	/** Holds the NodeReference used to save this sample to XML.
-	    This is undefined during onAddSample, SamplesDataFile sets it during that time. */
+	/** Holds the NodeReference used to save this sample to XML. */
 	SamplesDataFile::NodeReference m_nodeReference;
 
 	unsigned int m_start;
 	unsigned int m_duration;
-
-	inline const char
-		*getGuid( void ) const
-	{ return m_guid; }
-
-private:
 
 	Guid m_guid;
 

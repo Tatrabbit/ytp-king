@@ -85,9 +85,9 @@ TapeComposition::addSampleInstance( const smp::SampleInstance &sampleInstance )
 		const smp::Sample *sample = &sampleInstance.getSample();
 
 		// TODO not needed; do this in update()
-		source->setFilename( sample->m_filename.c_str() );
-		source->setStart( sample->m_start );
-		source->setDuration( sample->m_duration );
+		source->setFilename( sample->getFilename() );
+		source->setStart( sample->getStart() );
+		source->setDuration( sample->getDuration() );
 
 		// Keep a pointer
 		m_samples.push_back( SampleInstancePair( &sampleInstance, source ) );

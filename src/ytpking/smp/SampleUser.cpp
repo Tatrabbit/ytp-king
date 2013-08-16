@@ -73,4 +73,10 @@ SampleUser::onLoadAllSamples( void )
 }
 
 
+void
+SampleUser::onChangeSampleRange( Sample *sample )
+{
+}
+
+
 	} }

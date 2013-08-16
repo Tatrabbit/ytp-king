@@ -75,6 +75,10 @@ protected:
 	virtual void
 		onLoadAllSamples( void );
 
+	virtual void
+		onChangeSampleRange( Sample *sample );
+
+
 private:
 
 	SampleManager *m_manager;

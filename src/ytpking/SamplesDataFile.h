@@ -49,11 +49,6 @@ public:
 		char *m_endString;
 	};
 
-	void
-		setSampleStart( int sampleStart, NodeReference &nodeReference );
-	void
-		setSampleEnd( int sampleStart, NodeReference &nodeReference );
-
 
 private:
 
@@ -79,6 +74,10 @@ private:
 		override;
 	void
 		onLoadAllSamples( void )
+		override;
+
+	void
+		onChangeSampleRange( smp::Sample *sample )
 		override;
 
 };

@@ -182,8 +182,8 @@ MainWindow::onSamplesTreeChange( wxTreeEvent& event )
 		m_sampleAndMovieSizer->Show( m_samplePropertiesWindow );
 		m_sampleAndMovieSizer->Layout();
 
-		int start = treeData->m_sample->m_start;
-		int end   = start + treeData->m_sample->m_duration;
+		int start = treeData->m_sample->getStart();
+		int end   = treeData->m_sample->getEnd();
 
 		m_samplePropertiesWindow->updateConstraints( start, end );
 

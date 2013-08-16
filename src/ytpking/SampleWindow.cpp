@@ -42,7 +42,7 @@ SampleWindow::SampleWindow( wxWindow *parent,
 	m_tape( tape ),
 	m_sampleInstance( sampleInstance )
 {
-	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, sampleInstance->getSample().m_name.c_str() );
+	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, sampleInstance->getSample().getName() );
 
 	wxButton *button = new wxButton( this, TimelineWindow::ButtonDelete, "Delete" );
 

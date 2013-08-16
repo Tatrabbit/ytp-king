@@ -110,17 +110,9 @@ void
 SamplePropertiesWindow::onSpinStartChange( wxSpinEvent& event )
 {
 	smp::Sample *sample = smp::sampleManager->getSelectedSample();
+
 	if ( sample != NULL )
-	{
-		int start    = event.GetInt();
-		int end      = getEnd();
-		int duration = end - start;
-
-		sample->m_start    = start;
-		sample->m_duration = duration;
-
-		smp::sampleManager->saveSample( sample );
-	}
+		smp::sampleManager->setSampleStart( sample, event.GetInt()  );
 
 	m_endFrameSpinCtrl->SetMin( event.GetInt() + 1 );
 }
@@ -130,11 +122,9 @@ void
 SamplePropertiesWindow::onSpinEndChange( wxSpinEvent& event )
 {
 	smp::Sample *sample = smp::sampleManager->getSelectedSample();
+
 	if ( sample != NULL )
-	{
-		sample->m_duration = event.GetInt() - sample->m_start;
-		smp::sampleManager->saveSample( sample );
-	}
+		smp::sampleManager->setSampleEnd( sample, event.GetInt() );
 
 	m_startFrameSpinCtrl->SetMax( event.GetInt() - 1 );
 }

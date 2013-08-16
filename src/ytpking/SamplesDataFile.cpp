@@ -88,22 +88,6 @@ SamplesDataFile::SamplesDataFile( void ) :
 }
 
 
-void
-SamplesDataFile::setSampleStart( int sampleStart, NodeReference &nodeReference )
-{
-	if ( !setOrMakeNumberAttribute( sampleStart, nodeReference.m_speech, nodeReference.m_startString, "start", MAX_START_FRAME_SIZE ) )
-		wxLogError( "Start time can't be more than %d digits long.", MAX_START_FRAME_SIZE - 1 );
-}
-
-
-void
-SamplesDataFile::setSampleEnd( int sampleEnd, NodeReference &nodeReference )
-{
-	if ( !setOrMakeNumberAttribute( sampleEnd, nodeReference.m_speech, nodeReference.m_endString,  "end", MAX_END_FRAME_SIZE ) )
-		wxLogError( "End time can't be more than %d digits long.", MAX_END_FRAME_SIZE - 1 );
-}
-
-
 xml_node<>
 *SamplesDataFile::getOrMakeSpeakerNode( const char *speakerName )
 {
@@ -146,7 +130,7 @@ SamplesDataFile::onAddSample( char const *sampleName, char const *speakerName, s
 	if ( m_isLocked )
 		return;
 
-	NodeReference *nodeReference = &addedSample->m_nodeReference;
+	NodeReference *nodeReference = &addedSample->getNodeReference();
 
 	nodeReference->m_speaker = getOrMakeSpeakerNode( speakerName );
 	nodeReference->m_speech  = m_xmlDocument.allocate_node( node_element, "speech" );
@@ -170,7 +154,7 @@ SamplesDataFile::onDeleteSample( smp::Sample *deletedSample )
 void
 SamplesDataFile::onRenameSample( char const *newSampleName, smp::Sample *sample )
 {
-	xml_attribute<> *nameAttr = sample->m_nodeReference.m_speech->first_attribute( "name" );
+	xml_attribute<> *nameAttr = sample->getNodeReference().m_speech->first_attribute( "name" );
 
 	newSampleName = m_xmlDocument.allocate_string( newSampleName );
 	nameAttr->value( newSampleName );
@@ -182,7 +166,7 @@ SamplesDataFile::onRenameSample( char const *newSampleName, smp::Sample *sample 
 void
 SamplesDataFile::onChangeSampleSpeaker( char const *speakerName, smp::Sample *sample )
 {
-	NodeReference *nodeReference = &sample->m_nodeReference;
+	NodeReference *nodeReference = &sample->getNodeReference();
 
 	nodeReference->m_speaker->remove_node( nodeReference->m_speech );
 
@@ -257,17 +241,20 @@ m_isLocked = true;
 				appendStringAttribute( speechNode, "guid", sample->getGuid() );
 
 
-			// get duration start and end
-			int start, duration, end;
+			// get start and end
+			int start, end;
 			start = getIntAttribute( speechNode, "start", 0 );
 			end   = getIntAttribute( speechNode, "end", 5 );
 
-			duration = end - start;
-			if ( duration <= 0 ) // guard against invalid duration
-				duration = 5;
 
-			sample->m_start = start;
-			sample->m_duration = duration;
+			if ( start < 0 )
+				start = 0;
+				// guard against invalid duration
+			if ( end <= start )
+				end = start + 5;
+
+			// Then set it
+			smp::sampleManager->setSampleRange( sample, start, end );
 
 			speechNode = speechNode->next_sibling( "speech" );
 		}
@@ -277,6 +264,24 @@ m_isLocked = true;
 
 
 	m_isLocked = false;
+}
+
+
+void
+SamplesDataFile::onChangeSampleRange( smp::Sample *sample )
+{
+	if ( m_isLocked )
+		return;
+
+	NodeReference *nodeReference = &sample->getNodeReference();
+
+	if ( !setOrMakeNumberAttribute( sample->getStart(), nodeReference->m_speech, nodeReference->m_startString, "start", MAX_START_FRAME_SIZE ) )
+		wxLogError( "Start time can't be more than %d digits long.", MAX_START_FRAME_SIZE - 1 );
+
+	if ( !setOrMakeNumberAttribute( sample->getEnd(), nodeReference->m_speech, nodeReference->m_endString,  "end", MAX_END_FRAME_SIZE ) )
+		wxLogError( "End time can't be more than %d digits long.", MAX_END_FRAME_SIZE - 1 );
+
+	saveToFile();
 }
 
 
