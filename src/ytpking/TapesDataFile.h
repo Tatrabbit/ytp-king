@@ -46,16 +46,7 @@ public:
 		friend class TapesDataFile;
 
 		rapidxml::xml_node<> *m_tape;
-		unsigned int m_count;
 	};
-
-	// TODO replace with callbacks
-	int
-		addSample( const char *guid, NodeReference &nodeReference );
-	void
-		deleteElement( int elementIndex, NodeReference &nodeReference );
-	void
-		renameTape( const char *newName, NodeReference &nodeReference );
 
 	void
 		onAddTape( smp::Tape &addedTape )
@@ -68,6 +59,12 @@ public:
 		override;
 	void
 		onLoadAllTapes( void )
+		override;
+	void
+		onTapeAddInstance( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
+		override;
+	void
+		onTapeDeleteInstance( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
 		override;
 
 

@@ -20,6 +20,8 @@
 #include <wx/log.h>
 
 #include "smp/SampleManager.h"
+#include "smp/Sample.h"
+#include "smp/SampleInstance.h"
 #include "smp/TapeManager.h"
 #include "smp/Tape.h"
 
@@ -32,8 +34,7 @@ using namespace rapidxml;
 
 TapesDataFile::
 NodeReference::NodeReference( void ) :
-	m_tape( NULL ),
-	m_count( 0 )
+	m_tape( NULL )
 {
 }
 
@@ -52,42 +53,6 @@ TapesDataFile::TapesDataFile( void ) :
 	}
 	else if ( strcmp( rootNode->name(), "ytpking" ) != 0 )
 		wxSafeShowMessage( "Error", "Samples file is corrupt. Please make a backup of it, then delete it." );
-}
-
-
-int
-TapesDataFile::addSample( const char *guid, NodeReference &nodeReference )
-{
-	if ( m_isLocked )
-		return -1;
-
-	const char *value = m_xmlDocument.allocate_string( guid );
-	xml_node<> *sampleNode = m_xmlDocument.allocate_node( node_element, "sample", value );
-
-	nodeReference.m_tape->append_node( sampleNode );
-
-	saveToFile();
-
-	return nodeReference.m_count++;
-}
-
-
-void
-TapesDataFile::deleteElement( int elementIndex, NodeReference &nodeReference )
-{
-	xml_node<> *sampleNode = nodeReference.m_tape->first_node();
-	int index = 0;
-	while( index++ < elementIndex )
-	{
-		if ( sampleNode == NULL )
-			return;
-
-		sampleNode = sampleNode->next_sibling();
-	}
-
-	nodeReference.m_tape->remove_node( sampleNode );
-
-	saveToFile();
 }
 
 
@@ -178,7 +143,7 @@ TapesDataFile::onLoadAllTapes( void )
 			{
 				smp::Sample *sample = smp::sampleManager->getSampleByGuid( contentNode->value() );
 				if ( sample != NULL )
-					tape->appendSample( *sample );
+					smp::tapeManager->appendInstance( tape, *sample );
 				else
 				{
 					if ( !hadError )
@@ -198,6 +163,40 @@ TapesDataFile::onLoadAllTapes( void )
 	}
 
 	m_isLocked = false;
+}
+
+
+void
+TapesDataFile::onTapeAddInstance( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
+{
+	if ( m_isLocked )
+		return;
+
+	const char *value = m_xmlDocument.allocate_string( sampleInstance.getSample().getGuid() );
+	xml_node<> *sampleNode = m_xmlDocument.allocate_node( node_element, "sample", value );
+
+	tape.getNodeReference().m_tape->append_node( sampleNode );
+
+	saveToFile();
+}
+
+
+void
+TapesDataFile::onTapeDeleteInstance( smp::Tape &tape, const smp::SampleInstance &sampleInstance )
+{
+	NodeReference *nodeReference = &tape.getNodeReference();
+
+	xml_node<> *sampleNode = nodeReference->m_tape->first_node();
+	while( sampleNode != NULL )
+	{
+		// if ( match the guid )
+		//	break;
+
+		sampleNode = sampleNode->next_sibling();
+	}
+
+	//nodeReference->m_tape->remove_node( sampleNode );
+	//saveToFile();
 }
 
 

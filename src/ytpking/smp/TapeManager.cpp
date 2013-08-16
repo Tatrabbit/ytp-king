@@ -124,4 +124,26 @@ TapeManager::renameTape( Tape *tape, const char *name )
 }
 
 
+SampleInstance
+*TapeManager::appendInstance( Tape *tape, const Sample &sample )
+{
+	SampleInstance *sampleInstance = tape->appendInstance( sample );
+
+	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
+		(*it)->onTapeAddInstance( *tape, *sampleInstance );
+
+	return sampleInstance;
+}
+
+
+void
+TapeManager::deleteInstance( Tape *tape, const SampleInstance &sampleInstance )
+{
+	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
+		(*it)->onTapeDeleteInstance( *tape, sampleInstance );
+
+	tape->deleteInstance( sampleInstance );
+}
+
+
 	} }

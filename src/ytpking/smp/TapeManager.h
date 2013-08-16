@@ -21,14 +21,14 @@
 
 #include "TapesDataFile.h"
 
-
 	namespace ytpking
 	{
 
 	namespace smp
 	{
 
-
+class Sample;
+class SampleInstance;
 class Tape;
 class TapeUser;
 
@@ -88,6 +88,13 @@ public:
 	/** Renames the tape. */
 	void
 		renameTape( Tape *tape, const char *name );
+
+
+	SampleInstance
+		*appendInstance( Tape *tape, const Sample &sample );
+
+	void
+		deleteInstance( Tape *tape, const SampleInstance &sampleInstance );
 
 private:
 

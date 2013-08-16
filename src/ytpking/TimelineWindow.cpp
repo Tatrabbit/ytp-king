@@ -52,8 +52,8 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 	if ( GetData() )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
-		smp::SampleInstance *sampleInstance;
-		sampleInstance = smp::tapeManager->getSelectedTape()->appendSample( *dataObject->m_sample );
+		smp::Tape *tape = smp::tapeManager->getSelectedTape();
+		smp::SampleInstance *sampleInstance = smp::tapeManager->appendInstance( tape, *dataObject->m_sample );
 
 		m_parent->appendComponent( *smp::tapeManager->getSelectedTape(), *sampleInstance );
 		m_parent->GetSizer()->Layout();

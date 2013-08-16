@@ -68,4 +68,16 @@ TapeUser::onLoadAllTapes( void )
 }
 
 
+void
+TapeUser::onTapeAddInstance( Tape &tape, const SampleInstance &sampleInstance )
+{
+}
+
+
+void
+TapeUser::onTapeDeleteInstance( Tape &tape, const SampleInstance &sampleInstance )
+{
+}
+
+
 	} }

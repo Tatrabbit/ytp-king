@@ -24,6 +24,7 @@
 	{
 
 
+class SampleInstance;
 class Tape;
 class TapeManager;
 
@@ -67,6 +68,13 @@ protected:
 	/** Called when all the tapes should be (re)loaded from the beginning. */
 	virtual void
 		onLoadAllTapes( void );
+
+
+	virtual void
+		onTapeAddInstance( Tape &tape, const SampleInstance &sampleInstance );
+
+	virtual void
+		onTapeDeleteInstance( Tape &tape, const SampleInstance &sampleInstance );
 
 
 private:

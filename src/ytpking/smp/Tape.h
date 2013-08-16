@@ -57,15 +57,6 @@ public:
 	const InstanceSet
 		&getInstances( void ) const;
 
-	SampleInstance
-		*appendSample( const Sample &sample );
-
-	void
-		deleteSample( const SampleInstance &sampleInstance );
-
-	void
-		connectToPreview( void );
-
 	const char
 		*getName( void ) const;
 
@@ -81,6 +72,15 @@ private:
 	TapesDataFile::NodeReference m_nodeReference;
 
 	bool m_isConnected;
+
+	SampleInstance
+		*appendInstance( const Sample &sample );
+
+	void
+		deleteInstance( const SampleInstance &sampleInstance );
+
+	void
+		connectToPreview( void );
 
 };
 

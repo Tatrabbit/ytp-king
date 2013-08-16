@@ -51,8 +51,15 @@ const Tape::InstanceSet
 }
 
 
+const char
+*Tape::getName( void ) const
+{
+	return m_name.c_str();
+}
+
+
 SampleInstance
-*Tape::appendSample( const Sample &sample )
+*Tape::appendInstance( const Sample &sample )
 {
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
@@ -71,7 +78,7 @@ SampleInstance
 
 
 void
-Tape::deleteSample( const SampleInstance &sampleInstance )
+Tape::deleteInstance( const SampleInstance &sampleInstance )
 {
 	int i = 0;
 	for ( InstanceSet::const_iterator it = m_samples.begin(); it != m_samples.end(); ++it )
@@ -100,13 +107,6 @@ Tape::connectToPreview( void )
 	
 	gst::gnl::previewTapes.m_connectedTape = this;
 	gst::gnl::previewTapes.update();
-}
-
-
-const char
-*Tape::getName( void ) const
-{
-	return m_name.c_str();
 }
 
 
