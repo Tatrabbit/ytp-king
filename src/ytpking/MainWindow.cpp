@@ -25,6 +25,7 @@
 #include <wx/spinctrl.h>
 #include <wx/filedlg.h>
 
+#include "ytpking/DataDirectory.h"
 #include "ytpking/EventId.h"
 #include "ytpking/DataFile.h"
 #include "ytpking/TimelineWindow.h"
@@ -149,7 +150,17 @@ MainWindow::onAbout( wxCommandEvent &WXUNUSED(event) )
 void
 MainWindow::onImport( wxCommandEvent &event )
 {
-	//wxFileDialog fileDialog( this, "Import Source", 
+	const char *wildcards = "Video files (mp4, avi, ogv, mkv)|*.mp4;*.avi;*.ogv;*.mkv|All Files (*)|*";
+
+	wxFileDialog fileDialog( this, "Import Source", "", "", wildcards, wxFD_OPEN|wxFD_FILE_MUST_EXIST );
+
+	if ( fileDialog.ShowModal() == wxID_OK )
+	{
+		std::string sourcePath = ytpking::dataDirectory.getSaveDataPath();
+		sourcePath += "/sources";
+
+		wxLogMessage( "Importing '%s%s'", sourcePath.c_str(), fileDialog.GetPath() );
+	}
 }
 
 
@@ -212,8 +223,9 @@ const wxSize
 
 wxBEGIN_EVENT_TABLE( MainWindow, wxFrame )
 
-	EVT_MENU( GlobalEventId::MainMenuQuit,  onQuit  )
-	EVT_MENU( GlobalEventId::MainMenuAbout, onAbout )
+	EVT_MENU( GlobalEventId::MainMenuQuit,   onQuit  )
+	EVT_MENU( GlobalEventId::MainMenuImport, onImport  )
+	EVT_MENU( GlobalEventId::MainMenuAbout,  onAbout )
 
 	EVT_TREE_SEL_CHANGED( GlobalEventId::SamplesTreeCtrl, onSamplesTreeChange )
 
