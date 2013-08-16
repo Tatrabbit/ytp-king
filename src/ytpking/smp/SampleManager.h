@@ -22,6 +22,7 @@
 #include <string>
 
 #include "ytpking/SamplesDataFile.h"
+#include "ytpking/Guid.h"
 
 
 	namespace ytpking
@@ -82,7 +83,7 @@ public:
 	\param nodeReference If NULL, the speaker will be created in the save DataFile. */
 	Sample
 		*addSample( const char *filename, const char *name, const char *speakerName,
-					const char *guid = NULL,
+					const Guid &guid,
 		            SamplesDataFile::NodeReference *nodeReference = NULL );
 
 	/** Deletes a Sample, freeing the memeory.

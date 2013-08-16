@@ -28,6 +28,7 @@ class Guid
 {
 public:
 	Guid( void );
+	Guid( const char *guid ); // implicit
 
 	inline operator const char *( void ) const
 	{ return m_string.c_str(); }

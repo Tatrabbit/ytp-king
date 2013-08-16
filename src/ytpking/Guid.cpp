@@ -52,4 +52,10 @@ Guid::Guid( void )
 }
 
 
+Guid::Guid( const char *guid ) :
+	m_string( guid )
+{
+}
+
+
 	}

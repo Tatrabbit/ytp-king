@@ -28,10 +28,10 @@
 	{
 
 
-Sample::Sample( const char *name, const char *filename, const char *guid )  :
+Sample::Sample( const char *name, const char *filename, const Guid &guid )  :
 	m_name( name ),
 	m_filename( filename ),
-	m_guid( guid? guid : Guid() ),
+	m_guid( guid ),
 	m_start( 0u ),
 	m_duration( 5u )
 {

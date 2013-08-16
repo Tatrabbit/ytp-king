@@ -83,7 +83,7 @@ SampleManager::selectSample( smp::Sample *sample )
 
 smp::Sample
 *SampleManager::addSample( const char *filename, const char *name, const char *speakerName,
-                           const char *guid,
+                           const Guid &guid,
                            SamplesDataFile::NodeReference *nodeReferencePtr )
 {
 	smp::Sample *sample = new smp::Sample( name, filename, guid );

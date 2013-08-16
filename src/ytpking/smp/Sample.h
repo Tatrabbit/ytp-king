@@ -20,7 +20,7 @@
 #include <string>
 
 #include "SamplesDataFile.h"
-
+#include "ytpking/Guid.h"
 
 	namespace ytpking
 	{
@@ -40,7 +40,7 @@ class Sample
 {
 public:
 
-	Sample( const char *name, const char *filename, const char *guid = NULL );
+	Sample( const char *name, const char *filename, const Guid &guid );
 
 	std::string m_name;
 	std::string m_filename;
@@ -54,11 +54,11 @@ public:
 
 	inline const char
 		*getGuid( void ) const
-	{ return m_guid.c_str(); }
+	{ return m_guid; }
 
 private:
 
-	std::string m_guid;
+	Guid m_guid;
 
 };
 
