@@ -30,7 +30,7 @@ TapesListCtrl::TapesListCtrl( wxWindow *parent ) :
 	// TODO make this be wxLC_VIRTUAL
 	wxListCtrl( parent, wxID_ANY,wxDefaultPosition, wxDefaultSize,
 		wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES|wxLC_EDIT_LABELS ),
-	smp::TapeUser( smp::tapeManager )
+	smp::TapeUser( *smp::tapeManager )
 {
 	AppendColumn( "What's Said" );
 	AppendColumn( "Speakers" );
@@ -75,7 +75,7 @@ void
 TapesListCtrl::onSelectItem( wxListEvent& event )
 {
 	smp::Tape *tape = (smp::Tape *)GetItemData( event.GetIndex() );
-	smp::tapeManager.selectTape( tape );
+	smp::tapeManager->selectTape( tape );
 }
 
 

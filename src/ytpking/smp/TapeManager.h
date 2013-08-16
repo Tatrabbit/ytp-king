@@ -44,7 +44,7 @@ private:
 public:
 
 	void
-		initialize( void );
+		loadAll( void );
 
 	
 	/** Register a TapeUsr with this class.
@@ -99,9 +99,9 @@ private:
 
 
 #ifdef YTPKING_SMP_TapeManager_cpp
-	TapeManager tapeManager;
+	TapeManager *tapeManager = NULL;
 #else
-	extern TapeManager tapeManager;
+	extern TapeManager *tapeManager;
 #endif
 
 

@@ -57,7 +57,7 @@ SampleWindow::onButtonDelete( wxCommandEvent& event )
 {	
 	m_tape->deleteSample( *m_sampleInstance );
 
-	if ( m_tape == smp::tapeManager.getSelectedTape() )
+	if ( m_tape == smp::tapeManager->getSelectedTape() )
 		gst::gnl::previewTapes.update();
 
 	event.Skip();

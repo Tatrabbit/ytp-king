@@ -38,17 +38,13 @@ TapeManager::~TapeManager( void )
 {
 	for ( TapeSet::const_iterator it = m_tapes.begin(); it != m_tapes.end(); ++it )
 		delete *it;
-
-	if ( ytpking::tapesDataFile != NULL )
-		delete ytpking::tapesDataFile;
 }
 
 void
-TapeManager::initialize( void )
+TapeManager::loadAll( void )
 {
-	assert( ytpking::tapesDataFile == NULL );
-	ytpking::tapesDataFile = new TapesDataFile( this );
-	ytpking::tapesDataFile->loadAll();
+	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
+		(*it)->onLoadAllTapes();
 }
 
 
@@ -92,14 +88,11 @@ Tape
 	
 	if ( existingNodeReference != NULL )
 		nodeReference = *existingNodeReference;
-	else
-		nodeReference = ytpking::tapesDataFile->addTape( name );
 
 	Tape *tape = new Tape( name, nodeReference );
 
 	for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 		(*it)->onAddTape( *tape );
-
 
 	return tape;
 }
@@ -115,7 +108,6 @@ TapeManager::deleteTape( Tape *tape )
 		for ( TapeUserSet::const_iterator it = m_tapeUsers.begin(); it != m_tapeUsers.end(); ++it )
 			(*it)->onDeleteTape( *tape );
 
-		ytpking::tapesDataFile->deleteTape( tape->getNodeReference() );
 		delete tape;
 		m_tapes.erase( *tapeIt );
 	}

@@ -18,6 +18,7 @@
 #define __YTPKING_TapesDataFile_h
 
 #include "ytpking/DataFile.h"
+#include "smp/TapeUser.h"
 
 
 	namespace ytpking
@@ -30,10 +31,11 @@ namespace smp {
 
 
 class TapesDataFile :
-	public DataFile
+	public DataFile,
+	public smp::TapeUser
 {
 public:
-	explicit TapesDataFile( smp::TapeManager *manager );
+	TapesDataFile( void );
 
 	class NodeReference
 	{
@@ -47,36 +49,30 @@ public:
 		unsigned int m_count;
 	};
 
-	NodeReference
-		addTape( const char *name );
-
-	void
-		deleteTape( NodeReference &nodeReference );
-
+	// TODO replace with callbacks
 	int
 		addSample( const char *guid, NodeReference &nodeReference );
-
 	void
 		deleteElement( int elementIndex, NodeReference &nodeReference );
-
 	void
 		renameTape( const char *newName, NodeReference &nodeReference );
 
-	// TODO delete this, should be a TapeUser
 	void
-		loadAll( void );
+		onAddTape( smp::Tape &addedTape )
+		override;
+	void
+		onDeleteTape( smp::Tape &deletedTape )
+		override;
+	void
+		onLoadAllTapes( void )
+		override;
+
 
 private:
 
-	smp::TapeManager *m_manager;
+	bool m_isLocked;
 
 };
-
-#ifdef __YTPKING_TapesDataFile_cpp
-	TapesDataFile *tapesDataFile = NULL;
-#else
-	extern TapesDataFile *tapesDataFile;
-#endif
 
 
 	}

@@ -52,7 +52,7 @@ const Tape::InstanceSet
 
 
 SampleInstance
-*Tape::appendSample( const Sample &sample, bool suppressSave )
+*Tape::appendSample( const Sample &sample )
 {
 	SampleInstance *sampleInstance = new SampleInstance( &sample );
 	m_samples.push_back( sampleInstance );
@@ -63,8 +63,8 @@ SampleInstance
 		gst::gnl::previewTapes.update();
 	}
 
-	if ( !suppressSave )
-		ytpking::tapesDataFile->addSample( sample.getGuid(), m_nodeReference );
+	//if ( !suppressSave )
+	//	ytpking::tapesDataFile->addSample( sample.getGuid(), m_nodeReference );
 
 	return sampleInstance;
 }
@@ -78,7 +78,7 @@ Tape::deleteSample( const SampleInstance &sampleInstance )
 	{
 		if ( **it == sampleInstance )
 		{
-			ytpking::tapesDataFile->deleteElement( i, m_nodeReference );
+			//ytpking::tapesDataFile->deleteElement( i, m_nodeReference );
 			delete *it;
 			m_samples.erase( it );
 			return;
@@ -113,7 +113,7 @@ const char
 void
 Tape::setName( const char *newName )
 {
-	ytpking::tapesDataFile->renameTape( (m_name = newName).c_str(), m_nodeReference );
+	//ytpking::tapesDataFile->renameTape( (m_name = newName).c_str(), m_nodeReference );
 }
 
 

@@ -30,6 +30,9 @@
 #include "smp/SampleManager.h"
 #include "ytpking/SamplesDataFile.h"
 
+#include "smp\/TapeManager.h"
+#include "ytpking/TapesDataFile.h"
+
 
 	namespace ytpking
 	{
@@ -37,6 +40,7 @@
 
 Application::Application( void )
 {
+	// TODO put the log in the home directory
 	/*
 	if ( !getcwd( m_currentDirectory, sizeof( m_currentDirectory ) ) )
 		m_currentDirectory[0] = '\0';
@@ -56,8 +60,12 @@ Application::Application( void )
 	//else
 		//wxSafeShowMessage( "Error", "Could not open the wxWidgets log file." );
 
+
 	smp::sampleManager = new smp::SampleManager;
-	m_samplesDataFile = new ytpking::SamplesDataFile;
+	m_samplesDataFile  = new ytpking::SamplesDataFile;
+
+	smp::tapeManager = new smp::TapeManager;
+	m_tapesDataFile  = new TapesDataFile;
 }
 
 
@@ -82,6 +90,9 @@ Application::OnInit( void )
 
 Application::~Application( void )
 {
+	delete m_tapesDataFile;
+	delete smp::tapeManager;
+
 	delete m_samplesDataFile;
 	delete smp::sampleManager;
 }

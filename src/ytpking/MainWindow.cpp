@@ -118,7 +118,7 @@ MainWindow::MainWindow( void ) :
 	SetStatusText( "Roll your cursor over something and look here for help." );
 
 	smp::sampleManager->loadAll();
-	smp::tapeManager.initialize();
+	smp::tapeManager->loadAll();
 }
 
 

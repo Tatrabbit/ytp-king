@@ -87,15 +87,8 @@ private:
 	void
 		onUpdate( wxUpdateUIEvent& event );
 
-	
-	void
-		onAddTape( smp::Tape &addedTape )
-		override;
 	void
 		onSelectTape( smp::Tape *selectedTape )
-		override;
-	void
-		onDeleteTape( smp::Tape &deletedTape )
 		override;
 
 	void

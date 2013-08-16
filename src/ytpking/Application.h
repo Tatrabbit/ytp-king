@@ -22,6 +22,7 @@
 
 
 class SamplesDataFile;
+class TapesDataFile;
 
 
 /** The YTP King app itself.
@@ -47,6 +48,8 @@ private:
 	char m_currentDirectory[MAX_PATH];
 
 	SamplesDataFile *m_samplesDataFile;
+	TapesDataFile   *m_tapesDataFile;
+
 	wxLog *m_logger;
 
 };

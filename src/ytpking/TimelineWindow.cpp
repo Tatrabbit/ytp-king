@@ -44,7 +44,7 @@ wxDragResult
 TimelineWindow::
 TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 {
-	if ( smp::tapeManager.getSelectedTape() == NULL )
+	if ( smp::tapeManager->getSelectedTape() == NULL )
 		return wxDragNone;
 
 	using gst::gnl::FileSource;
@@ -53,9 +53,9 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 	{
 		SampleDataObject *dataObject = (SampleDataObject *)GetDataObject();
 		smp::SampleInstance *sampleInstance;
-		sampleInstance = smp::tapeManager.getSelectedTape()->appendSample( *dataObject->m_sample );
+		sampleInstance = smp::tapeManager->getSelectedTape()->appendSample( *dataObject->m_sample );
 
-		m_parent->appendComponent( *smp::tapeManager.getSelectedTape(), *sampleInstance );
+		m_parent->appendComponent( *smp::tapeManager->getSelectedTape(), *sampleInstance );
 		m_parent->GetSizer()->Layout();
 
 		return defResult;
@@ -68,7 +68,7 @@ TimelineDropTarget::OnData( wxCoord, wxCoord, wxDragResult defResult )
 
 TimelineWindow::TimelineWindow( wxWindow *parent ) :
 	wxWindow( parent, wxID_ANY, wxDefaultPosition, wxSize( 200, 150 ) ),
-	smp::TapeUser( smp::tapeManager )
+	smp::TapeUser( *smp::tapeManager )
 {
 	wxSizer *sizer = new wxStaticBoxSizer( wxHORIZONTAL, this, "Tape Mixer" );
 	SetDropTarget( new TimelineDropTarget( this ) );
@@ -80,12 +80,6 @@ void
 TimelineWindow::onUpdate( wxUpdateUIEvent& event )
 {
 	Layout();
-}
-
-
-void
-TimelineWindow::onAddTape( smp::Tape & )
-{
 }
 
 
@@ -106,12 +100,6 @@ TimelineWindow::onSelectTape( smp::Tape *selectedTape )
 		sizer->Hide( this );
 
 	sizer->Layout();
-}
-
-
-void
-TimelineWindow::onDeleteTape( smp::Tape & )
-{
 }
 
 

@@ -38,9 +38,10 @@ NodeReference::NodeReference( void ) :
 }
 
 
-TapesDataFile::TapesDataFile( smp::TapeManager *manager ) :
+TapesDataFile::TapesDataFile( void ) :
+	TapeUser( *smp::tapeManager ),
 	DataFile( "/tapes.xml" ),
-	m_manager( manager )
+	m_isLocked( false )
 {
 	xml_node<> *rootNode = m_xmlDocument.first_node();
 
@@ -54,48 +55,12 @@ TapesDataFile::TapesDataFile( smp::TapeManager *manager ) :
 }
 
 
-TapesDataFile::NodeReference
-TapesDataFile::addTape( const char *name )
-{
-	xml_node<> *tapeNode = m_xmlDocument.allocate_node( node_element, "tape" );
-
-	appendStringAttribute( tapeNode, "name", name );
-
-	xml_node<> *rootNode = m_xmlDocument.first_node();
-	rootNode->append_node( tapeNode );
-
-	saveToFile();
-
-	NodeReference nodeReference;
-	nodeReference.m_tape = tapeNode;
-	return nodeReference;
-}
-
-
-void
-TapesDataFile::deleteTape( NodeReference &nodeReference )
-{
-	xml_node<> *rootNode = m_xmlDocument.first_node();
-	xml_node<> *foundNode = rootNode->first_node( "sample" );
-
-	while ( foundNode != NULL )
-	{
-		if ( foundNode == nodeReference.m_tape)
-		{
-			rootNode->remove_node( nodeReference.m_tape );
-			nodeReference.m_tape = NULL;
-			return;
-		}
-
-		foundNode = foundNode->next_sibling( "sample" );
-	}
-}
-
-
-
 int
 TapesDataFile::addSample( const char *guid, NodeReference &nodeReference )
 {
+	if ( m_isLocked )
+		return -1;
+
 	const char *value = m_xmlDocument.allocate_string( guid );
 	xml_node<> *sampleNode = m_xmlDocument.allocate_node( node_element, "sample", value );
 
@@ -144,8 +109,50 @@ TapesDataFile::renameTape( const char *newName, NodeReference &nodeReference )
 
 
 void
-TapesDataFile::loadAll( void )
+TapesDataFile::onAddTape( smp::Tape &addedTape )
 {
+	if ( m_isLocked )
+		return;
+
+	xml_node<> *tapeNode = m_xmlDocument.allocate_node( node_element, "tape" );
+
+	appendStringAttribute( tapeNode, "name", addedTape.getName() );
+
+	xml_node<> *rootNode = m_xmlDocument.first_node();
+	rootNode->append_node( tapeNode );
+
+	addedTape.getNodeReference().m_tape = tapeNode;
+
+	saveToFile();
+}
+
+
+void
+TapesDataFile::onDeleteTape( smp::Tape &deletedTape )
+{
+	xml_node<> *rootNode = m_xmlDocument.first_node();
+	xml_node<> *foundNode = rootNode->first_node( "sample" );
+
+	while ( foundNode != NULL )
+	{
+		NodeReference *nodeReference = &deletedTape.getNodeReference();
+		if ( foundNode == nodeReference->m_tape)
+		{
+			rootNode->remove_node( nodeReference->m_tape );
+			nodeReference->m_tape = NULL;
+			return;
+		}
+
+		foundNode = foundNode->next_sibling( "sample" );
+	}
+}
+
+
+void
+TapesDataFile::onLoadAllTapes( void )
+{
+	m_isLocked = true;
+
 	xml_node<> *rootNode = m_xmlDocument.first_node();
 
 	xml_node<> *tapeNode = rootNode->first_node( "tape" );
@@ -160,7 +167,7 @@ TapesDataFile::loadAll( void )
 		if ( !getStringAttribute( tapeNode, "name", name ) )
 			name = "(No Name)";
 
-		smp::Tape *tape = m_manager->addTape( name.c_str(), &nodeReference );
+		smp::Tape *tape = smp::tapeManager->addTape( name.c_str(), &nodeReference );
 
 		xml_node<> *contentNode = tapeNode->first_node();
 
@@ -170,7 +177,7 @@ TapesDataFile::loadAll( void )
 			{
 				smp::Sample *sample = smp::sampleManager->getSampleByGuid( contentNode->value() );
 				if ( sample != NULL )
-					tape->appendSample( *sample, true );
+					tape->appendSample( *sample );
 				else
 				{
 					if ( !hadError )
@@ -188,6 +195,8 @@ TapesDataFile::loadAll( void )
 
 		tapeNode = tapeNode->next_sibling( "tape" );
 	}
+
+	m_isLocked = false;
 }
 
 

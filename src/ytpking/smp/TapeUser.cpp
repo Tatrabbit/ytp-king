@@ -38,4 +38,27 @@ TapeUser::~TapeUser( void )
 }
 
 
+void
+TapeUser::onAddTape( Tape &addedTape )
+{
+}
+
+
+void
+TapeUser::onSelectTape( Tape *selectedTape )
+{
+}
+
+void
+TapeUser::onDeleteTape( Tape &deletedTape )
+{
+}
+
+
+void
+TapeUser::onLoadAllTapes( void )
+{
+}
+
+
 	} }
