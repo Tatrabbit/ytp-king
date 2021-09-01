@@ -1,6 +1,14 @@
 YTP King
 ========
 
+Notice
+------
+*This program is currently on hiatus. It's been years since I started it, and I'm likely to one day get back to it, but currently, I have other projects distracting me.*
+
+The original readme is below:
+
+-------------------------------
+
 It's a sentence mixer app for Windows Desktop, licensed under the GNU GPL. Designed to be easy to learn and simple to use for anybody to make YTP (YouTube Poops), to make it possible for beginners and, for experts, to get the audio done quicker and with less fuss.
 
 **THIS PROGRAM IS A WORK IN PROGRESS, YOU'RE WELCOME TO HELP MAKE IT,
@@ -11,7 +19,7 @@ Basic video editing and video file export is planned, but it's not the focus. Th
 Compiling
 ---------
 
-**You are welcome to fork this, of course, but please wait until I'm able to stabalize the code base.** It's a mess right now, only one week old at the time of this writing.
+**You are welcome to fork this, of course, ~~but please wait until I'm able to stabalize the code base.~~ (It's been too long and I won't die on this hill. I encourage you to play around with it.)** It's a mess right now, only one week old at the time of this writing.
 
 This app is being built with cross-platform compatibility in mind, but currently, project files only exist for Windows. In addition, there are some platform specific things which are Windows only. However, I'm taking great pains to make sure that it will compile on other platforms without too much effort.
 
